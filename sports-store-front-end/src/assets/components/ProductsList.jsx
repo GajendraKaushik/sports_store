@@ -1,8 +1,21 @@
 import React from "react";
+
 import Tileimg from "../images/NavigationalTiles_RoadBikes_1200x1200_02.webp"
+import forestImg  from "../images/forestRider.webp"
+import offridingImg  from "../images/offriding.webp"
+import singleridingImg  from "../images/Single_rider.webp"
+
 import Button from "./Button";
+import ImageSlider from "./ImageSlider";
 
 const ProductsList = () =>{
+    let productItems = [{
+        name:"",
+        img:""
+
+    }]
+
+
    return(
     <>
         {/* <div className="w-56 h-52 my-20 mx-6">
@@ -18,14 +31,14 @@ const ProductsList = () =>{
             </div>
         </div> */}
 
+
 <div className="w-56 h-52 my-20 mx-6 md:w-80 md:h-64">
     <div className="relative overflow-hidden rounded-lg group">
         <img
             src={Tileimg} 
             alt="Electric Bike"
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-        />
-
+        />  
         {/* Overlay */}
         <div className="absolute inset-0 p-6 flex flex-col items-center gap-5 justify-center bg-black bg-opacity-20 md:bg-opacity-15">
             <div className="text-white font-bold text-lg">Electric Bike</div>
@@ -33,9 +46,7 @@ const ProductsList = () =>{
         </div>
     </div>
 </div>
-
-        
-        
+ 
     </>
    )
 
