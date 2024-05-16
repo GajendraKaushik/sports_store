@@ -78,14 +78,14 @@ const Footer = () => {
       </div>
       </div>
 
-      <div className='pb-8 flex flex-col gap-5 my-0 mx-60'>
+      <div className='pb-8 flex flex-col gap-5 my-0 mx-11 md:mx-60 text-xs'>
         <div className='flex gap-6 text-center flex-wrap flex-col md:items-center md:justify-center md:flex-row'>
             <div>PRIVACY</div>
             <div>TERMS OF USE</div>
             <div>DO NOT SELL MY PERSONAL INFORMATION (CALIFORNIA)</div>
             <div>CALIFORNIA TRANSPARENCY ACT</div>
         </div>
-        <div className='flex  gap-7 flex-wrap text-center flex-col md:items-center md:justify-center md:flex-row'>
+        <div className='flex text-xs gap-7 flex-wrap text-center flex-col md:items-center md:justify-center md:flex-row'>
             <div>© 1996-2024 Specialized Bicycle Components, Inc. All Rights Reserved.</div>
             <div>US | EN</div>
         </div>
