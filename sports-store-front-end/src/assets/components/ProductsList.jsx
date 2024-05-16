@@ -8,7 +8,7 @@ import Accessa  from "../images/Accesaries.webp"
 import apparel  from "../images/apparel.webp"
 import kids  from "../images/kids_bike.webp"
 import tire  from "../images/Tire.webp"
-import Homeimg from "../images/HomePage.webp"
+import Homeimg from "../images/BikeImg/HomeBike.webp"
 
 import Button from "./Button";
 const ProductsList = () =>{
