@@ -6,9 +6,9 @@ import playStor from "../images/BikeImg/google-play-black.svg"
 
 const Footer = () => {
   return (
-    <div className='w-full h-[425px] bg-slate-600 box-borde'>
+    <div className='w-full bg-slate-600 box-borde'>
       <div className='py-12'>
-      <div className='flex gap-y-5 mx-11 my-0 px-12 flex-wrap space-x-0 flex-col-reverse justify-between items-start md:flex-row md:mx-56'>
+      <div className='flex gap-y-5 mx-2 my-0 px-12 flex-wrap space-x-0 flex-col-reverse justify-between items-start md:flex-row md:mx-56'>
         <div className='flex items-center justify-center gap-8'>
             <div>
                 <h3>SPPOERT</h3>
@@ -22,7 +22,7 @@ const Footer = () => {
                 </ul>
             </div>
             <div> 
-                <h3 >RESOURCEs</h3>
+            <h3 >RESOURCEs</h3>
               <ul className='text-xs font-light text-gray-300 mt-4 leading-relaxed'>
                 <li>Bike Archive</li>
                 <li>Demo and Events</li>
@@ -78,7 +78,7 @@ const Footer = () => {
       </div>
       </div>
 
-      <div className='pb-8 flex flex-col gap-5 my-0 mx-11 md:mx-60 text-xs'>
+      <div className='pb-8 flex flex-col gap-5 my-0 mx-2 md:mx-60 text-xs'>
         <div className='flex gap-6 text-center flex-wrap flex-col md:items-center md:justify-center md:flex-row'>
             <div>PRIVACY</div>
             <div>TERMS OF USE</div>

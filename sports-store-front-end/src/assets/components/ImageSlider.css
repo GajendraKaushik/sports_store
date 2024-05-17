@@ -2,7 +2,7 @@
 .slider-wrapper .card-list{
     display: grid;
     gap:7px;
-    font-size: 0;
+    /* font-size: 0; */
     overflow-x: auto;
     scrollbar-width: none;
     grid-template-columns: repeat(10,1fr);

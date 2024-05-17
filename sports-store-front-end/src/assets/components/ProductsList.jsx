@@ -43,8 +43,8 @@ const ProductsList = () =>{
    return(
     <>
         <div className="LandinImageContainer">
-            <div className="w-full h-[810px] top-20 relative">
-            <img src={Homeimg} alt="HomeImg" className="w-full h-full z-50 transform " />
+            <div className="w-full h-[810px] top-16">
+            <img src={Homeimg} alt="HomeImg" className="w-full h-full"/>
             </div>
             <div></div>
         </div>

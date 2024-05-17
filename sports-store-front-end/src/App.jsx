@@ -4,8 +4,10 @@ import viteLogo from '/vite.svg'
 import NavBar from './assets/components/NavBar'
 import ProductsList from './assets/components/ProductsList'
 import ImageSlider from './assets/components/ImageSlider'
+import NormalProductSlider from './assets/components/NormalProductSlider'
 import LimitedStock from './assets/components/LimitedStock'
 import Footer from './assets/components/Footer'
+
 
 
 function App() {
@@ -22,6 +24,9 @@ function App() {
       </div>
       <div className='row-span-3 w-full'>
       <ImageSlider/>
+      </div>
+      <div className='row-span-3 w-full'>
+      <NormalProductSlider />
       </div>
       <div className='row-span-4 w-full'>
       <LimitedStock />
