@@ -4,7 +4,7 @@ const ProductListCard = ({ItemName, ItemImg}) => {
   return (
     <div
     key={ItemName}
-    className="w-56 h-52 my-20 mx-6 md:w-80 md:h-64"
+    className="my-20 mx-5 w-80 h-64"
   >
     <div className="relative overflow-hidden rounded-lg group">
       <img

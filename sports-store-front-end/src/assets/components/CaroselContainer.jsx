@@ -37,7 +37,7 @@ const CaroselContainer = (props) => {
       }));
     };
   return (
-      <div className="container">
+      <div className="container w-full">
         <div className="slider-wrapper p-12 w-full rounded-sm">
           <div className="card-list" ref={cardListRef} onScroll={handelScroll}>
             {props.children}

@@ -2,7 +2,6 @@ import React from "react";
 
 import { useRef, useEffect, useState } from "react";
 
-import "../components/ImageSlider.css";
 import ProductListCard from "./ProductListCard";
 import CaroselContainer from "./CaroselContainer";
 
