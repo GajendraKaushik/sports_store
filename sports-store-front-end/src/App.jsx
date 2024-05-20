@@ -7,6 +7,7 @@ import ImageSlider from './assets/components/ImageSlider'
 import NormalProductSlider from './assets/components/NormalProductSlider'
 import LimitedStock from './assets/components/LimitedStock'
 import Footer from './assets/components/Footer'
+import ResponsiveSideNavbar from './assets/components/ResponsiveSideNavbar'
 
 
 
@@ -15,7 +16,7 @@ function App() {
   return (
     <>
 
-    <div className='flex flex-col'>
+    {/* <div className='flex flex-col'>
       <div className='row-span-1'>
        <NavBar/>
       </div>
@@ -34,7 +35,7 @@ function App() {
       <div className='row-span-4 w-full'>
       <Footer />
       </div>
-    </div>
+    </div> */}
 
      
       {/* <ProductsList />
@@ -42,6 +43,8 @@ function App() {
       <LimitedStock />
       <Footer /> */}
        
+
+       <ResponsiveSideNavbar />
        
     </>
   )
