@@ -8,6 +8,8 @@ import NormalProductSlider from './assets/components/NormalProductSlider'
 import LimitedStock from './assets/components/LimitedStock'
 import Footer from './assets/components/Footer'
 import ResponsiveSideNavbar from './assets/components/ResponsiveSideNavbar'
+import SingUp from './assets/components/Login/SingUp'
+import Login from './assets/components/Login/Login'
 
 
 
@@ -15,11 +17,14 @@ function App() {
 
   return (
     <>
-
-    {/* <div className='flex flex-col'>
       <div className='row-span-1'>
        <NavBar/>
       </div>
+
+      <Login />
+     
+    {/* <div className='flex flex-col'>
+
       <div className='row-span-1 w-full'>
       <ProductsList />
       </div>
@@ -32,9 +37,7 @@ function App() {
       <div className='row-span-4 w-full'>
       <LimitedStock />
       </div>
-      <div className='row-span-4 w-full'>
-      <Footer />
-      </div>
+
     </div> */}
 
      
@@ -44,7 +47,11 @@ function App() {
       <Footer /> */}
        
 
-       <ResponsiveSideNavbar />
+       {/* <ResponsiveSideNavbar /> */}
+
+       <div className='row-span-4 w-full'>
+      <Footer />
+      </div>
        
     </>
   )
