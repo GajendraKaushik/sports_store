@@ -10,6 +10,7 @@ import Footer from './assets/components/Footer'
 import ResponsiveSideNavbar from './assets/components/ResponsiveSideNavbar'
 import SingUp from './assets/components/Login/SingUp'
 import Login from './assets/components/Login/Login'
+import CostumerDashbord from './assets/components/Consumer_Details/CostumerDashbord'
 
 
 
@@ -20,8 +21,9 @@ function App() {
       <div className='row-span-1'>
        <NavBar/>
       </div>
-
-      <Login />
+      {/* <CostumerDashbord /> */}
+     
+  <Login />
      
     {/* <div className='flex flex-col'>
 

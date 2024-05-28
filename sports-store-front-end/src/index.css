@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.input-field:focus + .floating-lable{
+    @apply  transform -translate-y-6 translate-x-1 scale-75 ease-in bg-white text-gray-900 p-1 top-[6px] left-[5px];
+}
