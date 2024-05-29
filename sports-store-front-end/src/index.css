@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 
-
+/* Login Sign In Page */
 .input-field:focus + .floating-lable{
     @apply  transform -translate-y-6 translate-x-1 scale-75 ease-in bg-white text-gray-900 p-1 top-[6px] left-[5px];
+}
+
+
+/* CostumerDashbord page */
+.CustomerDetaiCard{
+    @apply h-10  w-full rounded-md flex items-center justify-start gap-4 font-medium active:bg-white transition duration-500 ease-in;
 }

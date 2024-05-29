@@ -17,13 +17,13 @@ import CostumerDashbord from './assets/components/Consumer_Details/CostumerDashb
 function App() {
 
   return (
-    <>
+    <div className='bg-stone-100'>
       <div className='row-span-1'>
        <NavBar/>
       </div>
-      {/* <CostumerDashbord /> */}
+      <CostumerDashbord />
      
-  <Login />
+  {/* <Login /> */}
      
     {/* <div className='flex flex-col'>
 
@@ -55,7 +55,7 @@ function App() {
       <Footer />
       </div>
        
-    </>
+    </div>
   )
 }
 
