@@ -1,13 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import Button from "./Button";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   let Links = [
     { name: "Home", link: "/" },
-    { name: "Saved", link: "/" },
+    { name: "Saved", link: "myaccout/Wishlist" },
     { name: "Cart", link: "/" },
-    { name: "Login", link: "/" },
+    { name: "Login", link: "myaccout" },
   ];
 
   let [open, setOpen] = useState(false);
@@ -32,12 +33,12 @@ const NavBar = () => {
           >
             {Links.map((link) => (
               <li key={link.name} className="md:ml-8 text-xl md:my-0 my-7">
-                <a
-                  href={link.link}
+                <NavLink
+                 to={link.link}
                   className="text-gray-800 hover:text-gray-400 duration-500"
                 >
                   {link.name}
-                </a>
+                </NavLink>
               </li>
             ))}
             <Button>Login</Button>

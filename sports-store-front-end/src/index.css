@@ -11,5 +11,8 @@
 
 /* CostumerDashbord page */
 .CustomerDetaiCard{
-    @apply h-10  w-full rounded-md flex items-center justify-start gap-4 font-medium active:bg-white transition duration-500 ease-in;
+    @apply h-10  w-full rounded-md flex items-center justify-start gap-4 font-medium transition duration-500 ease-in;
+}
+.CustomerDetaiCardActive{
+    @apply h-10  w-full rounded-md flex items-center justify-start bg-white gap-4 font-medium transition duration-500 ease-in;
 }
