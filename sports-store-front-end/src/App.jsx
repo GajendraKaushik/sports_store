@@ -14,14 +14,14 @@ import Address from "./assets/components/Consumer_Details/Address";
 import Oders from "./assets/components/Consumer_Details/Oders";
 import PaymentMethods from "./assets/components/Consumer_Details/PaymentMethods";
 import WishList from "./assets/components/Consumer_Details/WishList";
-import Bikes from "./assets/components/Consumer_Details/Biles";
+import Bikes from "./assets/components/Consumer_Details/Bikes";
 import Wheels from "./assets/components/Consumer_Details/Wheels";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
      
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
           { path: "Oders", element: <Oders /> },
           { path: "PaymentMethods", element: <PaymentMethods /> },
           { path: "Wishlist", element: <WishList /> },
-          { path: "Bikes", element: <Bikes /> },
+          { path: "bikes", element: <Bikes /> },
           { path: "Wheels", element: <Wheels /> },
         ],
       },
