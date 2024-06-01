@@ -8,7 +8,7 @@ const Address = () => {
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xl font-light">Black</p>
+              <p className="text-xl font-light"><span><ion-icon name="chevron-back-outline"></ion-icon></span>Black</p>
             </div>
             <div className="underline font-semibold">Sign Out</div>
           </div>
@@ -155,6 +155,7 @@ const Address = () => {
               <div className="flex flex-col h-full items-center justify-center">
                 <div className="w-16 h-16 border-2 border-gray-400 rounded-full flex items-center justify-center flex-col ">
                   <div className="w-5 h-5">
+                    {/* <ion-icon name="add-outline"></ion-icon> */}
                     <img src={plus} alt="plus" />
                   </div>
                 </div>
