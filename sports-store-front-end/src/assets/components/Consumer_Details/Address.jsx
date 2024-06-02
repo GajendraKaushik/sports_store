@@ -4,7 +4,7 @@ import plus from "../../images/Icons/plus.png";
 const Address = () => {
   return (
     <div className="bg-white grid-col-[repeat(1,minmax(min-content, max-content))] mt-16">
-      <div className="md:hidden block">
+      <div className="lg:hidden block">
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
           <div className="flex items-center justify-between">
             <div>
@@ -18,7 +18,7 @@ const Address = () => {
         </div>
       </div>
      
-      <div className="hidden md:block ml-11 mt-24">
+      <div className="hidden lg:block ml-11 mt-24">
         <div className="pt-4 px-6 pb-px bg-white mt-3 flex items-center justify-between">
           <div className="text-3xl text-center font-bold">Address Book</div>
 
@@ -32,7 +32,7 @@ const Address = () => {
 
       <div className="bg-white">
         <div className="ml-11">
-          <h3 className="px-6 font-semibold">Shipping Addresses (2)</h3>
+          <h3 className="px-6 font-semibold mt-5">Shipping Addresses (2)</h3>
           <div className=" grid gap-6 grid-cols-[repeat(3,minmax(370px,1fr))] md:grid-cols-[repeat(2,minmax(100px,1fr))] md:grid-rows-1 overflow-x-auto p-10">
             <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
               <div className="flex items-start justify-between">
@@ -99,7 +99,7 @@ const Address = () => {
        
       <div className="bg-white">
         <div className="ml-11">
-          <h3 className="px-6 font-semibold">Billing Addresses(2)</h3>
+          <h3 className="px-6 font-semibold mt-5">Billing Addresses(2)</h3>
           <div className=" grid gap-6 grid-cols-[repeat(3,minmax(370px,1fr))] md:grid-cols-[repeat(2,minmax(100px,1fr))] md:grid-rows-1 overflow-x-auto p-10">
             <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
               <div className="flex items-start justify-between">

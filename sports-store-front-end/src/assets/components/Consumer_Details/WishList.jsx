@@ -4,7 +4,7 @@ import Saved_Product_Card from "./Saved_Product_Card";
 const WishList = () => {
   return (
     <>
-      <div className="md:hidden block mt-16">
+      <div className="lg:hidden block mt-16">
         <div className=" bg-stone-100 mt-3 h-44">
           <div className="flex items-center justify-between p-5">
             <div>

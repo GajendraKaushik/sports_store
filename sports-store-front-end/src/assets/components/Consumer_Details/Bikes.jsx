@@ -5,7 +5,7 @@ const BiKes = () => {
   return (
   <>   
      <div className="mb-12">
-      <div className="md:hidden block mt-16">
+      <div className="lg:hidden block mt-16">
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
           <div className="flex items-center justify-between">
             <div>

@@ -17,13 +17,15 @@ import WishList from "./assets/components/Consumer_Details/WishList";
 import Bikes from "./assets/components/Consumer_Details/Bikes";
 import Wheels from "./assets/components/Consumer_Details/Wheels";
 
+import Product_List_Page from "./assets/components/Product/Product_List_Page";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     // errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <Product_List_Page/> },
      
       {
         path: "myaccout",
