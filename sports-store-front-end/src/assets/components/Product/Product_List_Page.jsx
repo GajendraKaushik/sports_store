@@ -52,6 +52,18 @@ const Product_List_Page = () => {
       OfferPrice: "5,499.99",
       OriginalPrice: "8,000.00",
     },
+    {
+      img: Img1,
+      Name: "Roubaix Expert",
+      OfferPrice: "5,499.99",
+      OriginalPrice: "8,000.00",
+    },
+    {
+      img: Img1,
+      Name: "Roubaix Expert",
+      OfferPrice: "5,499.99",
+      OriginalPrice: "8,000.00",
+    },
   ];
   return (
     <>

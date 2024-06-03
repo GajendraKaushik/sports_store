@@ -19,13 +19,15 @@ import Wheels from "./assets/components/Consumer_Details/Wheels";
 
 import Product_List_Page from "./assets/components/Product/Product_List_Page";
 
+import Single_Product_page from "./assets/components/Product/Single_Product_page";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     // errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Product_List_Page/> },
+      { index: true, element: <Single_Product_page/> },
      
       {
         path: "myaccout",
