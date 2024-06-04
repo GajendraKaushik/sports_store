@@ -16,3 +16,25 @@
 .CustomerDetaiCardActive{
     @apply h-10  w-full rounded-md flex items-center justify-start bg-white gap-4 font-medium transition duration-500 ease-in;
 }
+
+
+
+/* Single Product detail Page  */
+.detail_desc{
+    @apply flex flex-col gap-8 pb-2
+}
+
+.detail_desc h4{
+    @apply text-xl font-bold
+}
+.detail_sub_heading{
+    @apply text-gray-900
+}
+
+.detail_sub_desc{
+    @apply text-neutral-600
+}
+
+.reviewCard::-webkit-scrollbar-thumb {
+     @apply none
+  }
