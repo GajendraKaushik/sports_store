@@ -1,6 +1,29 @@
-import React from "react";
+import React, {useRef, useState} from "react";
+import UserDetailForm from "./UserDetailForm";
+import FormModal from "./FormModal";
 
 const Profile = () => {
+  const [openForm, setOpenForm] = useState(false)
+
+  const ref = useRef(null)
+  
+  // const handleFormDailog = () =>{
+  //   setOpenForm((prevState)=> !prevState)
+  //   if (openForm){
+  //     ref.current.showModal()
+  //   }else{
+  //     ref.current.Close()
+  //   }   
+  // }
+
+  const handleDialog= () =>{   
+            ref.current.showModal()
+  }
+
+  const CloseDialog = () =>{
+    ref.current.close()
+  }
+
   return (
     <>
       <div className="bg-white ml-9 grid-col-1 p-12">
@@ -37,7 +60,7 @@ const Profile = () => {
                 <p className="text-xl font-semibold">Ridjing Styles</p>
                 <p>Mountain, steet</p>
               </div>
-              <button className="underline hover:text-red-600">
+              <button onClick={handleDialog} className="underline hover:text-red-600">
                 <a href="">Edit</a>
               </button>
             </div>
@@ -46,12 +69,19 @@ const Profile = () => {
             <div className="w-full h-52 bg-white rounded-lg shadow-lg shadow-black p-6">
               <p className="text-2xl font-bold mb-5">password</p>
               <div>*******</div>
-              <button className="underline hover:text-red-600">
+              <button  className="underline hover:text-red-600">
                 <a href="">Edit</a>
               </button>
             </div>
           </div>
         </div>
+        <dialog ref={ref}>
+          <div>
+            <div className="w-1/2 h-1/2 bg-gray-700 text-center">hello</div>
+            <button onClick={CloseDialog}>Close</button>
+      </div>
+    {/* <UserDetailForm closeForm={openForm} handleFormDailog={handleFormDailog}/> */}
+    </dialog>
       </div>
     </>
   );
