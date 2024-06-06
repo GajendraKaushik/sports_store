@@ -1,32 +1,72 @@
 import React, {useRef, useState} from "react";
 import UserDetailForm from "./UserDetailForm";
 import FormModal from "./FormModal";
+// import {
+//   Drawer,
+
+//   Typography,
+//   IconButton,
+// } from "@material-tailwind/react";
+
+import { Button, Drawer } from "flowbite-react";
 
 const Profile = () => {
-  const [openForm, setOpenForm] = useState(false)
+  const [openForm, setOpenForm] = useState(false);
+  const [openRight, setOpenRight] = useState(false);
+  const modalRef = useRef(null);
 
-  const ref = useRef(null)
-  
-  // const handleFormDailog = () =>{
-  //   setOpenForm((prevState)=> !prevState)
-  //   if (openForm){
-  //     ref.current.showModal()
-  //   }else{
-  //     ref.current.Close()
-  //   }   
-  // }
+  const openDrawerRight = () => setOpenRight(true);
+  const closeDrawerRight = () => setOpenRight(false);
 
-  const handleDialog= () =>{   
-            ref.current.showModal()
+  const handleDialog = () => {
+    if (modalRef.current?.hasAttribute("open")) {
+      modalRef.current.close();
+    } else {
+      modalRef.current?.showModal();
+    }
   }
 
-  const CloseDialog = () =>{
-    ref.current.close()
-  }
+  const [isOpen, setIsOpen] = useState(true);
 
+  const handleClose = () => setIsOpen(false);
   return (
     <>
-      <div className="bg-white ml-9 grid-col-1 p-12">
+
+    {/* <UserDetailForm/> */}
+{/* 
+    <Drawer
+        placement="right"
+        open={openRight}
+        onClose={closeDrawerRight}
+        className="p-4  backdrop-blur-lg"
+        size={513}
+        
+      >
+        <UserDetailForm/>
+      </Drawer> */}
+
+
+
+
+      
+{/* 
+<!-- drawer init and toggle --> */}
+{/* <div className="text-center">
+   <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right" aria-controls="drawer-right-example">
+   Show right drawer
+   </button>
+</div> */}
+
+{/* <!-- drawer component --> */}
+
+      <Drawer open={isOpen} onClose={handleClose} position="right" bodyScrolling={true} className="w-[553px]">
+        <Drawer.Items>
+        <UserDetailForm/>
+        </Drawer.Items>
+      </Drawer>
+   
+
+      <div className={`bg-white ml-9 grid-col-1 p-12 ${!openRight&&"overflow-hidden"} `}>
         <div className=" mt-28 h-20 text-3xl font-bold">Profile</div>
         <div className="grid md:grid-cols-2 gap-10 grid-cols-1">
           <div className="bg-white rounded-lg shadow-lg min-w-64 shadow-black">
@@ -60,8 +100,8 @@ const Profile = () => {
                 <p className="text-xl font-semibold">Ridjing Styles</p>
                 <p>Mountain, steet</p>
               </div>
-              <button onClick={handleDialog} className="underline hover:text-red-600">
-                <a href="">Edit</a>
+              <button onClick={() => setIsOpen(true)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right" aria-controls="drawer-right-example">
+                Edit
               </button>
             </div>
           </div>
@@ -69,19 +109,12 @@ const Profile = () => {
             <div className="w-full h-52 bg-white rounded-lg shadow-lg shadow-black p-6">
               <p className="text-2xl font-bold mb-5">password</p>
               <div>*******</div>
-              <button  className="underline hover:text-red-600">
-                <a href="">Edit</a>
+              <button onClick={() => setIsOpen(true)} className="underline hover:text-red-600">
+               Edit
               </button>
             </div>
           </div>
         </div>
-        <dialog ref={ref}>
-          <div>
-            <div className="w-1/2 h-1/2 bg-gray-700 text-center">hello</div>
-            <button onClick={CloseDialog}>Close</button>
-      </div>
-    {/* <UserDetailForm closeForm={openForm} handleFormDailog={handleFormDailog}/> */}
-    </dialog>
       </div>
     </>
   );

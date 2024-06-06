@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 
-const UserDetailForm = ({closeForm, handleFormDailog}) => {
+const UserDetailForm = () => {
 
   const [close, setClose] = useState(false)
-  
 
   return (
     <>
-      <div className={`relative transform duration-200 ease-in ${closeForm && "translate-x-full"}`}>
-        <div className="bg-gray-400 absolute w-full md:w-[513px] flex flex-col  jus right-0 p-8">
+      <div className={`relative transform duration-200 ease-in`}>
+        <div className="bg-white absolute w-full  flex flex-col  jus right-0">
           <div>
             <div className="flex flex-nowrap justify-end absolute top-3 right-6 w-full">
               <div className="bg-white flex justify-center items-center w-12 h-12 rounded ">
                 <div>
-                  <div onClick={handleFormDailog}  className="flex justify-center items-center text-3xl">
+                  <div className="flex justify-center items-center text-3xl">
                   <ion-icon name="close-outline"></ion-icon>
                   </div>
                 </div>
@@ -57,7 +56,6 @@ const UserDetailForm = ({closeForm, handleFormDailog}) => {
                       </span>
                     </div>
                   </div>
-
                   <div>
                     <div className="relative">
                       <input
