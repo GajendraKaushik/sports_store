@@ -1,8 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import plus from "../../images/Icons/plus.png";
+import { Button, Drawer } from "flowbite-react";
+import Payment_Detail_Form from "./Payment_Detail_Form";
 
 const PaymentMethods = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClose = () => setIsOpen(false);
   return (
+    <>
+    <Drawer
+        open={isOpen}
+        onClose={handleClose}
+        position="right"
+        bodyScrolling={false}
+        className="w-full md:w-[553px] p-5"
+      >
+        <Drawer.Items>
+          <Payment_Detail_Form handleClose={handleClose} />
+        </Drawer.Items>
+      </Drawer>
     <div className="bg-white grid-col-[repeat(1,minmax(min-content, max-content))] mt-16">
       <div className="lg:hidden block">
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
@@ -76,11 +93,12 @@ const PaymentMethods = () => {
       </div>
 
       <div className="ml-11 p-5 block lg:hidden">
-        <button className="md:w-48 w-full h-12 bg-neutral-800 hover:bg-neutral-500 text-white font-semibold mb-10 rounded-md">
+        <button onClick={setIsOpen} className="md:w-48 w-full h-12 bg-neutral-800 hover:bg-neutral-500 text-white font-semibold mb-10 rounded-md">
           Add Payment Method
         </button>
       </div>
     </div>
+    </>
   );
 };
 

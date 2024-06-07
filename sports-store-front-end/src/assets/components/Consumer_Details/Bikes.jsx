@@ -1,9 +1,27 @@
-import React from "react";
+import React,{useState} from "react";
 import InfoDetailCard from "./InfoDetailCard";
+import { Drawer } from "flowbite-react";
+import Bike_Detail_Form from "./Bike_Detail_Form";
 
 const BiKes = () => {
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClose = () => setIsOpen(false);
+
   return (
-  <>   
+  <> 
+      <Drawer
+  open={isOpen}
+  onClose={handleClose}
+  position="right"
+  bodyScrolling={false}
+  className="w-full md:w-[553px] p-5"
+>
+  <Drawer.Items>
+    <Bike_Detail_Form handleClose={handleClose} />
+  </Drawer.Items>
+</Drawer>  
      <div className="mb-12">
       <div className="lg:hidden block mt-16">
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
@@ -34,9 +52,9 @@ const BiKes = () => {
             <h6 className="text-xl mb-3 font-semibold">Register a new product</h6>
             <p>Make sure to register your bike before your first ride to activate your lifetime frame warranty.</p>
           </header>
-          <button className="md:w-28 h-12 w-full bg-neutral-900 text-white hover:bg-neutral-400 object-cover rounded-md">
-            <span className=" hidden md:block">Register</span>
-            <span className=" block md:hidden">Register Your Bike</span>
+          <button onClick={setIsOpen} className="md:w-28 h-12 w-full bg-neutral-900 text-white hover:bg-neutral-400 object-cover rounded-md">
+            <span   className=" hidden md:block">Register</span>
+            <span  className=" block md:hidden">Register Your Bike</span>
             </button>
         </div>
       </div>

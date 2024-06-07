@@ -1,9 +1,26 @@
-import React from 'react'
+import React,{useState} from 'react'
 import InfoDetailCard from './InfoDetailCard'
+import { Drawer } from 'flowbite-react'
+import Wheel_Detail_Form from './Wheel_Detail_Form'
 
 const Wheels = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClose = () => setIsOpen(false);
+
   return (
-<>
+  <> 
+      <Drawer
+  open={isOpen}
+  onClose={handleClose}
+  position="right"
+  bodyScrolling={false}
+  className="w-full md:w-[553px] p-5"
+>
+  <Drawer.Items>
+    <Wheel_Detail_Form handleClose={handleClose} />
+  </Drawer.Items>
+</Drawer> 
 <div className="mb-12">
       <div className="lg:hidden block mt-16">
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
@@ -33,7 +50,7 @@ const Wheels = () => {
           <header>
             <p className='mb-5 w-auto'>Register your wheels within 30 days of purchase. Once your wheels are registered, your lifetime warranty and no-fault crash replacement will be activated in our system. We’ll also keep you informed about new products, promotions, and special events.</p>
           </header>
-          <button className="md:w-28 h-12 min-w-28 w-full bg-neutral-900 text-white hover:bg-neutral-400 object-cover rounded-md flex-grow">
+          <button onClick={setIsOpen} className="md:w-28 h-12 min-w-28 w-full bg-neutral-900 text-white hover:bg-neutral-400 object-cover rounded-md flex-grow">
             <span className=" hidden md:block">Register</span>
             <span className=" block md:hidden">Register Your Wheel</span>
             </button>

@@ -4,10 +4,38 @@
 
 
 /* Login Sign In Page */
-.input-field:focus + .floating-lable{
+/* .input-field:focus + .floating-lable{
     @apply  transform -translate-y-6 translate-x-1 scale-75 ease-in bg-white text-gray-900 p-1 top-[6px] left-[5px];
-}
+} */
 
+:root {
+    --label-translate-y: -27px;
+    --label-translate-x: 4px;
+  }
+
+  /* Floating label effect */
+  .input-field:focus + .floating-lable {
+    transform: translate(var(--label-translate-x), var(--label-translate-y))
+    scale(0.75);
+    background-color: white;
+    color: #333; /* Adjust the color as needed */
+    padding: 4px;
+    top: 6px;
+    left: 5px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+.input-field:focus + .floating-lable ,
+.input-field:valid + .floating-lable {
+  transform: translateY(-26px)  scale(0.75);
+  font-family: 'Yanone Kaffeesatz', Arial, sans-serif;
+  color: #333;
+  background-color: white;
+  top: 6px;
+  left: 5px;
+  padding: 4px;
+  
+}
 
 /* CostumerDashbord page */
 .CustomerDetaiCard{
