@@ -1,20 +1,50 @@
 import React, {useRef, useState} from "react";
 import UserDetailForm from "./UserDetailForm";
 
-import { Button, Drawer } from "flowbite-react";
+import {Drawer} from "flowbite-react";
 
 const Profile = () => {
+  let user_info = {}
 
-  const [isOpen, setIsOpen] = useState(true);
-
+  const [userInfo, setUserInfo] = useState(user_info)
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(userInfo)
+  const handleUserInfo = (userDetail) =>{
+    setUserInfo((prevState)=>{
+      if(prevState){
+        if(prevState.name !== userDetail.name){
+          prevState.name= userDetail.name
+        }
+        if(prevState.email !== userDetail.email){
+          prevState.email= userDetail.email
+        }
+        if(prevState.PhoneNumber !== userDetail.PhoneNumber){
+          prevState.PhoneNumber= userDetail.PhoneNumber
+        }
+        if(prevState.dob!== userDetail.dob){
+          prevState.dob= userDetail.dob
+        }
+        if(prevState.city !== userDetail.city){
+          prevState.city= userDetail.city
+        }
+        if(prevState.country !== userDetail.country){
+          prevState.country= userDetail.country
+        }
+        if(prevState.Ridjing_Styles !== userDetail.Ridjing_Styles){
+          prevState.Ridjing_Styles= userDetail.Ridjing_Styles
+        }
+        return{...prevState}
+      }{
+        return userDetail
+      }
+    })
+  }
   const handleClose = () => setIsOpen(false);
   return (
     <>
-
-
       <Drawer open={isOpen} onClose={handleClose} position="right" bodyScrolling={false} className="w-full sm:w-[553px] p-5">
         <Drawer.Items>
-        <UserDetailForm onClose={handleClose}/>
+        <UserDetailForm onClose={handleClose} handleUserInfo={handleUserInfo} userInfo={userInfo} />
         </Drawer.Items>
       </Drawer>
    
@@ -27,31 +57,31 @@ const Profile = () => {
               <p className="text-2xl font-bold">Your Info</p>
               <div>
                 <p className="text-xl font-semibold">Name</p>
-                <p>Gajendra Kaushik</p>
+                <p>{userInfo.name}</p>
               </div>
               <div>
                 <p className="text-xl font-semibold">Email</p>
-                <p>gajendrakaushik128@gmail.com</p>
+                <p>{userInfo.email}</p>
               </div>
               <div>
                 <p className="text-xl font-semibold">Phone number</p>
-                <p>9009142069</p>
+                <p>{userInfo.PhoneNumber}</p>
               </div>
               <div>
                 <p className="text-xl font-semibold">Birthday</p>
-                <p>18/04/2000</p>
+                <p>{userInfo.dob}</p>
               </div>
               <div>
                 <p className="text-xl font-semibold">City</p>
-                <p>Pune Maharashtra</p>
+                <p>{userInfo.city}</p>
               </div>
               <div>
                 <p className="text-xl font-semibold">Country</p>
-                <p>India</p>
+                <p>{userInfo.country}</p>
               </div>
               <div>
                 <p className="text-xl font-semibold">Ridjing Styles</p>
-                <p>Mountain, steet</p>
+                <p>{userInfo.Ridjing_Styles && userInfo.Ridjing_Styles.join(", ")}</p>
               </div>
               <button onClick={() => setIsOpen(true)} className="underline hover:text-red-600" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right" aria-controls="drawer-right-example">
                 Edit
