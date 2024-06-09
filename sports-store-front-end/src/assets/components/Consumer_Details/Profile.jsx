@@ -42,7 +42,7 @@ const Profile = () => {
   const handleClose = () => setIsOpen(false);
   return (
     <>
-      <Drawer open={isOpen} onClose={handleClose} position="right" bodyScrolling={false} className="w-full sm:w-[553px] p-5">
+      <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full sm:w-[553px] p-5">
         <Drawer.Items>
         <UserDetailForm onClose={handleClose} handleUserInfo={handleUserInfo} userInfo={userInfo} />
         </Drawer.Items>
