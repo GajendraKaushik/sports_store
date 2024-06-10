@@ -2,6 +2,7 @@ import React, {useRef, useState} from "react";
 import UserDetailForm from "./UserDetailForm";
 
 import {Drawer} from "flowbite-react";
+import { NavLink } from "react-router-dom";
 
 const Profile = () => {
   let user_info = {}
@@ -47,9 +48,27 @@ const Profile = () => {
         <UserDetailForm onClose={handleClose} handleUserInfo={handleUserInfo} userInfo={userInfo} />
         </Drawer.Items>
       </Drawer>
-   
+      <div className="lg:hidden block mt-16">
+          <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <NavLink to={"/account"} className="text-xl font-light">
+                  <span>
+                    <ion-icon name="chevron-back-outline"></ion-icon>
+                  </span>
+                  Black
+                </NavLink>
+              </div>
+              <div className="underline font-semibold">Sign Out</div>
+            </div>
+            <div className="text-3xl text-center font-bold mb-10">
+              Address Book
+            </div>
+          </div>
+        </div>
 
       <div className={`bg-white ml-9 grid-col-1 p-12`}>
+
         <div className=" mt-28 h-20 text-3xl font-bold">Profile</div>
         <div className="grid md:grid-cols-2 gap-10 grid-cols-1">
           <div className="bg-white rounded-lg shadow-lg min-w-64 shadow-black">

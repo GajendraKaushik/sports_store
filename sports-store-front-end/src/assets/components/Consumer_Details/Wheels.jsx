@@ -1,12 +1,21 @@
-import React,{useState} from 'react'
+import React,{useDebugValue, useState} from 'react'
 import InfoDetailCard from './InfoDetailCard'
 import { Drawer } from 'flowbite-react'
 import Wheel_Detail_Form from './Wheel_Detail_Form'
+import Wheel_info_Cards from './Wheel_info_Cards.jsx'
+import plus from "../../images/Icons/plus.png";
+import { NavLink } from 'react-router-dom'
 
 const Wheels = () => {
-  const [isOpen, setIsOpen] = useState(true);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [registeredEheelsDetails, setRegisteredEheelsDetails] = useState([])
 
   const handleClose = () => setIsOpen(false);
+
+  const handleUpdatedWheelsDetails = (updatedDetails) => {
+    setRegisteredEheelsDetails(updatedDetails)
+  }
 
   return (
   <> 
@@ -18,7 +27,7 @@ const Wheels = () => {
   className="w-full md:w-[553px] p-5"
 >
   <Drawer.Items>
-    <Wheel_Detail_Form handleClose={handleClose} />
+    <Wheel_Detail_Form handleClose={handleClose} handleUpdatedWheelsDetails={handleUpdatedWheelsDetails} />
   </Drawer.Items>
 </Drawer> 
 <div className="mb-12">
@@ -26,7 +35,7 @@ const Wheels = () => {
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xl font-light">Black</p>
+              <NavLink to={"/myaccout"} className="text-xl font-light">Black</NavLink>
             </div>
             <div className="underline font-semibold">Sign Out</div>
           </div>
@@ -56,8 +65,26 @@ const Wheels = () => {
             </button>
         </div>
       </div>
-    <h3 className='ml-11 text-xl font-medium'>Your Wheels(0)</h3>
-     <InfoDetailCard />
+    <h3 className='ml-11 text-xl font-medium'>Your Wheels[{registeredEheelsDetails.length}]</h3>
+
+    <div className="bg-white">
+          <div className="ml-11">
+            <h3 className="px-6 font-semibold mt-5">Shipping Addresses [{registeredEheelsDetails.length}]</h3>
+            <div className={`grid gap-6 grid-cols-[repeat(${registeredEheelsDetails.length + 1},minmax(370px,1fr))] md:grid-cols-[repeat(2,minmax(100px,1fr))] md:grid-rows-1 overflow-x-auto p-10`}>
+            {registeredEheelsDetails && registeredEheelsDetails.map((info)=> <Wheel_info_Cards wheelInfo={info} key={info.purchaseId}/>)}
+        
+              <div onClick={() => setIsOpen(true)} className="border-dashed border-gray-400 border-2 bg-white min-w-56 min-h-52  rounded-md cursor-pointer p-6">
+                <div className="flex flex-col h-full items-center justify-center">
+                  <div className="w-16 h-16 border-2 border-gray-400 rounded-full flex items-center justify-center flex-col ">
+                    <div className="w-5 h-5">
+                      <img src={plus} alt="plus" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
   </div>
   </div>

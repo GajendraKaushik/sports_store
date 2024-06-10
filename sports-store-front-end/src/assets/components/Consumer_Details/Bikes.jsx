@@ -1,17 +1,23 @@
 import React,{useState} from "react";
 import InfoDetailCard from "./InfoDetailCard";
+import plus from "../../images/Icons/plus.png";
 import { Drawer } from "flowbite-react";
 import Bike_Detail_Form from "./Bike_Detail_Form";
+import Address_detail_Card from "./Address_detail_Card";
 
 const BiKes = () => {
+  const [registeredBikes, setRegisteredBikes] = useState([])
 
-  const [isOpen, setIsOpen] = useState(true);
-
+  const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
+
+ const handleRegisteredBikesDetails = (updatedDetails) =>{
+  setRegisteredBikes(updatedDetails)
+ }
 
   return (
   <> 
-      <Drawer
+  <Drawer
   open={isOpen}
   onClose={handleClose}
   position="right"
@@ -19,7 +25,7 @@ const BiKes = () => {
   className="w-full md:w-[553px] p-5"
 >
   <Drawer.Items>
-    <Bike_Detail_Form handleClose={handleClose} />
+    <Bike_Detail_Form handleClose={handleClose} handleRegisteredBikesDetails={handleRegisteredBikesDetails}  />
   </Drawer.Items>
 </Drawer>  
      <div className="mb-12">
@@ -59,7 +65,24 @@ const BiKes = () => {
         </div>
       </div>
 
-     <InfoDetailCard />
+      <div className="bg-white">
+          <div className="ml-11">
+            <h3 className="px-6 font-semibold mt-5">Shipping Addresses [{registeredBikes.length}]</h3>
+            <div className={`grid gap-6 grid-cols-[repeat(${registeredBikes.length + 1},minmax(370px,1fr))] md:grid-cols-[repeat(2,minmax(100px,1fr))] md:grid-rows-1 overflow-x-auto p-10`}>
+            {registeredBikes && registeredBikes.map((address)=> <InfoDetailCard bikeInfo={address} key={address.appartmentNumber}/>)}
+            
+              <div onClick={() => setIsOpen(true)} className="border-dashed border-gray-400 border-2 bg-white min-w-56 min-h-52  rounded-md cursor-pointer p-6">
+                <div className="flex flex-col h-full items-center justify-center">
+                  <div className="w-16 h-16 border-2 border-gray-400 rounded-full flex items-center justify-center flex-col ">
+                    <div className="w-5 h-5">
+                      <img src={plus} alt="plus" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
   </div>
   </div>

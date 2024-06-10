@@ -42,7 +42,7 @@ const CostumerDashbord = () => {
         </div>
       </div>
 
-      <div className="bg-stone-100 lg:hidden">
+      <div className="bg-stone-100 lg:hidden block">
         <div className="w-full mt-28 bg-stone-100">
           <div className=" flex items-center justify-between m-4">
             <p>My Account</p>

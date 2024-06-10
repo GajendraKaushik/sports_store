@@ -1,6 +1,22 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 
-const Wheel_Detail_Form = ({handleClose}) => {
+const Wheel_Detail_Form = ({handleClose, handleUpdatedWheelsDetails}) => {
+  const [registeredWheelsDetails, setRegisteredWheelsDetails] = useState([])
+  const handleSubmit = (event) =>{
+    event.preventDefault()
+    const fd = new FormData(event.target)
+
+    const data = Object.fromEntries(fd.entries())
+    console.log(data)
+    setRegisteredWheelsDetails([...registeredWheelsDetails, JSON.parse(JSON.stringify(data))])
+
+    event.target.reset()
+  }
+   
+  useEffect(()=>{
+    handleUpdatedWheelsDetails(registeredWheelsDetails)
+  },[registeredWheelsDetails])
+
   return (
 
     <div className="w-full fixed z-1010 opacity-100">
@@ -27,7 +43,7 @@ const Wheel_Detail_Form = ({handleClose}) => {
             <p>Be sure to register all Roval products listed on each proof of purchase. For example, if you have a receipt for a front and rear wheel, register both wheels. If your Roval wheels came as part of a complete bicycle that you purchased, register both wheels.</p>
           </div>
           <form
-            action=""
+            onSubmit={handleSubmit}
             className="pb-8 relative  flex flex-col gap-4"
           >  
            <h4 className='py-3 font-semibold'>Your Information</h4>
@@ -35,12 +51,12 @@ const Wheel_Detail_Form = ({handleClose}) => {
               <div className="relative">
                 <input
                   type="text"
-                  id="myInput"
+                  id="name"
                   required
                   className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
                 />
                 <span
-                  htmlFor="myInput"
+                  htmlFor="name"
                   className="floating-lable absolute left-3 top-3 text-gray-500"
                 >
                   Name
@@ -51,12 +67,13 @@ const Wheel_Detail_Form = ({handleClose}) => {
               <div className="relative">
                 <input
                   type="email"
-                  id="myInput"
+                  id="email"
+                  name='email'
                   required
                   className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
                 />
                 <span
-                  htmlFor="myInput"
+                  htmlFor="email"
                   className="floating-lable absolute left-3 top-3 text-gray-500"
                 >
                   Email
@@ -68,15 +85,33 @@ const Wheel_Detail_Form = ({handleClose}) => {
               <div className="relative">
                 <input
                   type="text"
-                  id="myInput"
+                  id="serialNumber"
+                  name='serialNumber'
                   required
                   className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
                 />
                 <span
-                  htmlFor="myInput"
+                  htmlFor="serialNumber"
                   className="floating-lable absolute left-3 top-3 text-gray-500"
                 >
                   Serial Number
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="wheelName"
+                  name='wheelName'
+                  required
+                  className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                />
+                <span
+                  htmlFor="wheelName"
+                  className="floating-lable absolute left-3 top-3 text-gray-500"
+                >
+                  Wheel Name 
                 </span>
               </div>
             </div>
@@ -86,12 +121,30 @@ const Wheel_Detail_Form = ({handleClose}) => {
               <div className="relative">
                 <input
                   type="text"
-                  id="myInput"
+                  id="purchaseId"
+                  name='purchaseId'
                   required
                   className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
                 />
                 <span
-                  htmlFor="myInput"
+                  htmlFor="purchaseId"
+                  className="floating-lable absolute left-3 top-3 text-gray-500"
+                >
+                  Purchase Id
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="myInput"
+                  name='purchaseLocation'
+                  required
+                  className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                />
+                <span
+                  htmlFor="purchaseLocation"
                   className="floating-lable absolute left-3 top-3 text-gray-500"
                 >
                   Purchase Location
@@ -102,26 +155,26 @@ const Wheel_Detail_Form = ({handleClose}) => {
               <div className="relative">
                 <input
                   type="date"
-                  id="myInput"
+                  id="purchaseDate"
+                  name='purchaseDate'
                   required
                   className="input-field h-[50px] w-1/2 p-3 rounded-md border-slate-400 border-2"
                 />
                 <span
-                  htmlFor="myInput"
+                  htmlFor="purchaseDate"
                   className="floating-lable absolute left-3 top-3 text-gray-500"
                 >
                   Purchase Date
                 </span>
               </div>
             </div>
-
-
-          </form>
-            <button className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4">
+            <button type='submit' className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4" onClick={handleClose}>
             Registre Your Bike
             </button>
 
             <div  onClick={handleClose} className=" text-center underline text-neutral-900 font-semibold mb-4 cursor-pointer">Cancel</div>
+          </form>
+
 
         </div>
       </div>
