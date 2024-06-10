@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
-  let userAddresslList =[]
+  const [userAddresslList, setUserAddresslList] = useState([]);
   const handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData(event.target);
@@ -10,12 +10,19 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
 
     const checkBoxData = fd.getAll("Address");
     data.Address = checkBoxData;
-    userAddresslList.push(JSON.parse(JSON.stringify(data)))
-    console.log(userAddresslList, "form page ")
-    handleUserAddress(userAddresslList)
-    console.log(data);
-    event.target.reset()
+    console.log(data)
+    setUserAddresslList([
+      ...userAddresslList,
+      JSON.parse(JSON.stringify(data)),
+    ]);
+    event.target.reset();
   };
+  // if new form entry then updating the userAddresslList in the address component 
+  useEffect(() => {
+    handleUserAddress(userAddresslList);
+    
+  }, [userAddresslList]);
+
 
   return (
     <div className="w-full fixed z-1010 opacity-100">
@@ -47,7 +54,7 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
                 <div className="flex w-full justify-start items-center gap-2 mb-2 ">
                   <input
                     type="checkbox"
-                    name="Address"
+                    name="address"
                     id="Shipping"
                     value="Shipping"
                     className="rounded-full border-[2px] w-5 h-5 accent-neutral-800"
@@ -222,30 +229,31 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
                 </span>
               </div>
               <div className="flex justify-start ml-1 mr-8 gap-3 mb-4">
-              <input
-                type="checkbox"
-                name="Address"
-                value="default"
-                id="Address"
-                required
-                className="w-6 h-5 border-slate-800 border-[3px] mt-2 accent-neutral-800"
-              />
-              <div className="text-xl text-gray-600 font-light">
-                Make this my default address
+                <input
+                  type="checkbox"
+                  name="Address"
+                  value="default"
+                  id="Address"
+                  className="w-6 h-5 border-slate-800 border-[3px] mt-2 accent-neutral-800"
+                />
+                <div className="text-xl text-gray-600 font-light">
+                  Make this my default address
+                </div>
               </div>
-            </div>
-            <button type="submit" className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4">
-              Save Address
-            </button>
+              <button
+                type="submit"
+                className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4"
+              >
+                Save Address
+              </button>
 
-            <div
-              onClick={handleClose}
-              className=" text-center underline text-neutral-900 font-semibold mb-4 cursor-pointer"
-            >
-              Cancel
-            </div>
+              <div
+                onClick={handleClose}
+                className=" text-center underline text-neutral-900 font-semibold mb-4 cursor-pointer"
+              >
+                Cancel
+              </div>
             </form>
- 
           </div>
         </div>
       </div>

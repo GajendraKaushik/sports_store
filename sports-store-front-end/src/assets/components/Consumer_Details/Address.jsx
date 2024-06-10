@@ -19,7 +19,7 @@ const Address = () => {
       BillingAddress.push(JSON.parse(JSON.stringify(addre)))
     }
     if(addre.address ==="Shipping"){
-      ShippingAddress.push(addre)
+      ShippingAddress.push(JSON.parse(JSON.stringify(addre)))
      }
 
   } )
@@ -88,58 +88,59 @@ const Address = () => {
 
         <div className="bg-white">
           <div className="ml-11">
-            <h3 className="px-6 font-semibold mt-5">Shipping Addresses (2)</h3>
+            <h3 className="px-6 font-semibold mt-5">Shipping Addresses [{ShippingAddress.length}]</h3>
             <div className=" grid gap-6 grid-cols-[repeat(3,minmax(370px,1fr))] md:grid-cols-[repeat(2,minmax(100px,1fr))] md:grid-rows-1 overflow-x-auto p-10">
-              <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
-                <div className="flex items-start justify-between">
-                  <div className="flex flex-col flex-auto">
-                    <div className="text-black font-bold">Ship to</div>
-                    <div>Gajendra Kauhik</div>
-                    <div>
-                      Sai Poorna Luxuria, Harlur Main Road Tower - 3 Flat Number
-                      010 bilaspur , Idaho 560068
-                    </div>
-                    <div>United States</div>
-                    <div>09009142069</div>
+            {ShippingAddress && ShippingAddress.map((address)=> <Address_detail_Card userInfo={address} key={address.appartmentNumber}/>) }
+            {/* <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
+              <div className="flex items-start justify-between">
+                <div className="flex flex-col flex-auto">
+                  <div className="text-black font-bold">Ship to</div>
+                  <div>Gajendra Kauhik</div>
+                  <div>
+                    Sai Poorna Luxuria, Harlur Main Road Tower - 3 Flat Number
+                    010 bilaspur , Idaho 560068
                   </div>
-                  <div className="bg-stone-100 text-gray-600 text-sm h-8 rounded text-center w-24 p-1">
-                    Default
-                  </div>
+                  <div>United States</div>
+                  <div>09009142069</div>
                 </div>
-                <div className="flex items-center justify-start gap-4">
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Edit
-                  </button>
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Remove
-                  </button>
+                <div className="bg-stone-100 text-gray-600 text-sm h-8 rounded text-center w-24 p-1">
+                  Default
                 </div>
               </div>
-              <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
-                <div className="flex items-start justify-between">
-                  <div className="flex flex-col flex-auto">
-                    <div className="text-black font-bold">Ship to</div>
-                    <div>Gajendra Kauhik</div>
-                    <div>
-                      Sai Poorna Luxuria, Harlur Main Road Tower - 3 Flat Number
-                      010 bilaspur , Idaho 560068
-                    </div>
-                    <div>United States</div>
-                    <div>09009142069</div>
+              <div className="flex items-center justify-start gap-4">
+                <button className=" hover:text-red-600 font-semibold underline">
+                  Edit
+                </button>
+                <button className=" hover:text-red-600 font-semibold underline">
+                  Remove
+                </button>
+              </div>
+            </div>
+            <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
+              <div className="flex items-start justify-between">
+                <div className="flex flex-col flex-auto">
+                  <div className="text-black font-bold">Ship to</div>
+                  <div>Gajendra Kauhik</div>
+                  <div>
+                    Sai Poorna Luxuria, Harlur Main Road Tower - 3 Flat Number
+                    010 bilaspur , Idaho 560068
                   </div>
-                  <div className="bg-stone-100 text-gray-600 text-sm h-8 rounded text-center w-24 p-1">
-                    Default
-                  </div>
+                  <div>United States</div>
+                  <div>09009142069</div>
                 </div>
-                <div className="flex items-center justify-start gap-4">
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Edit
-                  </button>
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Remove
-                  </button>
+                <div className="bg-stone-100 text-gray-600 text-sm h-8 rounded text-center w-24 p-1">
+                  Default
                 </div>
               </div>
+              <div className="flex items-center justify-start gap-4">
+                <button className=" hover:text-red-600 font-semibold underline">
+                  Edit
+                </button>
+                <button className=" hover:text-red-600 font-semibold underline">
+                  Remove
+                </button>
+              </div>
+            </div> */}
               <div onClick={() => setIsOpen(true)} className="border-dashed border-gray-400 border-2 bg-white min-w-56 min-h-52  rounded-md cursor-pointer p-6">
                 <div className="flex flex-col h-full items-center justify-center">
                   <div className="w-16 h-16 border-2 border-gray-400 rounded-full flex items-center justify-center flex-col ">
@@ -158,56 +159,6 @@ const Address = () => {
             <h3 className="px-6 font-semibold mt-5">Billing Addresses [{BillingAddress.length}]</h3>
             <div className=" grid gap-6 grid-cols-[repeat(3,minmax(370px,1fr))] md:grid-cols-[repeat(2,minmax(100px,1fr))] md:grid-rows-1 overflow-x-auto p-10">
             {BillingAddress && BillingAddress.map((address)=> <Address_detail_Card userInfo={address} key={address.appartmentNumber}/>) }
-
-              {/* <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
-                <div className="flex items-start justify-between">
-                  <div className="flex flex-col flex-auto">
-                    <div className="text-black font-bold">Ship to</div>
-                    <div>{userInfo.name}{userInfo.lastname}</div>
-                    <div>
-                      {userInfo.street},{userInfo.postcode}
-                    </div>
-                    <div>{userInfo.country}</div>
-                    <div>{userInfo.phoneNumber}</div>
-                  </div>
-               {userInfo.Address && userInfo.Address.includes("default") && <div className="bg-stone-100 text-gray-600 text-sm h-8 rounded text-center w-24 p-1">
-                  Default
-                </div>}
-                </div>
-                <div className="flex items-center justify-start gap-4">
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Edit
-                  </button>
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Remove
-                  </button>
-                </div>
-              </div> */}
-              {/* <div className="p-5 flex flex-col gap-5 shadow-3xl shadow-stone-200 rounded-md">
-                <div className="flex items-start justify-between">
-                  <div className="flex flex-col flex-auto">
-                    <div className="text-black font-bold">Ship to</div>
-                    <div>Gajendra Kauhik</div>
-                    <div>
-                      Sai Poorna Luxuria, Harlur Main Road Tower - 3 Flat Number
-                      010 bilaspur , Idaho 560068
-                    </div>
-                    <div>United States</div>
-                    <div>09009142069</div>
-                  </div>
-                  <div className="bg-stone-100 text-gray-600 text-sm h-8 rounded text-center w-24 p-1">
-                    Default
-                  </div>
-                </div>
-                <div className="flex items-center justify-start gap-4">
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Edit
-                  </button>
-                  <button className=" hover:text-red-600 font-semibold underline">
-                    Remove
-                  </button>
-                </div>
-              </div> */}
               <div onClick={() => setIsOpen(true)} className="border-dashed border-gray-400 border-2 bg-white min-w-56 min-h-52  rounded-md cursor-pointer p-6">
                 <div className="flex flex-col h-full items-center justify-center">
                   <div className="w-16 h-16 border-2 border-gray-400 rounded-full flex items-center justify-center flex-col ">
