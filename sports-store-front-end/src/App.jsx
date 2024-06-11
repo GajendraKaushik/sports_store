@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive'
+
+
 
 import Login from "./assets/components/Login/Login";
 
@@ -19,36 +22,38 @@ import Wheels from "./assets/components/Consumer_Details/Wheels";
 import Product_List_Page from "./assets/components/Product/Product_List_Page";
 
 import Single_Product_page from "./assets/components/Product/Single_Product_page";
+import ResponsiveRootLayout from "./assets/components/Layout_Pages/ResponsiveRootLayout";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootLayout />,
-    // errorElement: <ErrorPage />,
-    children: [
-      { index: true, element: <Single_Product_page/> },
-     
-      {
-        path: "myaccout",
-        element: <MyaccountRootLayout />,
-        children: [
-          {
-            index:true,
-            element: <Profile />,
-          },
-          { path: "address", element: <Address /> },
-          { path: "Oders", element: <Oders /> },
-          { path: "PaymentMethods", element: <PaymentMethods /> },
-          { path: "Wishlist", element: <WishList /> },
-          { path: "bikes", element: <Bikes /> },
-          { path: "Wheels", element: <Wheels /> },
-        ],
-      },
-    ],
-  },
-]);
 
 function App() {
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-width: 1024px)'
+  })
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      // errorElement: <ErrorPage />,
+      children: [
+        { index: true, element: <Single_Product_page/> },
+       git 
+          children: [
+            {
+              index:true,
+              path:"profile", element: <Profile />
+            },
+            { path: "address", element: <Address /> },
+            { path: "Oders", element: <Oders /> },
+            { path: "PaymentMethods", element: <PaymentMethods /> },
+            { path: "Wishlist", element: <WishList /> },
+            { path: "bikes", element: <Bikes /> },
+            { path: "Wheels", element: <Wheels /> },
+          ],
+        },
+      ],
+    },
+  ]);
+
   return <RouterProvider router={router}/>;
 }
 

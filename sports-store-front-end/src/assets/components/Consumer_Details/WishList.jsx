@@ -7,15 +7,15 @@ const WishList = () => {
       <div className="lg:hidden block mt-16">
         <div className=" bg-stone-100 mt-3 h-44">
           <div className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-xl font-light">
-                <span>
-                  <ion-icon name="chevron-back-outline"></ion-icon>
-                </span>
-                Black
-              </p>
-            </div>
-            <div className="underline font-semibold">Sign Out</div>
+          <div className="flex justify-start mt-3 gap-0 hover:text-red-600">
+                    <span className="text-2xl font-light pt-1">
+                      <ion-icon name="chevron-back-outline"></ion-icon>
+                    </span>
+                    <p onClick={goBack} className="text-xl font-light">
+                      Black
+                    </p>
+                  </div>
+            <div className="underline font-semibold hover:text-red-600">Sign Out</div>
           </div>
           <div className="text-3xl text-center font-bold mt-7">
           Saved For Later

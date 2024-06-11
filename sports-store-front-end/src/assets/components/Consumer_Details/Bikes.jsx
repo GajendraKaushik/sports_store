@@ -4,8 +4,11 @@ import plus from "../../images/Icons/plus.png";
 import { Drawer } from "flowbite-react";
 import Bike_Detail_Form from "./Bike_Detail_Form";
 import Address_detail_Card from "./Address_detail_Card";
+import { useNavigate } from "react-router-dom";
 
 const BiKes = () => {
+
+  const navigate = useNavigate()
   const [registeredBikes, setRegisteredBikes] = useState([])
 
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +17,11 @@ const BiKes = () => {
  const handleRegisteredBikesDetails = (updatedDetails) =>{
   setRegisteredBikes(updatedDetails)
  }
+
+ const goBack =()=>{
+  navigate(-1)
+}
+
 
   return (
   <> 
@@ -32,10 +40,11 @@ const BiKes = () => {
       <div className="lg:hidden block mt-16">
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xl font-light">Black</p>
+            <div className="flex justify-start mt-3 gap-0 hover:text-red-600">
+            <span className="text-2xl font-light pt-1"><ion-icon name="chevron-back-outline"></ion-icon></span>
+            <p onClick={goBack} className="text-xl font-light">Black</p>
             </div>
-            <div className="underline font-semibold">Sign Out</div>
+            <div className="underline font-semibold hover:text-red-600">Sign Out</div>
           </div>
           <div className="text-3xl text-center font-bold mb-10">
             Address Book

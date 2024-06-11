@@ -4,6 +4,7 @@ import {Drawer } from "flowbite-react";
 import Address_Detail_Form from "./Address_Detail_Form";
 import Address_detail_Card from "./Address_detail_Card";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -11,6 +12,8 @@ const Address = () => {
   let user_address = []
   let BillingAddress = []
   let ShippingAddress = []
+
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(user_address)
   const handleUserAddress = (updatedAddress) =>{
@@ -32,6 +35,10 @@ const Address = () => {
 
 
   const handleClose = () => setIsOpen(false);
+
+  const goBack =()=>{
+    navigate(-1)
+  }
   return (
     <>
       <Drawer
@@ -49,14 +56,14 @@ const Address = () => {
           <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
             <div className="flex items-center justify-between">
               <div>
-                <NavLink to={"/myaccout"} className="text-xl font-light">
+                <p onClick={goBack} className="text-xl font-light">
                   <span>
                     <ion-icon name="chevron-back-outline"></ion-icon>
                   </span>
                   Black
-                </NavLink>
+                </p>
               </div>
-              <div className="underline font-semibold">Sign Out</div>
+              <div className="underline font-semibold hover:text-red-600">Sign Out</div>
             </div>
             <div className="text-3xl text-center font-bold mb-10">
               Address Book

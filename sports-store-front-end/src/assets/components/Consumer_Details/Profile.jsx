@@ -3,10 +3,12 @@ import UserDetailForm from "./UserDetailForm";
 
 import {Drawer} from "flowbite-react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   let user_info = {}
-
+  
+  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState(user_info)
   const [isOpen, setIsOpen] = useState(false);
   console.log(userInfo)
@@ -40,7 +42,12 @@ const Profile = () => {
       }
     })
   }
+
   const handleClose = () => setIsOpen(false);
+
+  const goBack =()=>{
+       navigate(-1)
+  }
   return (
     <>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full sm:w-[553px] p-5">
@@ -51,15 +58,15 @@ const Profile = () => {
       <div className="lg:hidden block mt-16">
           <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
             <div className="flex items-center justify-between">
-              <div>
-                <NavLink to={"/account"} className="text-xl font-light">
-                  <span>
-                    <ion-icon name="chevron-back-outline"></ion-icon>
-                  </span>
-                  Black
-                </NavLink>
-              </div>
-              <div className="underline font-semibold">Sign Out</div>
+            <div className="flex justify-start mt-3 gap-0 hover:text-red-600 cursor-pointer">
+                    <span className="text-2xl font-light pt-1">
+                      <ion-icon name="chevron-back-outline"></ion-icon>
+                    </span>
+                    <p onClick={goBack} className="text-xl font-light">
+                      Black
+                    </p>
+                  </div>
+              <div className="underline font-semibold hover:text-red-600 cursor-pointer">Sign Out</div>
             </div>
             <div className="text-3xl text-center font-bold mb-10">
               Address Book
