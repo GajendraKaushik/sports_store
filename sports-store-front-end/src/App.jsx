@@ -35,15 +35,19 @@ function App() {
       element: <RootLayout />,
       // errorElement: <ErrorPage />,
       children: [
-        { index: true, element: <Single_Product_page/> },
-       git 
-          children: [
+        { index: true, element: <Single_Product_page/>},
+        { path:"product", element:<Product_List_Page />},
+     
+        {  
+          path: "myaccout",
+          element: <ResponsiveRootLayout />,
+          children:[
             {
-              index:true,
+              index:true, 
               path:"profile", element: <Profile />
             },
             { path: "address", element: <Address /> },
-            { path: "Oders", element: <Oders /> },
+            { path: "Oders", element: <Oders />},
             { path: "PaymentMethods", element: <PaymentMethods /> },
             { path: "Wishlist", element: <WishList /> },
             { path: "bikes", element: <Bikes /> },
@@ -51,6 +55,7 @@ function App() {
           ],
         },
       ],
+      
     },
   ]);
 

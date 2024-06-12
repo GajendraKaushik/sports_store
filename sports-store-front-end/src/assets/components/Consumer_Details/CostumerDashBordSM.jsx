@@ -15,7 +15,7 @@ import SaveForLatter from "../../images/bookmark.png";
 import SideNavBtn from "./SideNavBtn";
 import Profile from "./Profile";
 
-const CostumerDashBordSM = () => {
+const CostumerDashBordSM = ({}) => {
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1024px)'
   })

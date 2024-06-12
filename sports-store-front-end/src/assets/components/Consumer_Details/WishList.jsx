@@ -1,7 +1,12 @@
 import React, {useState} from "react";
 import Saved_Product_Card from "./Saved_Product_Card";
+import { useNavigate } from "react-router-dom";
 
 const WishList = () => {
+  const navigate = useNavigate()
+  const goBack =()=>{
+    navigate(-1)
+  }
   return (
     <>
       <div className="lg:hidden block mt-16">

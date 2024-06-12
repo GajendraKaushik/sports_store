@@ -3,10 +3,10 @@ import login from "../images/login.png";
 import saveLater from "../images/bookmark.png";
 import {useState} from "react"
 
-const ResponsiveSideNavbar = () => {
+const ResponsiveSideNavbar = ({open,setOpen}) => {
    const [hide, setHide] = useState("translate-x-0")
   return (
-    <div className={`relative ${hide} transition-all duration-300 ease-in`}>
+  <div className={`relative ${open?"translate-x-0":"-translate-x-full"} transition-all duration-300 ease-in`}>
     <div className=" bg-white ml-12 mt-9">
       <div className="text-3xl font-medium text-gray-900 italic uppercase pb-9">
         <a href="">Sports store</a>
@@ -65,7 +65,7 @@ const ResponsiveSideNavbar = () => {
       <hr className=" bg-slate-500 my-6 mr-7 mb-40" />
     </div>
     <div className="absolute top-1 left-[90%] ">
-        <button  onClick={()=>setHide("-translate-x-full")} className="flex justify-center w-12 h-12 font-thin text-3xl rounded-sm items-center bg-stone-200"><ion-icon name="close"></ion-icon></button>
+        <button  onClick={()=>setOpen()}  className={`flex justify-center w-12 h-12 font-thin text-3xl rounded-sm items-center bg-stone-200`}><ion-icon name="close"></ion-icon></button>
     </div>
     </div>
   );
