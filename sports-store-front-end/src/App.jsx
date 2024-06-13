@@ -23,6 +23,7 @@ import Product_List_Page from "./assets/components/Product/Product_List_Page";
 
 import Single_Product_page from "./assets/components/Product/Single_Product_page";
 import ResponsiveRootLayout from "./assets/components/Layout_Pages/ResponsiveRootLayout";
+import ProductCart from "./assets/components/Product/ProductCart";
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
       // errorElement: <ErrorPage />,
       children: [
         { index: true, element: <Single_Product_page/>},
-        { path:"product", element:<Product_List_Page />},
+        { path:"product", element:<ProductCart />},
      
         {  
           path: "myaccout",
