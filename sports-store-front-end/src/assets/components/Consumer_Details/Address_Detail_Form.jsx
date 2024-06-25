@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
   const [userAddresslList, setUserAddresslList] = useState([]);
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) =>{
     event.preventDefault();
     const fd = new FormData(event.target);
 
@@ -20,7 +20,6 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
   // if new form entry then updating the userAddresslList in the address component 
   useEffect(() => {
     handleUserAddress(userAddresslList);
-    
   }, [userAddresslList]);
 
 

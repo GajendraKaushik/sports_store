@@ -29,135 +29,150 @@ const Single_Product_page = () => {
             </button>
           </div>
 
-          <div className="w-full">
-            <img src={BikeImg} alt="BikeImg" />
-          </div>
-
-          <div className="grid grid-cols-1 p-5 gap-y-3">
-            <div className="mb-3">
-              <div className="flex flex-col">
-                <h1 className="text-black text-2xl font-bold ">Sirrus X 5.0</h1>
-                <p className="text-gray-400 text-sm"> Part No. : 92422-3001</p>
-              </div>
+          <div className="grid grid-cols-3 ">
+            <div className="w-full col-span-2">
+           <div className="ml-14 ">
+              <img src={BikeImg} alt="BikeImg" className="w-full h-[750px] rounded-md "/>
+              {/* <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/>
+              <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/>
+              <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/>
+              <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/> */}
+           </div>
+        
             </div>
 
-            <div className="mb-3">
-              <div className="flex justify-start ">
-                <h5 className="text-2xl font-semibold text-black">$2,250</h5>
-              </div>
-            </div>
-
-            <div className="mb-5">
-              <div className="flex justify-start pb-5">
-                {getSize ? `Size : ${getSize}` : "Size a Size"}
-              </div>
-              <div className="grid grid-cols-3 gap-4">
-                <button
-                  onClick={() => handleChangeSize("XS")}
-                  className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                >
-                  <div>XS</div>
-                </button>
-                <button
-                  onClick={() => handleChangeSize("S")}
-                  className="bg-white w-full h-9 text-center  border-2 rounded border-gray-400 hover:border-gray-600"
-                >
-                  <div>S</div>
-                </button>
-                <button
-                  onClick={() => handleChangeSize("XL")}
-                  className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                >
-                  <div>XL</div>
-                </button>
-                <button
-                  onClick={() => handleChangeSize("M")}
-                  className="bg-white w-full h-9 text-center  border-2 rounded border-gray-400 hover:border-gray-600"
-                >
-                  <div>M</div>
-                </button>
-                <button
-                  onClick={() => handleChangeSize("L")}
-                  className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                >
-                  <div>L</div>
-                </button>
-                <button
-                  onClick={() => handleChangeSize("XXL")}
-                  className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                >
-                  <div>XXL</div>
-                </button>
-              </div>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="mb-2">
-                <button className=" bg-neutral-900 text-white font-semibold w-full h-14 rounded-md hover:bg-stone-400">
-                  Add To Cart
-                </button>
-              </div>
-              <div className="mb-2">
-                <button className="bg-white w-full h-14 text-neutral-800 font-medium border-[3px] rounded-md hover:broder-2 hover:border-neutral-900 border-neutral-500 ">
-                  Find In-Store
-                </button>
-              </div>
-            </div>
-
-            <hr className="h-1" />
-            <div className="pt-3">
-              <div className="flex justify-start gap-3 pb-3">
-                <div className=" text-2xl flex justify-center items-center">
-                  <ion-icon name="bag-check-outline"></ion-icon>
-                </div>
-                <span className="text-xl">Express Checkout</span>
-              </div>
-              <div className="pb-5">
-                By placing an order via Express Checkout, you accept the
-                Specialized{" "}
-                <span className="underline text-neutral-800">
-                  {" "}
-                  Terms of Use
-                </span>{" "}
-                (updated April 16, 2024) and you acknowledge Specialized will
-                use your information in accordance with its Privacy Policy{" "}
-                <span className="underline text-neutral-800">
-                  Privacy Policy
-                </span>
-                .
-              </div>
-
-              <div className="grid grid-cols-1 w-full">
-                <button className="bg-white w-full h-14 text-neutral-800 font-medium border-[3px] rounded-md hover:broder-2 hover:border-neutral-900 border-neutral-500 ">
-                  Find In-Store
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-3">
-              <div className="flex justify-between">
-                <button className="flex justify-start gap-1 pb-3">
-                  <div className="text-2xl flex justify-center items-center ">
+            <div className="grid grid-cols-1 p-5 gap-y-3 col-span-1">
+              <div className="mb-3">
+                <div className="flex flex-col">
+                  <h1 className="text-black text-2xl font-bold ">
+                    Sirrus X 5.0
+                  </h1>
+                  <p className="text-gray-400 text-sm">
                     {" "}
-                    <ion-icon name="heart-outline"></ion-icon>
-                  </div>
-                  <p className="underline decoration-gray-700 underline-offset-1 text-[16px] text-gray-500 font-thin">
-                    Save for Later
+                    Part No. : 92422-3001
                   </p>
-                </button>
-                <div>
-                  <button className="flex justify-start gap-1 pb-3">
-                    <div className="text-2xl flex justify-center items-center">
-                      <ion-icon name="star-sharp"></ion-icon>
-                    </div>
-                    <p className="underline decoration-gray-700 underline-offset-2 text-[16px] text-gray-500 font-thin">
-                      Reviews
-                    </p>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <div className="flex justify-start ">
+                  <h5 className="text-2xl font-semibold text-black">$2,250</h5>
+                </div>
+              </div>
+
+              <div className="mb-5">
+                <div className="flex justify-start pb-5">
+                  {getSize ? `Size : ${getSize}` : "Size a Size"}
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <button
+                    onClick={() => handleChangeSize("XS")}
+                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
+                  >
+                    <div>XS</div>
+                  </button>
+                  <button
+                    onClick={() => handleChangeSize("S")}
+                    className="bg-white w-full h-9 text-center  border-2 rounded border-gray-400 hover:border-gray-600"
+                  >
+                    <div>S</div>
+                  </button>
+                  <button
+                    onClick={() => handleChangeSize("XL")}
+                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
+                  >
+                    <div>XL</div>
+                  </button>
+                  <button
+                    onClick={() => handleChangeSize("M")}
+                    className="bg-white w-full h-9 text-center  border-2 rounded border-gray-400 hover:border-gray-600"
+                  >
+                    <div>M</div>
+                  </button>
+                  <button
+                    onClick={() => handleChangeSize("L")}
+                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
+                  >
+                    <div>L</div>
+                  </button>
+                  <button
+                    onClick={() => handleChangeSize("XXL")}
+                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
+                  >
+                    <div>XXL</div>
                   </button>
                 </div>
               </div>
+
+              <div className="flex flex-col">
+                <div className="mb-2">
+                  <button className=" bg-neutral-900 text-white font-semibold w-full h-14 rounded-md hover:bg-stone-400">
+                    Add To Cart
+                  </button>
+                </div>
+                <div className="mb-2">
+                  <button className="bg-white w-full h-14 text-neutral-800 font-medium border-[3px] rounded-md hover:broder-2 hover:border-neutral-900 border-neutral-500 ">
+                    Find In-Store
+                  </button>
+                </div>
+              </div>
+
+              <hr className="h-1" />
+              <div className="pt-3">
+                <div className="flex justify-start gap-3 pb-3">
+                  <div className=" text-2xl flex justify-center items-center">
+                    <ion-icon name="bag-check-outline"></ion-icon>
+                  </div>
+                  <span className="text-xl">Express Checkout</span>
+                </div>
+                <div className="pb-5">
+                  By placing an order via Express Checkout, you accept the
+                  Specialized{" "}
+                  <span className="underline text-neutral-800">
+                    {" "}
+                    Terms of Use
+                  </span>{" "}
+                  (updated April 16, 2024) and you acknowledge Specialized will
+                  use your information in accordance with its Privacy Policy{" "}
+                  <span className="underline text-neutral-800">
+                    Privacy Policy
+                  </span>
+                  .
+                </div>
+
+                <div className="grid grid-cols-1 w-full">
+                  <button className="bg-white w-full h-14 text-neutral-800 font-medium border-[3px] rounded-md hover:broder-2 hover:border-neutral-900 border-neutral-500 ">
+                    Find In-Store
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-3">
+                <div className="flex justify-between">
+                  <button className="flex justify-start gap-1 pb-3">
+                    <div className="text-2xl flex justify-center items-center ">
+                      {" "}
+                      <ion-icon name="heart-outline"></ion-icon>
+                    </div>
+                    <p className="underline decoration-gray-700 underline-offset-1 text-[16px] text-gray-500 font-thin">
+                      Save for Later
+                    </p>
+                  </button>
+                  <div>
+                    <button className="flex justify-start gap-1 pb-3">
+                      <div className="text-2xl flex justify-center items-center">
+                        <ion-icon name="star-sharp"></ion-icon>
+                      </div>
+                      <p className="underline decoration-gray-700 underline-offset-2 text-[16px] text-gray-500 font-thin">
+                        Reviews
+                      </p>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
           <hr className="h-1 mx-5" />
           <div className="data-component">
             <section className="technical specification mx-6 relative">
@@ -188,11 +203,11 @@ const Single_Product_page = () => {
                 >
                   <div className="flex">
                     <div className="flex flex-col gap-8">
-                      <div className="detail_desc">
-                        <div>
+                      <div className="detail_desc ">
+                        <div className="col-1">
                           <h4 className="text-xl font-bold">Frameset</h4>
                         </div>
-                        <div>
+                        <div className="col-2">
                           <div>
                             <p className="detail_sub_heading">Frame</p>
                             <p className="detail_sub_desc">
@@ -212,10 +227,10 @@ const Single_Product_page = () => {
                       </div>
                       <hr className="h-[1.5px] bg-neutral-600" />
                       <div className="detail_desc">
-                        <div>
+                        <div className="col-1">
                           <h4>Suspension</h4>
                         </div>
-                        <div>
+                        <div className="col-2">
                           <div>
                             <p className="detail_sub_heading">Fork</p>
                             <p className="detail_sub_desc">
@@ -228,10 +243,10 @@ const Single_Product_page = () => {
                       </div>
                       <hr className="h-[1.5px] bg-neutral-600" />
                       <div className="detail_desc">
-                        <div>
+                        <div className="col-1">
                           <h4>Cockpit</h4>
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 col-2">
                           <div>
                             <p className="detail_sub_heading">Saddle</p>
                             <p className="detail_sub_desc">
@@ -266,10 +281,10 @@ const Single_Product_page = () => {
                       </div>
                       <hr className="h-[1.5px] bg-neutral-600" />
                       <div className="detail_desc">
-                        <div>
+                        <div className="col-1">
                           <h4>Brakes</h4>
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 col-2">
                           <div>
                             <p className="detail_sub_heading">Front Brake</p>
                             <p className="detail_sub_desc">
@@ -287,10 +302,10 @@ const Single_Product_page = () => {
                       <hr className="h-[1.5px] bg-neutral-600" />
 
                       <div className="detail_desc">
-                        <div>
+                        <div className="col-1">
                           <h4>Drivetrain</h4>
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 col-2">
                           <div>
                             <p className="detail_sub_heading">
                               Rear Derailleur
@@ -337,10 +352,10 @@ const Single_Product_page = () => {
                       <hr className="h-[1.5px] bg-neutral-600" />
 
                       <div className="detail_desc">
-                        <div>
+                        <div className="col-1">
                           <h4>Wheels &amp; Tires</h4>
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 col-2">
                           <div>
                             <p className="detail_sub_heading">Rims</p>
                             <p className="detail_sub_desc">
@@ -388,10 +403,10 @@ const Single_Product_page = () => {
                       </div>
                       <hr className="h-[1.5px] bg-neutral-600" />
                       <div className="detail_desc">
-                        <div>
+                        <div className="col-1">
                           <h4>Accessories</h4>
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 col-2">
                           <div>
                             <p className="detail_sub_heading">Pedals</p>
                             <p className="detail_sub_desc">
@@ -455,14 +470,12 @@ const Single_Product_page = () => {
             </div>
           </div>
           <div className="reviewCard flex flex-row overflow-x-auto mb-5 scroll-m-8 ">
-      
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard /> 
-          <ReviewCard />
-
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
           </div>
           {/* <div className="mt-9 ml-6 mb-9">
             <div className="bg-gray-400 full p-7 rounded">
@@ -497,7 +510,6 @@ const Single_Product_page = () => {
               </div>
             </div>
           </div> */}
-        
         </div>
       </div>
     </>

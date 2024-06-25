@@ -49,9 +49,15 @@
 
 /* Single Product detail Page  */
 .detail_desc{
-    @apply flex flex-col gap-8 pb-2
+    @apply grid grid-cols-1 sm:grid-cols-[repeat(4,minmax(273px,1fr))]
 }
 
+.col-1{
+    @apply col-span-1 pb-8
+}
+.col-2{
+    @apply col-span-3
+}
 .detail_desc h4{
     @apply text-xl font-bold
 }

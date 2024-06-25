@@ -37,7 +37,7 @@ function App() {
       // errorElement: <ErrorPage />,
       children: [
         { index: true, element: <Single_Product_page/>},
-        { path:"product", element:<ProductCart />},
+        { path:"product", element:<Product_List_Page />},
      
         {  
           path: "myaccout",
