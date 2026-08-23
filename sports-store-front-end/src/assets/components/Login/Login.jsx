@@ -23,7 +23,7 @@ const Login = () => {
                 className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
               />
               <span
-                for="myInput"
+                htmlFor="myInput"
                 className="floating-lable absolute left-3 top-3 text-gray-500"
               >
                 Email

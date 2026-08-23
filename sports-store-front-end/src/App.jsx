@@ -24,6 +24,7 @@ import Product_List_Page from "./assets/components/Product/Product_List_Page";
 import Single_Product_page from "./assets/components/Product/Single_Product_page";
 import ResponsiveRootLayout from "./assets/components/Layout_Pages/ResponsiveRootLayout";
 import ProductCart from "./assets/components/Product/ProductCart";
+import SingUp from "./assets/components/Login/SingUp";
 
 
 function App() {
@@ -31,30 +32,41 @@ function App() {
     query: '(min-width: 1024px)'
   })
   const router = createBrowserRouter([
-    {
+    { // This is the root path "/"
       path: "/",
       element: <RootLayout />,
-      // errorElement: <ErrorPage />,
       children: [
-        { index: true, element: <Single_Product_page/>},
-        { path:"product", element:<Product_List_Page />},
-     
-        {  
-          path: "myaccout",
-          element: <ResponsiveRootLayout />,
+        { index: true, element: <HomePage/>},
+        { 
+          path:"/products", 
+          element:<Product_List_Page />,
           children:[
             {
-              index:true, 
-              path:"profile", element: <Profile />
-            },
-            { path: "address", element: <Address /> },
-            { path: "Oders", element: <Oders />},
-            { path: "PaymentMethods", element: <PaymentMethods /> },
-            { path: "Wishlist", element: <WishList /> },
+              path: ":productSlug", 
+              element: <Single_Product_page />
+            }
+          ]
+        },
+        { path: "/cart", element: <ProductCart /> },
+        
+        // U02: Normalized account routes
+        {  
+          path: "/account",
+          element: <ResponsiveRootLayout />,
+          children:[
+            { index:true, element: <Profile />},
+            { path: "addresses", element: <Address /> },
+            { path: "orders", element: <Oders />},
+            { path: "payment-methods", element: <PaymentMethods /> },
+            { path: "wishlist", element: <WishList /> },
             { path: "bikes", element: <Bikes /> },
-            { path: "Wheels", element: <Wheels /> },
+            { path: "wheels", element: <Wheels /> },
           ],
         },
+        
+        // U04: Auth routes
+        { path: "/auth/login", element: <Login /> },
+        { path: "/auth/signup", element: <SingUp /> },
       ],
       
     },
@@ -64,4 +76,3 @@ function App() {
 }
 
 export default App;
-

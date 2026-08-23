@@ -11,7 +11,7 @@ const NavBar = () => {
   let Links = [
     { name: "Home", link: "/" },
     { name: "Saved", link: "myaccout/Wishlist" },
-    { name: "Cart", link: "/" },
+    { name: "Cart", link: "/ag" },
     { name: "Login", link: "myaccout" },
   ];
    const navigate = useNavigate()

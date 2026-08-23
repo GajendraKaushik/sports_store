@@ -28,7 +28,7 @@ const Payment_Detail_Form = ({handleClose}) => {
                 Payment details
             </div>
         </div>
-          <h3 className="text-3xl font-bold pb-10"s>Billing Address</h3>
+          <h3 className="text-3xl font-bold pb-10">Billing Address</h3>
           <div className="pb-4">
 
           </div>
