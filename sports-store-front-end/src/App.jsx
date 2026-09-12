@@ -52,9 +52,8 @@ function App() {
         // U02: Normalized account routes
         {  
           path: "/account",
-          element: <ResponsiveRootLayout />,
           children:[
-            { index:true, element: <Profile />},
+            { index:true, element: <Profile />, loader: async () => { /* Validate authentication here if needed */ }},
             { path: "addresses", element: <Address /> },
             { path: "orders", element: <Oders />},
             { path: "payment-methods", element: <PaymentMethods /> },
@@ -76,3 +75,5 @@ function App() {
 }
 
 export default App;
+
+

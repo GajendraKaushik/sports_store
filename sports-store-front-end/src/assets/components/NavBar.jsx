@@ -10,9 +10,9 @@ import { useNavigate } from "react-router-dom";
 const NavBar = () => {
   let Links = [
     { name: "Home", link: "/" },
-    { name: "Saved", link: "myaccout/Wishlist" },
-    { name: "Cart", link: "/ag" },
-    { name: "Login", link: "myaccout" },
+    { name: "Saved", link: "/account/wishlist" },
+    { name: "Cart", link: "/cart" },
+    { name: "Login", link: "auth/login" },
   ];
    const navigate = useNavigate()
   const handleNavidation =(path)=>{
@@ -85,7 +85,7 @@ const NavBar = () => {
                 </div>
                 <hr className=" bg-slate-500 my-6 mr-7" />
                 <div className="flex flex-col items-start justify-start w-full gap-8">
-                  <NavLink onClick={() => setOpen()} to={"myaccout"} className="flex items-center justify-between w-full">
+                  <NavLink onClick={() => setOpen()} to="/account" className="flex items-center justify-between w-full">
                     <div className="text-gray-900 font-bold">My Account</div>
                     <div className="text-gray-600 mr-7 w-8 h-8">
                       <img src={login} alt="login" />
@@ -93,10 +93,10 @@ const NavBar = () => {
                   </NavLink>
                   <div>Login in or sign up for an account</div>
                   <div className="flex items-center justify-start gap-16">
-                    <button className="bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-400 outline-none w-20 h-12">
+                    <button className="bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-400 outline-none w-20 h-12" onClick={() => handleNavidation("/auth/login")}>
                       Log In
                     </button>
-                    <button className="bg-white text-slate-800 font-semibold rounded-lg  hover:border-[3px]  border-2 border-black w-20 h-12">
+                    <button className="bg-white text-slate-800 font-semibold rounded-lg  hover:border-[3px]  border-2 border-black w-20 h-12" onClick={() => handleNavidation("/auth/signup")}>
                       Sign Up
                     </button>
                   </div>
@@ -104,7 +104,7 @@ const NavBar = () => {
 
                 <hr className=" bg-slate-500 h-[1px] my-6 mr-7" />
 
-                <NavLink onClick={() => setOpen()} to={"myaccout/Wishlist"} className="flex items-center justify-between">
+                <NavLink onClick={() => setOpen()} to="/account/wishlist" className="flex items-center justify-between">
                   <div className="text-gray-900 font-bold">
                     {" "}
                     Saved for Later

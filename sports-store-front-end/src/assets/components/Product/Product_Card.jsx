@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
-const Product_Card = ({ProductImg, ProductName,OfferPrice, OriginalPrice}) => {
+const Product_Card = ({ProductImg, ProductName, OfferPrice, OriginalPrice, productSlug}) => {
   return (
+    <Link to={`/products/${productSlug}`}>
     <div className="w-full h-full bg-white">
-    <div className="px-6 py-8  bg-white relative">
+        <div className="px-6 py-8 bg-white relative">
     <div className="absolute p-4 left-[75%] font-thin text-sm">2023</div>
       <img src={ProductImg} alt="img1" className="w-full h-3/4 rounded-md" />
       <div className="flex justify-between flex-col w-full">
@@ -14,7 +16,8 @@ const Product_Card = ({ProductImg, ProductName,OfferPrice, OriginalPrice}) => {
         </div>
       </div>
     </div>
-  </div> 
+    </div>
+    </Link>
   );
 };
 

@@ -1,70 +1,9 @@
 import React from "react";
 import Product_Card from "./Product_Card";
-import Img1 from "../../images/BikeImg/BikeImg-4.webp";
+import { mockProducts } from "./products.mock";
 
 const Product_List_Page = () => {
-  let ProductList = [
-    {
-      img: Img1,
-      Name: "Stumpjumper Comp Alloy",
-      OfferPrice: "6,499.99",
-      OriginalPrice: "11,500.00",
-    },
-
-    {
-      img: Img1,
-      Name: "S-Works Stumpjumper EVO",
-      OfferPrice: "5,499.99",
-      OriginalPrice: "10,500.00",
-    },
-
-    {
-      img: Img1,
-      Name: "Turbo Vado 4.0",
-      OfferPrice: "2,749.99",
-      OriginalPrice: "4,000.00",
-    },
-
-    {
-      img: Img1,
-      Name: "Turbo Como SL 4.0",
-      OfferPrice: "1,799.99",
-      OriginalPrice: "3,250.00",
-    },
-
-    {
-      img: Img1,
-      Name: "Diverge Comp E5",
-      OfferPrice: "1,999.99",
-      OriginalPrice: "2,500.00",
-    },
-
-    {
-      img: Img1,
-      Name: "Turbo Vado 4.0 Step-Through",
-      OfferPrice: "2,749.99",
-      OriginalPrice: "4,000.00",
-    },
-
-    {
-      img: Img1,
-      Name: "Roubaix Expert",
-      OfferPrice: "5,499.99",
-      OriginalPrice: "8,000.00",
-    },
-    {
-      img: Img1,
-      Name: "Roubaix Expert",
-      OfferPrice: "5,499.99",
-      OriginalPrice: "8,000.00",
-    },
-    {
-      img: Img1,
-      Name: "Roubaix Expert",
-      OfferPrice: "5,499.99",
-      OriginalPrice: "8,000.00",
-    },
-  ];
+  const ProductList = mockProducts;
   return (
     <>
       <div className="mt-32 ml-8 lg:mx-20 bg-white ">
@@ -107,11 +46,12 @@ const Product_List_Page = () => {
             return (
               // image card itmes ProductImg, ProductName, OfferPrice, OriginalPrice
               <Product_Card
-                key={item.Name}
+                key={item.id}
                 ProductImg={item.img}
                 ProductName={item.Name}
                 OfferPrice={item.OfferPrice}
                 OriginalPrice={item.OriginalPrice}
+                productSlug={item.slug}
               />
             );
           })}
