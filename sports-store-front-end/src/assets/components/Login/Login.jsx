@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 const Login = () => {
   const [showpass, setShowpass] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const handleShowpass = () => {
     setShowpass((prevState) => !prevState);
   };
+  const isFormValid = email.trim() !== "" && password.trim() !== "";
   return (
     <>
       <div className="flex items-center justify-center flex-col mt-36">
@@ -21,6 +24,8 @@ const Login = () => {
                 type="email"
                 id="myInput"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
               />
               <span
@@ -33,18 +38,20 @@ const Login = () => {
 
             <div className=" relative">
               <input
-                type="password"
+                type={showpass ? "text" : "password"}
                 name="pass"
                 id=""
                 placeholder="Password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full h-[50px] p-3 rounded-md border-slate-400 border-2"
               />
               <span
                 onClick={handleShowpass}
                 className="absolute mt-3 right-5 text-stone-400 cursor-pointer"
               >
-                {showpass ? "Show" : "Hide"}
+                {showpass ? "Hide" : "Show"}
               </span>
             </div>
 
@@ -65,8 +72,12 @@ const Login = () => {
 
             <div>
               <button
-                className=" h-[50px] w-full text-stone-600 font-semibold rounded-md bg-gray-400
-              "
+                disabled={!isFormValid}
+                className={`h-[50px] w-full font-semibold rounded-md ${
+                  isFormValid
+                    ? "bg-neutral-900 text-white hover:bg-neutral-700 cursor-pointer"
+                    : "text-stone-600 bg-gray-400 cursor-not-allowed"
+                }`}
               >
                 Sign In
               </button>

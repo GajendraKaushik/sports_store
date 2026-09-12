@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SingUp = () => {
+const SignUp = () => {
   return (
     <>
       <div className="flex items-center justify-center mt-36">
@@ -85,4 +85,4 @@ const SingUp = () => {
   );
 };
 
-export default SingUp;
+export default SignUp;

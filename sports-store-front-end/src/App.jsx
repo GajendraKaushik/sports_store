@@ -24,7 +24,7 @@ import Product_List_Page from "./assets/components/Product/Product_List_Page";
 import Single_Product_page from "./assets/components/Product/Single_Product_page";
 import ResponsiveRootLayout from "./assets/components/Layout_Pages/ResponsiveRootLayout";
 import ProductCart from "./assets/components/Product/ProductCart";
-import SingUp from "./assets/components/Login/SingUp";
+import SignUp from "./assets/components/Login/SignUp";
 
 // U10: temporary frontend-only auth placeholder for the cart flow.
 // Backend integration will replace this with a real session/token check.
@@ -76,7 +76,7 @@ function App() {
         
         // U04: Auth routes
         { path: "/auth/login", element: <Login /> },
-        { path: "/auth/signup", element: <SingUp /> },
+        { path: "/auth/signup", element: <SignUp /> },
       ],
       
     },
