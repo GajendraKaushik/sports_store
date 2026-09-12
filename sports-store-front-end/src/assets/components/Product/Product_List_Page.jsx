@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Product_Card from "./Product_Card";
-import { mockProducts } from "./products.mock";
+import { apiFetch } from "../../../lib/api.js";
 
 const Product_List_Page = () => {
-  const ProductList = mockProducts;
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    apiFetch("/products")
+      .then((data) => {
+        if (!cancelled) setProducts(data?.items ?? []);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <>
       <div className="mt-32 ml-8 lg:mx-20 bg-white ">
@@ -41,20 +63,30 @@ const Product_List_Page = () => {
           </section>
         </div>
 
+        {loading && <p className="m-4">Loading products…</p>}
+
+        {!loading && error && (
+          <p className="m-4 text-red-600">
+            Could not load products: {error.message}
+          </p>
+        )}
+
+        {!loading && !error && products.length === 0 && (
+          <p className="m-4">No products found.</p>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 m-4 mt-16">
-          {ProductList.map((item) => {
-            return (
-              // image card itmes ProductImg, ProductName, OfferPrice, OriginalPrice
-              <Product_Card
-                key={item.id}
-                ProductImg={item.img}
-                ProductName={item.Name}
-                OfferPrice={item.OfferPrice}
-                OriginalPrice={item.OriginalPrice}
-                productSlug={item.slug}
-              />
-            );
-          })}
+          {products.map((item) => (
+            <Product_Card
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              compareAtPrice={item.compareAtPrice}
+              currency={item.currency}
+              primaryImage={item.primaryImage}
+              productSlug={item.slug}
+            />
+          ))}
         </div>
       </div>
     </>

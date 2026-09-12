@@ -1,13 +1,39 @@
-import React from "react";
-import BikeImg from "../../images/BikeImg/BikeImg-3.webp";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
+import { apiFetch } from "../../../lib/api.js";
+import { formatPrice } from "../../../lib/format.js";
 
 const Single_Product_page = () => {
   const navigate = useNavigate();
+  const { productSlug } = useParams();
+
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [toggleTechInfo, setToggleTechInfo] = useState(true);
   const [getSize, setSize] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setLoadError(null);
+
+    apiFetch(`/products/${productSlug}`)
+      .then((data) => {
+        if (!cancelled) setProduct(data?.product ?? data);
+      })
+      .catch((err) => {
+        if (!cancelled) setLoadError(err);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [productSlug]);
 
   const handleChangeSize = (Size) => {
     setSize(Size);
@@ -18,8 +44,36 @@ const Single_Product_page = () => {
   };
 
   const handleAddToCart = () => {
+    // I04 wires the real POST /cart/items; for now keep the redirect.
     navigate("/cart");
   };
+
+  if (loading) {
+    return (
+      <div className="bg-white mt-28">
+        <p className="ml-8 mt-6">Loading product…</p>
+        <button className="ml-8 mt-4 underline" onClick={() => navigate(-1)}>
+          Go back
+        </button>
+      </div>
+    );
+  }
+
+  if (loadError || !product) {
+    const notFound = loadError?.code === "NOT_FOUND";
+    return (
+      <div className="bg-white mt-28">
+        <p className="ml-8 mt-6">
+          {notFound
+            ? "Product not found."
+            : `Could not load product: ${loadError?.message ?? "Unknown error"}`}
+        </p>
+        <button className="ml-8 mt-4 underline" onClick={() => navigate(-1)}>
+          Go back
+        </button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -27,7 +81,7 @@ const Single_Product_page = () => {
         <div className="top-button">
           <div className="flex">
             <button className="flex justify-between items-center w-full h-16 px-4">
-              <p>Sirrus X 5.0</p>
+              <p>{product.title}</p>
               <div className="tex-gray-900 rounded-full">
                 <ion-icon name="chevron-down-outline"></ion-icon>
               </div>
@@ -38,11 +92,8 @@ const Single_Product_page = () => {
           <div className="grid grid-cols-3 ">
             <div className="w-full col-span-2">
            <div className="ml-14 ">
-              <img src={BikeImg} alt="BikeImg" className="w-full h-[750px] rounded-md "/>
-              {/* <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/>
-              <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/>
-              <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/>
-              <img src={BikeImg} alt="BikeImg" className="w-full h-[400px]"/> */}
+              <img src={product.primaryImage ?? product.images?.[0]} alt={product.title} className="w-full h-[750px] rounded-md "/>
+              {/* Additional product images can be rendered here from product.images[] */}
            </div>
         
             </div>
@@ -51,18 +102,27 @@ const Single_Product_page = () => {
               <div className="mb-3">
                 <div className="flex flex-col">
                   <h1 className="text-black text-2xl font-bold ">
-                    Sirrus X 5.0
+                    {product.title}
                   </h1>
                   <p className="text-gray-400 text-sm">
                     {" "}
-                    Part No. : 92422-3001
+                    {product.stockQuantity > 0
+                      ? `In stock: ${product.stockQuantity}`
+                      : "Out of stock"}
                   </p>
                 </div>
               </div>
 
               <div className="mb-3">
                 <div className="flex justify-start ">
-                  <h5 className="text-2xl font-semibold text-black">$2,250</h5>
+                  <h5 className="text-2xl font-semibold text-black">
+                    {formatPrice(product.price, product.currency)}
+                  </h5>
+                  {product.compareAtPrice ? (
+                    <p className="text-sm text-gray-500 line-through">
+                      Compare at {formatPrice(product.compareAtPrice, product.currency)}
+                    </p>
+                  ) : null}
                 </div>
               </div>
 
@@ -71,48 +131,31 @@ const Single_Product_page = () => {
                   {getSize ? `Size : ${getSize}` : "Size a Size"}
                 </div>
                 <div className="grid grid-cols-3 gap-4">
-                  <button
-                    onClick={() => handleChangeSize("XS")}
-                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                  >
-                    <div>XS</div>
-                  </button>
-                  <button
-                    onClick={() => handleChangeSize("S")}
-                    className="bg-white w-full h-9 text-center  border-2 rounded border-gray-400 hover:border-gray-600"
-                  >
-                    <div>S</div>
-                  </button>
-                  <button
-                    onClick={() => handleChangeSize("XL")}
-                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                  >
-                    <div>XL</div>
-                  </button>
-                  <button
-                    onClick={() => handleChangeSize("M")}
-                    className="bg-white w-full h-9 text-center  border-2 rounded border-gray-400 hover:border-gray-600"
-                  >
-                    <div>M</div>
-                  </button>
-                  <button
-                    onClick={() => handleChangeSize("L")}
-                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                  >
-                    <div>L</div>
-                  </button>
-                  <button
-                    onClick={() => handleChangeSize("XXL")}
-                    className="bg-white w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600"
-                  >
-                    <div>XXL</div>
-                  </button>
+                  {(product.sizes ?? []).map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => handleChangeSize(size)}
+                      className={`w-full h-9 text-center border-2 rounded border-gray-400 hover:border-gray-600 ${
+                        getSize === size ? "bg-neutral-900 text-white" : "bg-white"
+                      }`}
+                    >
+                      <div>{size}</div>
+                    </button>
+                  ))}
                 </div>
               </div>
 
               <div className="flex flex-col">
                 <div className="mb-2">
-                  <button onClick={handleAddToCart} className=" bg-neutral-900 text-white font-semibold w-full h-14 rounded-md hover:bg-stone-400">
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={!getSize}
+                    className={`w-full h-14 rounded-md font-semibold ${
+                      getSize
+                        ? "bg-neutral-900 text-white hover:bg-stone-400"
+                        : "bg-gray-400 text-white cursor-not-allowed"
+                    }`}
+                  >
                     Add To Cart
                   </button>
                 </div>
@@ -207,223 +250,34 @@ const Single_Product_page = () => {
                       : "details pt-10 "
                   }
                 >
-                  <div className="flex">
-                    <div className="flex flex-col gap-8">
-                      <div className="detail_desc ">
-                        <div className="col-1">
-                          <h4 className="text-xl font-bold">Frameset</h4>
-                        </div>
-                        <div className="col-2">
-                          <div>
-                            <p className="detail_sub_heading">Frame</p>
-                            <p className="detail_sub_desc">
-                              Specialized FACT 9r Carbon, Fitness Geometry, 1x
-                              Drivetrain, 12x142 thru-axle, internal cable
-                              routing, flat-mount disc, Plug + Play rack/fender
-                              mounts
-                            </p>
+                  {Object.keys(product.specifications ?? {}).length > 0 ? (
+                    <div className="flex">
+                      <div className="flex flex-col gap-8">
+                        {Object.entries(product.specifications).map(([group, fields]) => (
+                          <div key={group}>
+                            <div className="detail_desc">
+                              <div className="col-1">
+                                <h4 className="text-xl font-bold">{group}</h4>
+                              </div>
+                              <div className="flex flex-col gap-4 col-2">
+                                {Object.entries(fields).map(([field, value]) => (
+                                  <div key={field}>
+                                    <p className="detail_sub_heading">{field}</p>
+                                    <p className="detail_sub_desc">{value}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <hr className="h-[1.5px] bg-neutral-600" />
                           </div>
-                          <div className="pt-4">
-                            <p className="text-gray-900">Seat Binder</p>
-                            <p className="text-neutral-600">
-                              Integrated w/ frame
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <hr className="h-[1.5px] bg-neutral-600" />
-                      <div className="detail_desc">
-                        <div className="col-1">
-                          <h4>Suspension</h4>
-                        </div>
-                        <div className="col-2">
-                          <div>
-                            <p className="detail_sub_heading">Fork</p>
-                            <p className="detail_sub_desc">
-                              Specialized FACT 9r Carbon Monocoque, flat-mount
-                              disc, 12x100mm thru-axle, low rider mounts, Plug +
-                              Play fender mounts, Future Shock 1.5
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <hr className="h-[1.5px] bg-neutral-600" />
-                      <div className="detail_desc">
-                        <div className="col-1">
-                          <h4>Cockpit</h4>
-                        </div>
-                        <div className="flex flex-col gap-4 col-2">
-                          <div>
-                            <p className="detail_sub_heading">Saddle</p>
-                            <p className="detail_sub_desc">
-                              Body Geometry Power Sport, steel rails
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Stem</p>
-                            <p className="detail_sub_desc">Future Stem, Comp</p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Tape</p>
-                            <p className="detail_sub_desc">
-                              Specialized Neutralizer, Body Geometry, locking
-                              grip
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Handlebars</p>
-                            <p className="detail_sub_desc">
-                              Double-butted alloy, 9-degree backsweep, 15mm
-                              rise, 31.8mm
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">SeatPost</p>
-                            <p className="detail_sub_desc">
-                              Alloy, 2-bolt, 14mm offset, 27.2mm
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <hr className="h-[1.5px] bg-neutral-600" />
-                      <div className="detail_desc">
-                        <div className="col-1">
-                          <h4>Brakes</h4>
-                        </div>
-                        <div className="flex flex-col gap-4 col-2">
-                          <div>
-                            <p className="detail_sub_heading">Front Brake</p>
-                            <p className="detail_sub_desc">
-                              Tektro HD-R510, hydraulic disc, 160mm
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Rear Brake</p>
-                            <p className="detail_sub_desc">
-                              Tektro HD-R510, hydraulic disc, 160mm
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <hr className="h-[1.5px] bg-neutral-600" />
-
-                      <div className="detail_desc">
-                        <div className="col-1">
-                          <h4>Drivetrain</h4>
-                        </div>
-                        <div className="flex flex-col gap-4 col-2">
-                          <div>
-                            <p className="detail_sub_heading">
-                              Rear Derailleur
-                            </p>
-                            <p className="detail_sub_desc">
-                              SRAM NX Eagle, 12-speed
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Shift Levers</p>
-                            <p className="detail_sub_desc">
-                              SRAM SL NX Eagle Trigger
-                            </p>
-                          </div>
-                          <div>
-                            <p>Cassette</p>
-                            <p className="detail_sub_desc">
-                              SRAM PG-1210 Eagle, 11-50t
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Chain</p>
-                            <p className="detail_sub_desc">
-                              SRAM NX Eagle, 12-speed
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Crankset</p>
-                            <p className="detail_sub_desc">
-                              SRAM S650, 3-piece, Powerspline
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Chainrings</p>
-                            <p className="detail_sub_desc">38T</p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Bottom Bracket</p>
-                            <p className="detail_sub_desc">SRAM Powerspline</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <hr className="h-[1.5px] bg-neutral-600" />
-
-                      <div className="detail_desc">
-                        <div className="col-1">
-                          <h4>Wheels &amp; Tires</h4>
-                        </div>
-                        <div className="flex flex-col gap-4 col-2">
-                          <div>
-                            <p className="detail_sub_heading">Rims</p>
-                            <p className="detail_sub_desc">
-                              700C disc, double-wall alloy, 30mm depth, 21mm
-                              internal width
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Front Hub</p>
-                            <p className="detail_sub_desc">
-                              Alloy, sealed cartridge bearings, Center Lock,
-                              12x100mm thru-axle, 24h
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Rear Hub</p>
-                            <p className="detail_sub_desc">
-                              Alloy, sealed cartridge bearings, Center Lock,
-                              12x142mm thru-axle, 28h
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Spokes</p>
-                            <p className="detail_sub_desc">Stainless, 14g</p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Front Tire</p>
-                            <p className="detail_sub_desc">
-                              Pathfinder Pro, 2Bliss Ready, 700x38mm
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Rear Tire</p>
-                            <p className="detail_sub_desc">
-                              Pathfinder Pro, 2Bliss Ready, 700x38mm
-                            </p>
-                          </div>
-                          <div>
-                            <p className="detail_sub_heading">Inner Tubes</p>
-                            <p className="detail_sub_desc">
-                              700x28/38mm, 48mm Presta valve
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <hr className="h-[1.5px] bg-neutral-600" />
-                      <div className="detail_desc">
-                        <div className="col-1">
-                          <h4>Accessories</h4>
-                        </div>
-                        <div className="flex flex-col gap-4 col-2">
-                          <div>
-                            <p className="detail_sub_heading">Pedals</p>
-                            <p className="detail_sub_desc">
-                              VP Platform, Alloy Body
-                            </p>
-                          </div>
-                        </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
-                  <p className="pt-4 text-neutral-800 mb-8">
+                  ) : (
+                    <p className="pt-2 text-neutral-600">
+                      No specifications available for this product yet.
+                    </p>
+                  )}                  <p className="pt-4 text-neutral-800 mb-8">
                     <span>
                       * Weights based on production painted frames as pictured.
                       Actual weights will vary based on colorway, frame size,

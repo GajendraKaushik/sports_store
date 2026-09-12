@@ -138,6 +138,8 @@ Convert "6,499.99" strings to numbers. Do not touch frontend in this task.
 
 ## Phase 1 — Shared frontend infra (blocks everything below)
 
+> Status: PARTIAL — `src/lib/api.js` + `src/lib/format.js` created (I02/I03 blocked on these). `AuthContext.jsx`, App.jsx guards + NavBar wiring still pending (needed by I04+).
+
 ## I01
 
 Task ID: I01
@@ -186,7 +188,11 @@ Create src/lib/* only + wire App.jsx guards and NavBar auth state.
 Keep UI look intact. No product/cart logic in this task.
 ```
 
-## Phase 2 — Catalog: kill product mocks
+## Phase 2 — Catalog: kill product mocks ✅ DONE
+
+> Status: I02 + I03 implemented and verified Sep 12, 2026. `products.mock.js` deleted;
+> list reads `GET /products`, detail reads `GET /products/:slug` with loading/error/404.
+> Verified live against backend on `:5001` (list 9 items, detail sizes/stock, 404 clean).
 
 ## I02
 
