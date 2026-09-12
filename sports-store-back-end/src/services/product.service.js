@@ -19,7 +19,10 @@ function toProductPayload(product) {
     primaryImage: raw.images?.[0] ?? null,
     specifications: raw.specifications ?? {},
     status: raw.status,
-    categoryId: raw.categoryId?.toString?.() ?? raw.categoryId,
+    categoryId:
+      typeof raw.categoryId === "object" && raw.categoryId !== null
+        ? (raw.categoryId._id?.toString?.() ?? raw.categoryId._id)
+        : raw.categoryId,
     category: raw.categoryId?.name
       ? {
           id: raw.categoryId._id.toString(),

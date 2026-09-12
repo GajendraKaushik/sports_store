@@ -34,7 +34,10 @@ function toOwnerProductPayload(product) {
     images: raw.images ?? [],
     specifications: raw.specifications ?? {},
     status: raw.status,
-    categoryId: raw.categoryId?.toString?.() ?? raw.categoryId,
+    categoryId:
+      typeof raw.categoryId === "object" && raw.categoryId !== null
+        ? (raw.categoryId._id?.toString?.() ?? raw.categoryId._id)
+        : (raw.categoryId?.toString?.() ?? raw.categoryId),
   };
 }
 
