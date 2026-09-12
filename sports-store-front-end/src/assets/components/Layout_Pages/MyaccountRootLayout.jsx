@@ -34,7 +34,7 @@ const MyaccountRootLayout = () => {
               <SideNavBtn routePath={"wheels"} imgLogo={wheel} btnName={"Registered Wheels"} />   
             </div>
 
-            <NavLink to={'/'} className="mr-3 underline">Sign Out</NavLink>
+            <NavLink to={'/auth/login'} className="mr-3 underline">Sign Out</NavLink>
           </div>
         </div>
 
@@ -55,32 +55,32 @@ const MyaccountRootLayout = () => {
 
           <div className="flex justify-center items-center mb-10">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-5  flex-wrap w-full m-11 md:mx-36 md:mt-20 lg:m-10">
-            <CustomerDetail_Card Logo={about_user} CardName={"Profile"} routePath={"profile"}/>
-              <CustomerDetail_Card Logo={location} CardName={"Address Book"}  routePath={"/myaccout/address"}/>
+            <CustomerDetail_Card Logo={about_user} CardName={"Profile"} routePath={""}/>
+              <CustomerDetail_Card Logo={location} CardName={"Address Book"}  routePath={"addresses"}/>
               <CustomerDetail_Card
                 Logo={orderHistory}
                 CardName={"Order History"}
-                routePath={"Oders"}
+                routePath={"orders"}
               />
               <CustomerDetail_Card
                 Logo={Payment}
                 CardName={"Payment Methods"}
-                routePath={"PaymentMethods"}
+                routePath={"payment-methods"}
               />
               <CustomerDetail_Card
                 Logo={SaveForLatter}
                 CardName={"Saved For Later"}
-                routePath={"Wishlist"}
+                routePath={"wishlist"}
               />
               <CustomerDetail_Card
                 Logo={Bycicle}
                 CardName={"Registered Bikes"}
-                routePath={"Bikes"}
+                routePath={"bikes"}
               />
               <CustomerDetail_Card
                 Logo={wheel}
                 CardName={"Registered Wheels"}
-                routePath={"Wheels"}
+                routePath={"wheels"}
               />
             </div>
           </div>
