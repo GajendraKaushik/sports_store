@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test / coverage output
+coverage/
+.nyc_output/
+
+# Build / OS artifacts
+dist/
+.DS_Store
