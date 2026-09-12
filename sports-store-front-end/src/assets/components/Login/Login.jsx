@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 const Login = () => {
   const [showpass, setShowpass] = useState(false);
@@ -74,9 +75,9 @@ const Login = () => {
         </div>
         <div className="m-10">
           <p>
-            <a href="" className="underline text-gray-700">
+            <Link to="/auth/signup" className="underline text-gray-700">
               Create Account
-            </a>
+            </Link>
           </p>
         </div>
       </div>

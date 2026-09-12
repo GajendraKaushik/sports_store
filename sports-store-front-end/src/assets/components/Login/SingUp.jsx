@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SingUp = () => {
   return (
@@ -75,7 +76,7 @@ const SingUp = () => {
           </form>
           <div className="m-10">
             <p>
-              Already have an account? <a href=""  className="underline">Login</a>
+              Already have an account? <Link to="/auth/login"  className="underline">Login</Link>
             </p>
           </div>
         </div>

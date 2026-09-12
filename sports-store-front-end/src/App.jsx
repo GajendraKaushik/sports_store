@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, redirect } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive'
 
 
@@ -26,6 +26,18 @@ import ResponsiveRootLayout from "./assets/components/Layout_Pages/ResponsiveRoo
 import ProductCart from "./assets/components/Product/ProductCart";
 import SingUp from "./assets/components/Login/SingUp";
 
+// U10: temporary frontend-only auth placeholder for the cart flow.
+// Backend integration will replace this with a real session/token check.
+const isAuthenticated = () => false;
+
+const cartLoader = () => {
+  // TODO: replace with backend session check (e.g. GET /api/v1/auth/session).
+  if (!isAuthenticated()) {
+    return redirect("/auth/login");
+  }
+  return null;
+};
+
 
 function App() {
   const isDesktopOrLaptop = useMediaQuery({
@@ -40,18 +52,17 @@ function App() {
         { 
           path:"/products", 
           element:<Product_List_Page />,
-          children:[
-            {
-              path: ":productSlug", 
-              element: <Single_Product_page />
-            }
-          ]
         },
-        { path: "/cart", element: <ProductCart /> },
+        {
+          path: "/products/:productSlug",
+          element: <Single_Product_page />
+        },
+        { path: "/cart", element: <ProductCart />, loader: cartLoader },
         
         // U02: Normalized account routes
         {  
           path: "/account",
+          element: <MyaccountRootLayout />,
           children:[
             { index:true, element: <Profile />, loader: async () => { /* Validate authentication here if needed */ }},
             { path: "addresses", element: <Address /> },

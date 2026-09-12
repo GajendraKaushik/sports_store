@@ -26,12 +26,12 @@ const MyaccountRootLayout = () => {
             <div className="text-3xl font-bold mr-3 my-3">User Name</div>
             <div className="flex flex-col justify-start gap-2">
               <SideNavBtn routePath={""} imgLogo={about_user} btnName={"Profile"} />
-              <SideNavBtn routePath={"address"} imgLogo={location} btnName={"Address Book"} />
-              <SideNavBtn routePath={"Oders"} imgLogo={orderHistory} btnName={"Order History"} />
-              <SideNavBtn routePath={"PaymentMethods"} imgLogo={Payment} btnName={"Payment Methods"} />
-              <SideNavBtn routePath={"Wishlist"} imgLogo={SaveForLatter} btnName={"Saved For Later"} />
+              <SideNavBtn routePath={"addresses"} imgLogo={location} btnName={"Address Book"} />
+              <SideNavBtn routePath={"orders"} imgLogo={orderHistory} btnName={"Order History"} />
+              <SideNavBtn routePath={"payment-methods"} imgLogo={Payment} btnName={"Payment Methods"} />
+              <SideNavBtn routePath={"wishlist"} imgLogo={SaveForLatter} btnName={"Saved For Later"} />
               <SideNavBtn routePath={"bikes"} imgLogo={Bycicle} btnName={"Registered Bikes"} />
-              <SideNavBtn routePath={"Wheels"} imgLogo={wheel} btnName={"Registered Wheels"} />   
+              <SideNavBtn routePath={"wheels"} imgLogo={wheel} btnName={"Registered Wheels"} />   
             </div>
 
             <NavLink to={'/'} className="mr-3 underline">Sign Out</NavLink>

@@ -1,9 +1,11 @@
 import React from "react";
 import BikeImg from "../../images/BikeImg/BikeImg-3.webp";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
 
 const Single_Product_page = () => {
+  const navigate = useNavigate();
   const [toggleTechInfo, setToggleTechInfo] = useState(true);
   const [getSize, setSize] = useState("");
 
@@ -13,6 +15,10 @@ const Single_Product_page = () => {
 
   const handleTechInfoStyle = () => {
     setToggleTechInfo((prevState) => !prevState);
+  };
+
+  const handleAddToCart = () => {
+    navigate("/cart");
   };
 
   return (
@@ -106,7 +112,7 @@ const Single_Product_page = () => {
 
               <div className="flex flex-col">
                 <div className="mb-2">
-                  <button className=" bg-neutral-900 text-white font-semibold w-full h-14 rounded-md hover:bg-stone-400">
+                  <button onClick={handleAddToCart} className=" bg-neutral-900 text-white font-semibold w-full h-14 rounded-md hover:bg-stone-400">
                     Add To Cart
                   </button>
                 </div>

@@ -12,7 +12,7 @@ const NavBar = () => {
     { name: "Home", link: "/" },
     { name: "Saved", link: "/account/wishlist" },
     { name: "Cart", link: "/cart" },
-    { name: "Login", link: "auth/login" },
+    { name: "Login", link: "/auth/login" },
   ];
    const navigate = useNavigate()
   const handleNavidation =(path)=>{
@@ -62,22 +62,22 @@ const NavBar = () => {
 
                 <div className="flex items-start justify-evenly flex-col text-2xl gap-5">
                   <div className="text-gray-900 font-bold py-2">
-                    <NavLink onClick={() => setOpen()} to={"product"}>Bike</NavLink>
+                    <NavLink onClick={() => setOpen()} to={"/products"}>Bike</NavLink>
                   </div>
                   <div className="text-gray-900 font-bold py-2">
-                    <NavLink onClick={() => setOpen()} to={"product"}>Parts</NavLink>
+                    <NavLink onClick={() => setOpen()} to={"/products"}>Parts</NavLink>
                   </div>
                   <div className="text-gray-900 font-bold py-2">
-                    <NavLink onClick={() => setOpen()} to={"product"}>Apparel</NavLink>
+                    <NavLink onClick={() => setOpen()} to={"/products"}>Apparel</NavLink>
                   </div>
                   <div className="text-gray-900 font-bold py-2">
-                    <NavLink onClick={() => setOpen()} to={"product"}>Accessaries</NavLink>
+                    <NavLink onClick={() => setOpen()} to={"/products"}>Accessaries</NavLink>
                   </div>
                   <div className="text-gray-900 font-bold py-2">
-                  <NavLink onClick={() => setOpen()} to={"product"}>Sales</NavLink>
+                  <NavLink onClick={() => setOpen()} to={"/products"}>Sales</NavLink>
                   </div>
                   <div className="text-gray-900 font-bold py-2">
-                    <NavLink onClick={() => setOpen()} to={"product"}>Inside Specialized</NavLink>
+                    <NavLink onClick={() => setOpen()} to={"/products"}>Inside Specialized</NavLink>
                   </div>
                   <div className="text-gray-900 font-bold py-2">
                     <a href=""> Support</a>
