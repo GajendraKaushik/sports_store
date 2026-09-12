@@ -37,6 +37,44 @@ export async function deleteAddress(req, res) {
   res.status(200).json({ success: true, data: result });
 }
 
+export async function getWishlist(req, res) {
+  const items = await accountService.getWishlist(req.user.id);
+  res.status(200).json({ success: true, data: { items } });
+}
+
+export async function addWishlistItem(req, res) {
+  const items = await accountService.addWishlistItem(req.user.id, req.body);
+  res.status(200).json({ success: true, data: { items } });
+}
+
+export async function removeWishlistItem(req, res) {
+  const items = await accountService.removeWishlistItem(
+    req.user.id,
+    req.params.productId,
+  );
+  res.status(200).json({ success: true, data: { items } });
+}
+
+export async function listBikes(req, res) {
+  const bikes = await accountService.listBikes(req.user.id);
+  res.status(200).json({ success: true, data: { bikes } });
+}
+
+export async function createBike(req, res) {
+  const bike = await accountService.createBike(req.user.id, req.body);
+  res.status(201).json({ success: true, data: { bike } });
+}
+
+export async function listWheels(req, res) {
+  const wheels = await accountService.listWheels(req.user.id);
+  res.status(200).json({ success: true, data: { wheels } });
+}
+
+export async function createWheel(req, res) {
+  const wheel = await accountService.createWheel(req.user.id, req.body);
+  res.status(201).json({ success: true, data: { wheel } });
+}
+
 export default {
   getProfile,
   updateProfile,
@@ -44,4 +82,11 @@ export default {
   createAddress,
   updateAddress,
   deleteAddress,
+  getWishlist,
+  addWishlistItem,
+  removeWishlistItem,
+  listBikes,
+  createBike,
+  listWheels,
+  createWheel,
 };
