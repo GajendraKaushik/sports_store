@@ -41,7 +41,7 @@ const Product_List_Page = () => {
           </section>
         </div>
 
-        <div className="grid grid-cols-[repeat[auto-fit,minmax(310px, 1fr)]] gap-5 lg:grid-cols-3 md:grid-cols-2 m-4 mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 m-4 mt-16">
           {ProductList.map((item) => {
             return (
               // image card itmes ProductImg, ProductName, OfferPrice, OriginalPrice
