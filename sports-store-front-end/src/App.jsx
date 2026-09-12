@@ -32,7 +32,7 @@ import SignUp from "./assets/components/Login/SignUp";
 const isAuthenticated = () => false;
 
 const cartLoader = () => {
-  // TODO: replace with backend session check (e.g. GET /api/v1/auth/session).
+  // TODO: replace with backend auth check (JWT bearer -> GET /api/v1/auth/me).
   if (!isAuthenticated()) {
     return redirect("/auth/login");
   }
@@ -83,8 +83,13 @@ function App() {
         { path: "/auth/login", element: <Login /> },
         { path: "/auth/signup", element: <SignUp /> },
 
-        // U18: minimal owner route placeholders. Names align with the
-        // backend owner API plan (/api/v1/owner/*). Real dashboard later.
+        // U18: minimal owner route placeholders. UI names chosen to mirror the
+        // backend owner API plan (GET /api/v1/owner/store, /owner/products,
+        // /owner/orders, /owner/dashboard; see BACKEND_ARCHITECTURE_PLAN.md
+        // section F). /owner/login has no backend endpoint — it will use
+        // POST /api/v1/auth/login with role=owner. /owner/inventory and
+        // /owner/store-profile are UI groupings, not backend resources.
+        // Real dashboard later.
         { path: "/owner/login", element: <OwnerPlaceholder title="Owner Login" /> },
         { path: "/owner/dashboard", element: <OwnerPlaceholder title="Owner Dashboard" /> },
         { path: "/owner/products", element: <OwnerPlaceholder title="Owner Products" /> },

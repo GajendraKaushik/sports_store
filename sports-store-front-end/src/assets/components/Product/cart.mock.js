@@ -1,5 +1,7 @@
 // U14: mock cart shape aligned with future backend cart response.
-// e.g. GET /api/v1/cart -> { items: [...], savedForLater: [...] }
+// e.g. GET /api/v1/cart -> { success, data: { items: [{ productId, quantity, selectedSize, unitPriceSnapshot, titleSnapshot, imageSnapshot }] } }
+// (see BACKEND_ARCHITECTURE_PLAN.md sections E.7 + F). Wishlist lives at
+// GET /api/v1/account/wishlist, and orders are created via POST /api/v1/orders.
 import BikeImg from "../../images/BikeImg/BikeImg-4.webp";
 
 export const mockCartItems = [

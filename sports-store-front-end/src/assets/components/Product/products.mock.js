@@ -2,7 +2,8 @@ import Img1 from "../../images/BikeImg/BikeImg-4.webp";
 
 // Temporary frontend-only mock dataset for the product list.
 // Shape intentionally mirrors the future backend product response:
-// GET /api/v1/products -> [{ id, slug, name, image, offerPrice, originalPrice }]
+// GET /api/v1/products -> { success, data: { items: [{ id, title, slug, price, compareAtPrice, currency, primaryImage, stockQuantity, sizes }] } }
+// and GET /api/v1/products/:slug for detail (see BACKEND_ARCHITECTURE_PLAN.md sections E.4 + F + G).
 // Legacy capitalized fields (Name, OfferPrice, ...) are kept alongside the
 // normalized fields so existing components keep working until API integration.
 
