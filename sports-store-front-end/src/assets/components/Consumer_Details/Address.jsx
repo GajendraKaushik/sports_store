@@ -27,13 +27,7 @@ const Address = () => {
       ShippingAddress.push(JSON.parse(JSON.stringify(addre)))
      }
 
-  } )
-  // console.log(BillingAddress, "Billing", BillingAddress.length)
-
-  console.log(window.innerWidth, "widht")
-
-
-
+  } );
   const handleClose = () => setIsOpen(false);
 
   const goBack =()=>{

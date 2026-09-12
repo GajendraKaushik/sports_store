@@ -7,8 +7,8 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
-    const acquisitionChannel = fd.getAll("Ridjing_Styles");
-    data.Ridjing_Styles = acquisitionChannel;
+    const acquisitionChannel = fd.getAll("Riding_Styles");
+    data.Riding_Styles = acquisitionChannel;
 
     console.log(data, "data");
     handleUserInfo(data);
@@ -186,7 +186,7 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                     <div className="flex justify-start mr-8 gap-3">
                       <input
                         type="checkbox"
-                        name="Ridjing_Styles"
+                        name="Riding_Styles"
                         value="keep_info"
                         id=""
                         className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md ml-2"
@@ -204,9 +204,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Mountain"
-                              // defaultChecked={userInfo.Ridjing_Styles && "Mountain" in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && "Mountain" in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -217,9 +217,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Road"
-                              // defaultChecked={userInfo.Ridjing_Styles && "Road" in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && "Road" in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -230,9 +230,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Fitness"
-                              // defaultChecked={userInfo.Ridjing_Styles && "Fitness" in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && "Fitness" in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -243,9 +243,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Adventure/Bike Packing"
-                              // defaultChecked={userInfo.Ridjing_Styles && value in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -256,9 +256,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Dirt/Park"
-                              // defaultChecked={userInfo.Ridjing_Styles && value in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -272,9 +272,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Cyclocross"
-                              // defaultChecked={userInfo.Ridjing_Styles && value in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -285,9 +285,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Casual/Commute"
-                              // defaultChecked={userInfo.Ridjing_Styles && value in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -298,9 +298,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Downhill"
-                              // defaultChecked={userInfo.Ridjing_Styles && value in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
@@ -311,22 +311,22 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
-                              value="Triathon"
-                              // defaultChecked={userInfo.Ridjing_Styles && value in userInfo.Ridjing_Styles}
+                              name="Riding_Styles"
+                              value="Triathlon"
+                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
                             />
                             <div className="text-xl text-gray-600 font-light">
-                              Triathon
+                              Triathlon
                             </div>
                           </div>
                           <div className="flex justify-start gap-3 mr-8">
                             <input
                               type="checkbox"
-                              name="Ridjing_Styles"
+                              name="Riding_Styles"
                               value="Pedal Assist"
-                              // defaultChecked={userInfo.Ridjing_Styles && value in userInfo.Ridjing_Styles}
+                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
 
                               className="w-6 h-6 border-slate-600 border-[1.5px] mt-2 accent-neutral-800 rounded-md "
                             />

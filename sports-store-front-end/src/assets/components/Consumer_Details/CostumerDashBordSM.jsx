@@ -1,7 +1,5 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
-import { useMediaQuery } from 'react-responsive'
-import { useLocation } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 import CustomerDetail_Card from "./CustomerDetail_Card";
 import about_user from "../../images/Icons/about_user.png";
@@ -12,28 +10,12 @@ import location from "../../images/Icons/location-50.png";
 import orderHistory from "../../images/Icons/Order-History.png";
 import SaveForLatter from "../../images/bookmark.png";
 
-import SideNavBtn from "./SideNavBtn";
-import Profile from "./Profile";
-
+// U16: mobile account overview screen. This component is the index route of
+// /account, so it renders purely from nested routing — no useLocation /
+// pathname string checks. Nested pages (profile, orders, ...) render through
+// the parent layout's <Outlet/> instead.
 const CostumerDashBordSM = () => {
-  const isDesktopOrLaptop = useMediaQuery({
-    query: '(min-width: 1024px)'
-  })
- const location  = useLocation()
-
- console.log(location, "location")
- 
- if("/myaccout" !== location.pathname){
-return(
-  <div >
-  <main>
-    <Outlet/>
-  </main>
-</div>
-)
- }else{
   return (
-    
     <div className="bg-stone-100 relative">
       <div className="w-full mt-28 bg-stone-100">
         <div className=" flex items-center justify-between m-4">
@@ -44,7 +26,7 @@ return(
 
         <div className="flex justify-center items-center mb-10">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-5  flex-wrap w-full m-11 md:mx-36 md:mt-20 lg:m-10">
-          <CustomerDetail_Card Logo={about_user} CardName={"Profile"} routePath={""}/>
+          <CustomerDetail_Card Logo={about_user} CardName={"Profile"} routePath={"profile"}/>
               <CustomerDetail_Card Logo={location} CardName={"Address Book"}  routePath={"addresses"}/>
               <CustomerDetail_Card
                 Logo={orderHistory}
@@ -76,7 +58,6 @@ return(
       </div>
     </div>
   );
- }
 };
 
 export default CostumerDashBordSM;

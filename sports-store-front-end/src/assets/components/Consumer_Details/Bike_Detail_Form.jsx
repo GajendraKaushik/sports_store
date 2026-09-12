@@ -11,7 +11,6 @@ const Bike_Detail_Form = ({ handleClose, handleRegisteredBikesDetails }) => {
       ...registerBikesDetailList,
       JSON.parse(JSON.stringify(data)),
     ]);
-    console.log(data);
     event.target.reset();
   };
   useEffect(() => {
@@ -165,7 +164,7 @@ const Bike_Detail_Form = ({ handleClose, handleRegisteredBikesDetails }) => {
                 type="submit"
                 className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4 enabled:bg-neutral-800"
               >
-                Registre Your Bike
+                Register Your Bike
               </button>
 
               <div

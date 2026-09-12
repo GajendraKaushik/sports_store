@@ -7,7 +7,6 @@ const Wheel_Detail_Form = ({handleClose, handleUpdatedWheelsDetails}) => {
     const fd = new FormData(event.target)
 
     const data = Object.fromEntries(fd.entries())
-    console.log(data)
     setRegisteredWheelsDetails([...registeredWheelsDetails, JSON.parse(JSON.stringify(data))])
 
     event.target.reset()
@@ -52,6 +51,7 @@ const Wheel_Detail_Form = ({handleClose, handleUpdatedWheelsDetails}) => {
                 <input
                   type="text"
                   id="name"
+                  name="name"
                   required
                   className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
                 />
@@ -169,7 +169,7 @@ const Wheel_Detail_Form = ({handleClose, handleUpdatedWheelsDetails}) => {
               </div>
             </div>
             <button type='submit' className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4" onClick={handleClose}>
-            Registre Your Bike
+            Register Your Wheels
             </button>
 
             <div  onClick={handleClose} className=" text-center underline text-neutral-900 font-semibold mb-4 cursor-pointer">Cancel</div>

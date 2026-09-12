@@ -9,9 +9,8 @@ const Profile = () => {
   let user_info = {}
   
   const navigate = useNavigate()
-  const [userInfo, setUserInfo] = useState(user_info)
+  const [userInfo, setUserInfo] = useState(user_info);
   const [isOpen, setIsOpen] = useState(false);
-  console.log(userInfo)
   const handleUserInfo = (userDetail) =>{
     setUserInfo((prevState)=>{
       if(prevState){
@@ -33,8 +32,8 @@ const Profile = () => {
         if(prevState.country !== userDetail.country){
           prevState.country= userDetail.country
         }
-        if(prevState.Ridjing_Styles !== userDetail.Ridjing_Styles){
-          prevState.Ridjing_Styles= userDetail.Ridjing_Styles
+        if(prevState.Riding_Styles !== userDetail.Riding_Styles){
+          prevState.Riding_Styles= userDetail.Riding_Styles
         }
         return{...prevState}
       }{
@@ -69,7 +68,7 @@ const Profile = () => {
               <div className="underline font-semibold hover:text-red-600 cursor-pointer">Sign Out</div>
             </div>
             <div className="text-3xl text-center font-bold mb-10">
-              Address Book
+              Profile
             </div>
           </div>
         </div>
@@ -106,8 +105,8 @@ const Profile = () => {
                 <p>{userInfo.country}</p>
               </div>
               <div>
-                <p className="text-xl font-semibold">Ridjing Styles</p>
-                <p>{userInfo.Ridjing_Styles && userInfo.Ridjing_Styles.join(", ")}</p>
+                <p className="text-xl font-semibold">Riding Styles</p>
+                <p>{userInfo.Riding_Styles && userInfo.Riding_Styles.join(", ")}</p>
               </div>
               <button onClick={() => setIsOpen(true)} className="underline hover:text-red-600" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right" aria-controls="drawer-right-example">
                 Edit

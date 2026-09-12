@@ -8,7 +8,8 @@ import Login from "./assets/components/Login/Login";
 
 
 import RootLayout from "./assets/components/Layout_Pages/RootLayout";
-import MyaccountRootLayout from "./assets/components/Layout_Pages/MyaccountRootLayout";
+import ResponsiveRootLayout from "./assets/components/Layout_Pages/ResponsiveRootLayout";
+import CostumerDashBordSM from "./assets/components/Consumer_Details/CostumerDashBordSM";
 import HomePage from "./assets/components/Pages/HomePage";
 import ErrorPage from "./assets/components/Pages/ErrorPage";
 import Profile from "./assets/components/Consumer_Details/Profile";
@@ -18,11 +19,11 @@ import PaymentMethods from "./assets/components/Consumer_Details/PaymentMethods"
 import WishList from "./assets/components/Consumer_Details/WishList";
 import Bikes from "./assets/components/Consumer_Details/Bikes";
 import Wheels from "./assets/components/Consumer_Details/Wheels";
+import OwnerPlaceholder from "./assets/components/Owner/OwnerPlaceholder";
 
 import Product_List_Page from "./assets/components/Product/Product_List_Page";
 
 import Single_Product_page from "./assets/components/Product/Single_Product_page";
-import ResponsiveRootLayout from "./assets/components/Layout_Pages/ResponsiveRootLayout";
 import ProductCart from "./assets/components/Product/ProductCart";
 import SignUp from "./assets/components/Login/SignUp";
 
@@ -59,12 +60,16 @@ function App() {
         },
         { path: "/cart", element: <ProductCart />, loader: cartLoader },
         
-        // U02: Normalized account routes
+        // U02 + U16: Normalized + responsive account routes.
+        // ResponsiveRootLayout picks the desktop sidebar or the mobile
+        // <Outlet/> shell. CostumerDashBordSM is the mobile-only index
+        // overview; "profile" is the shared first detail page.
         {  
           path: "/account",
-          element: <MyaccountRootLayout />,
+          element: <ResponsiveRootLayout />,
           children:[
-            { index:true, element: <Profile />, loader: async () => { /* Validate authentication here if needed */ }},
+            { index:true, element: <CostumerDashBordSM /> },
+            { path: "profile", element: <Profile /> },
             { path: "addresses", element: <Address /> },
             { path: "orders", element: <Oders />},
             { path: "payment-methods", element: <PaymentMethods /> },
@@ -77,6 +82,15 @@ function App() {
         // U04: Auth routes
         { path: "/auth/login", element: <Login /> },
         { path: "/auth/signup", element: <SignUp /> },
+
+        // U18: minimal owner route placeholders. Names align with the
+        // backend owner API plan (/api/v1/owner/*). Real dashboard later.
+        { path: "/owner/login", element: <OwnerPlaceholder title="Owner Login" /> },
+        { path: "/owner/dashboard", element: <OwnerPlaceholder title="Owner Dashboard" /> },
+        { path: "/owner/products", element: <OwnerPlaceholder title="Owner Products" /> },
+        { path: "/owner/orders", element: <OwnerPlaceholder title="Owner Orders" /> },
+        { path: "/owner/inventory", element: <OwnerPlaceholder title="Owner Inventory" /> },
+        { path: "/owner/store-profile", element: <OwnerPlaceholder title="Owner Store Profile" /> },
       ],
       
     },

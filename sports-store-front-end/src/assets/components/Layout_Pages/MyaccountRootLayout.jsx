@@ -25,7 +25,7 @@ const MyaccountRootLayout = () => {
             <div className="mr-3 my-2">My Account</div>
             <div className="text-3xl font-bold mr-3 my-3">User Name</div>
             <div className="flex flex-col justify-start gap-2">
-              <SideNavBtn routePath={""} imgLogo={about_user} btnName={"Profile"} />
+              <SideNavBtn routePath={"profile"} imgLogo={about_user} btnName={"Profile"} />
               <SideNavBtn routePath={"addresses"} imgLogo={location} btnName={"Address Book"} />
               <SideNavBtn routePath={"orders"} imgLogo={orderHistory} btnName={"Order History"} />
               <SideNavBtn routePath={"payment-methods"} imgLogo={Payment} btnName={"Payment Methods"} />
