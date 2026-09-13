@@ -1,20 +1,35 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState} from 'react'
+import { apiFetch } from "../../../lib/api.js";
 
-const Wheel_Detail_Form = ({handleClose, handleUpdatedWheelsDetails}) => {
-  const [registeredWheelsDetails, setRegisteredWheelsDetails] = useState([])
-  const handleSubmit = (event) =>{
+// I08: wheel registration posts to POST /account/wheels
+const Wheel_Detail_Form = ({handleClose, onCreated}) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
+
+  const handleSubmit = async (event) =>{
     event.preventDefault()
-    const fd = new FormData(event.target)
-
-    const data = Object.fromEntries(fd.entries())
-    setRegisteredWheelsDetails([...registeredWheelsDetails, JSON.parse(JSON.stringify(data))])
-
-    event.target.reset()
+    const data = Object.fromEntries(new FormData(event.target).entries())
+    setSubmitting(true)
+    setError(null)
+    try {
+      await apiFetch("/account/wheels", {
+        method: "POST",
+        body: {
+          serialNumber: data.serialNumber,
+          wheelName: data.wheelName,
+          purchaseId: data.purchaseId ?? "",
+          purchaseLocation: data.purchaseLocation ?? "",
+          ...(data.purchaseDate ? { purchaseDate: data.purchaseDate } : {}),
+        },
+      })
+      event.target.reset()
+      onCreated?.()
+    } catch (err) {
+      setError(err?.message ?? "Could not register wheels")
+    } finally {
+      setSubmitting(false)
+    }
   }
-   
-  useEffect(()=>{
-    handleUpdatedWheelsDetails(registeredWheelsDetails)
-  },[registeredWheelsDetails])
 
   return (
 
@@ -138,7 +153,7 @@ const Wheel_Detail_Form = ({handleClose, handleUpdatedWheelsDetails}) => {
               <div className="relative">
                 <input
                   type="text"
-                  id="myInput"
+                  id="purchaseLocation"
                   name='purchaseLocation'
                   required
                   className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
@@ -168,8 +183,9 @@ const Wheel_Detail_Form = ({handleClose, handleUpdatedWheelsDetails}) => {
                 </span>
               </div>
             </div>
-            <button type='submit' className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4" onClick={handleClose}>
-            Register Your Wheels
+            {error ? <p className="text-red-600 text-sm">{error}</p> : null}
+            <button type='submit' disabled={submitting} className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4 disabled:opacity-60">
+            {submitting ? "Registering…" : "Register Your Wheels"}
             </button>
 
             <div  onClick={handleClose} className=" text-center underline text-neutral-900 font-semibold mb-4 cursor-pointer">Cancel</div>

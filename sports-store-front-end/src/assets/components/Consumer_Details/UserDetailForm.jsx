@@ -1,18 +1,38 @@
-import React, { useState, useRef } from "react";
+// I07: rider profile edit form. Writes PATCH /account/profile with the
+// fields the backend accepts (firstName/lastName/phone); email/role are
+// never editable client-side. Keeps the original drawer styling.
+import React, { useState } from "react";
+import { apiFetch } from "../../../lib/api.js";
 
-const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
-  const [inputValue, setInputValue] = useState({});
-  const handleSubmit = (event) => {
+const UserDetailForm = ({ onClose, onSaved, userInfo }) => {
+  const [firstName, setFirstName] = useState(userInfo?.firstName ?? "");
+  const [lastName, setLastName] = useState(userInfo?.lastName ?? "");
+  const [phone, setPhone] = useState(userInfo?.phone ?? "");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const canSave = firstName.trim() !== "" && lastName.trim() !== "";
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const fd = new FormData(event.target);
-    const data = Object.fromEntries(fd.entries());
-    const acquisitionChannel = fd.getAll("Riding_Styles");
-    data.Riding_Styles = acquisitionChannel;
-
-    console.log(data, "data");
-    handleUserInfo(data);
-    event.target.reset();
+    if (!canSave || submitting) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const data = await apiFetch("/account/profile", {
+        method: "PATCH",
+        body: {
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          phone: phone.trim(),
+        },
+      });
+      onSaved(data?.profile ?? data);
+    } catch (err) {
+      setError(err?.message ?? "Could not save profile.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -42,19 +62,20 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                     <h1 className="flex justify-center text-3xl font-bold pb-8">
                       Edit Rider Profile
                     </h1>
+
                     <div className="flex-wrap flex justify-between">
                       <div className="relative  basis-[47%]">
                         <input
                           type="text"
-                          id="name"
-                          name="name"
-                          // value={userInfo && userInfo.name}
-
+                          id="firstName"
+                          name="firstName"
                           required
-                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2  text-gray-500 focus:border-neutral-800"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500 focus:border-neutral-800"
                         />
                         <span
-                          htmlFor="name"
+                          htmlFor="firstName"
                           className="floating-lable absolute left-3 top-3 text-gray-500"
                         >
                           First Name
@@ -65,8 +86,9 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                           type="text"
                           id="lastName"
                           name="lastName"
-                          // value={userInfo && "Kaushik"}
                           required
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
                           className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500"
                         />
                         <span
@@ -77,21 +99,23 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                         </span>
                       </div>
                     </div>
+
                     <div>
                       <div className="relative">
                         <input
                           type="email"
                           id="email"
                           name="email"
-                          // value={userInfo && userInfo.email}
-                          required
-                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500"
+                          value={userInfo?.email ?? ""}
+                          readOnly
+                          disabled
+                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 bg-stone-100 text-gray-400"
                         />
                         <span
                           htmlFor="email"
                           className="floating-lable absolute left-3 top-3 text-gray-500"
                         >
-                          Email
+                          Email (can't change)
                         </span>
                       </div>
                     </div>
@@ -99,15 +123,15 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                     <div>
                       <div className="relative">
                         <input
-                          type="text"
-                          id="PhoneNumber"
-                          name="PhoneNumber"
-                          // value={userInfo && userInfo.PhoneNumber}
-                          required
-                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500 "
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500"
                         />
                         <span
-                          htmlFor="PhoneNumber"
+                          htmlFor="phone"
                           className="floating-lable absolute left-3 top-3 text-gray-500"
                         >
                           Phone Number
@@ -115,237 +139,17 @@ const UserDetailForm = ({ onClose, handleUserInfo, userInfo }) => {
                       </div>
                     </div>
 
-                    <div className="relative">
-                      <input
-                        type="date"
-                        id="dod"
-                        name="dod"
-                        // value={userInfo && userInfo.dob}
-                        required
-                        className="input-field h-[50px] w-1/2 p-3 rounded-md border-slate-400 border-2 text-gray-500 "
-                      />
-                      <span
-                        htmlFor="bod"
-                        className="floating-lable absolute left-3 top-3 text-gray-500"
-                      >
-                        Birthday
-                      </span>
-                    </div>
-
-                    <div className="relative">
-                      <input
-                        type="text"
-                        id="country"
-                        name="country"
-                        // value={userInfo && userInfo.country}
-                        required
-                        className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500"
-                      />
-                      <span
-                        htmlFor="country"
-                        className="floating-lable absolute left-3 top-3 text-gray-500"
-                      >
-                        Country
-                      </span>
-                    </div>
-
-                    <div className="flex flex-wrap justify-between">
-                      <div className="relative basis-[47%]">
-                        <input
-                          type="text"
-                          id="city"
-                          name="city"
-                          // value={userInfo && userInfo.city}
-                          required
-                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500"
-                        />
-                        <span
-                          htmlFor="city"
-                          className="floating-lable absolute left-3 top-3 text-gray-500"
-                        >
-                          City
-                        </span>
-                      </div>
-                      <div className="relative basis-[47%]">
-                        <input
-                          type="text"
-                          id="state"
-                          name="state"
-                          // value={userInfo && userInfo.state}
-                          required
-                          className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2 text-gray-500"
-                        />
-                        <span
-                          htmlFor="state"
-                          className="floating-lable absolute left-3 top-3 text-gray-500"
-                        >
-                          State/Province
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex justify-start mr-8 gap-3">
-                      <input
-                        type="checkbox"
-                        name="Riding_Styles"
-                        value="keep_info"
-                        id=""
-                        className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md ml-2"
-                      />
-                      <div className="text-xl text-gray-600 font-light">
-                        Keep Me Informed Of Specialized News, Events And Product
-                        Information
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="pt-5">Riding Style(s)</h3>
-                      <div className="flex mt-5 ml-3">
-                        <div className="flex flex-col ">
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Mountain"
-                              // defaultChecked={userInfo.Riding_Styles && "Mountain" in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Mountain
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Road"
-                              // defaultChecked={userInfo.Riding_Styles && "Road" in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Road
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Fitness"
-                              // defaultChecked={userInfo.Riding_Styles && "Fitness" in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Fitness
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Adventure/Bike Packing"
-                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Adventure/Bike Packing
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Dirt/Park"
-                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Dirt/Park
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Cyclocross"
-                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Cyclocross
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Casual/Commute"
-                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Casual/Commute
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Downhill"
-                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Downhill
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Triathlon"
-                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-800 border-[1.5px] mt-2 accent-neutral-800 rounded-md"
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Triathlon
-                            </div>
-                          </div>
-                          <div className="flex justify-start gap-3 mr-8">
-                            <input
-                              type="checkbox"
-                              name="Riding_Styles"
-                              value="Pedal Assist"
-                              // defaultChecked={userInfo.Riding_Styles && value in userInfo.Riding_Styles}
-
-                              className="w-6 h-6 border-slate-600 border-[1.5px] mt-2 accent-neutral-800 rounded-md "
-                            />
-                            <div className="text-xl text-gray-600 font-light">
-                              Pedal Assist
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    {error && <p className="text-sm text-red-600">{error}</p>}
 
                     <div className="flex justify-between my-10">
                       <div>
                         <button
                           type="submit"
-                          className="h-12 w-48 bg-neutral-700 text-white rounded font-bold "
+                          disabled={!canSave || submitting}
+                          className="h-12 w-48 bg-neutral-700 text-white rounded font-bold disabled:opacity-50"
                         >
                           {" "}
-                          Save Changes
+                          {submitting ? "Saving…" : "Save Changes"}
                         </button>
                       </div>
                       <button

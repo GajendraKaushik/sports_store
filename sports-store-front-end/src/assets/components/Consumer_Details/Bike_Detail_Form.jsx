@@ -1,21 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { apiFetch } from "../../../lib/api.js";
 
-const Bike_Detail_Form = ({ handleClose, handleRegisteredBikesDetails }) => {
-  const [registerBikesDetailList, setRegisterBikesDetailList] = useState([]);
-  const handleSubmit = (event) => {
+// I08: bike registration posts to POST /account/bikes
+const Bike_Detail_Form = ({ handleClose, onCreated }) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const fd = new FormData(event.target);
-    const data = Object.fromEntries(fd.entries());
-
-    setRegisterBikesDetailList([
-      ...registerBikesDetailList,
-      JSON.parse(JSON.stringify(data)),
-    ]);
-    event.target.reset();
+    const data = Object.fromEntries(new FormData(event.target).entries());
+    setSubmitting(true);
+    setError(null);
+    try {
+      await apiFetch("/account/bikes", {
+        method: "POST",
+        body: {
+          serialNumber: data.serialNumber,
+          bikeName: data.bikeName,
+          purchaseLocation: data.purchaseLocation ?? "",
+          ...(data.purchaseDate ? { purchaseDate: data.purchaseDate } : {}),
+        },
+      });
+      event.target.reset();
+      onCreated?.();
+    } catch (err) {
+      setError(err?.message ?? "Could not register bike");
+    } finally {
+      setSubmitting(false);
+    }
   };
-  useEffect(() => {
-    handleRegisteredBikesDetails(registerBikesDetailList);
-  }, [registerBikesDetailList]);
 
   return (
     <div className="w-full fixed z-1010 opacity-100">
@@ -160,11 +173,13 @@ const Bike_Detail_Form = ({ handleClose, handleRegisteredBikesDetails }) => {
                 </div>
             
 
+              {error ? <p className="text-red-600 text-sm">{error}</p> : null}
               <button
                 type="submit"
-                className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4 enabled:bg-neutral-800"
+                disabled={submitting}
+                className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4 enabled:bg-neutral-800 disabled:opacity-60"
               >
-                Register Your Bike
+                {submitting ? "Registering…" : "Register Your Bike"}
               </button>
 
               <div

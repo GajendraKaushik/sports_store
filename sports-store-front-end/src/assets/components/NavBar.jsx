@@ -6,18 +6,25 @@ import ResponsiveSideNavbar from "./ResponsiveSideNavbar";
 import login from "../images/login.png";
 import saveLater from "../images/bookmark.png";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../lib/AuthContext.jsx";
 
 const NavBar = () => {
+  const { user, logout } = useAuth();
   let Links = [
     { name: "Home", link: "/" },
     { name: "Saved", link: "/account/wishlist" },
     { name: "Cart", link: "/cart" },
-    { name: "Login", link: "/auth/login" },
   ];
+  if (!user) Links.push({ name: "Login", link: "/auth/login" });
    const navigate = useNavigate()
   const handleNavidation =(path)=>{
          navigate(path)
   }
+
+  const handleSignOut = () => {
+    logout();
+    navigate("/");
+  };
 
   let [open, setOpen] = useState(false);
 
@@ -52,7 +59,16 @@ const NavBar = () => {
                   </NavLink>
                 </li>
               ))}
-              <Button>Login</Button>
+              {user ? (
+                <button
+                  onClick={handleSignOut}
+                  className="text-gray-800 hover:text-gray-400 duration-500 text-xl md:ml-8 md:my-0 my-7"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <Button>Login</Button>
+              )}
             </ul>
             <div className={`fixed left-0 w-full h-full md:w-[600px] z-[999] bg-white  top-0  pb-5 ${open ? "translate-x-0" : "-translate-x-full" } transition-all duration-200 dur ease-in`}>
               <div className=" bg-white h-full ml-12 mt-9 overflow-y-scroll scroll-smooth">
@@ -91,15 +107,28 @@ const NavBar = () => {
                       <img src={login} alt="login" />
                     </div>
                   </NavLink>
-                  <div>Login in or sign up for an account</div>
-                  <div className="flex items-center justify-start gap-16">
-                    <button className="bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-400 outline-none w-20 h-12" onClick={() => handleNavidation("/auth/login")}>
-                      Log In
-                    </button>
-                    <button className="bg-white text-slate-800 font-semibold rounded-lg  hover:border-[3px]  border-2 border-black w-20 h-12" onClick={() => handleNavidation("/auth/signup")}>
-                      Sign Up
-                    </button>
-                  </div>
+                  {user ? (
+                    <div className="flex items-center justify-start gap-16">
+                      <button
+                        className="bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-400 outline-none w-20 h-12"
+                        onClick={handleSignOut}
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div>Login in or sign up for an account</div>
+                      <div className="flex items-center justify-start gap-16">
+                        <button className="bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-400 outline-none w-20 h-12" onClick={() => handleNavidation("/auth/login")}>
+                          Log In
+                        </button>
+                        <button className="bg-white text-slate-800 font-semibold rounded-lg  hover:border-[3px]  border-2 border-black w-20 h-12" onClick={() => handleNavidation("/auth/signup")}>
+                          Sign Up
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 <hr className=" bg-slate-500 h-[1px] my-6 mr-7" />

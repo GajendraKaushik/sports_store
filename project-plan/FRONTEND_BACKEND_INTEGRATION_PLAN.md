@@ -136,9 +136,9 @@ Create src/seed/seed.js only. Upsert owner/store/categories/products by slug.
 Convert "6,499.99" strings to numbers. Do not touch frontend in this task.
 ```
 
-## Phase 1 — Shared frontend infra (blocks everything below)
+## Phase 1 — Shared frontend infra (blocks everything below) ✅ DONE
 
-> Status: PARTIAL — `src/lib/api.js` + `src/lib/format.js` created (I02/I03 blocked on these). `AuthContext.jsx`, App.jsx guards + NavBar wiring still pending (needed by I04+).
+> Status: I01 implemented and verified Sep 12, 2026 — `src/lib/api.js` (apiFetch/getToken/setToken), `src/lib/AuthContext.jsx` (login/signup/logout, token in localStorage, GET /auth/me bootstrap), `src/lib/RequireAuth.jsx` route guard, App.jsx + NavBar + main.jsx wired.
 
 ## I01
 
@@ -277,7 +277,9 @@ Edit Single_Product_page.jsx only. Fetch by productSlug via apiFetch.
 Add loading/error/404 states. Keep visual layout intact.
 ```
 
-## Phase 3 — Make UI actions work (cart to account)
+## Phase 3 — Make UI actions work (cart to account) ✅ DONE
+
+> Status: I04–I08 implemented and verified Sep 12, 2026 — add-to-cart posts /cart/items with size gate; cart page live with qty/remove/checkout (cart.mock.js deleted); login/signup wired with field errors; profile + address CRUD; wishlist, bikes, wheels, and order history all read/write real APIs. E2E via live backend: signup → cart (add/qty/remove) → checkout (order pending, cart cleared) → wishlist/bikes/wheels/addresses/profile all 2xx. CastError (bad id) now returns 400 INVALID_ID instead of 500.
 
 ## I04
 
@@ -487,7 +489,9 @@ Edit the four account pages only. One endpoint group per page.
 Keep list/card layouts intact.
 ```
 
-## Phase 4 — Owner UI (replaces placeholders)
+## Phase 4 — Owner UI (replaces placeholders) ✅ DONE
+
+> Status: I09 implemented and verified Sep 12, 2026 — placeholders deleted. RequireOwner guards /owner/* (role=user → /owner/login, anon → /owner/login); owner login reuses POST /auth/login and rejects non-owner accounts; dashboard counts, store editor (GET/PATCH /owner/store), product list/create/edit (GET/POST/PATCH /owner/products, category select from public /categories), orders list with status dropdown (PATCH /owner/orders/:id/status). Verified live: customer token 403 FORBIDDEN, anon 401, owner price edit 4999.99 reflected on storefront GET /products/:slug, order status pending→confirmed.
 
 ## I09
 
@@ -529,7 +533,9 @@ Replace OwnerPlaceholder pages only. Guard /owner/* by role.
 One endpoint group per owner page.
 ```
 
-## Phase 5 — Cleanup + proof
+## Phase 5 — Cleanup + proof ✅ DONE
+
+> Status: I10 implemented and verified Sep 12, 2026 — frontend `.env.example` added with `VITE_API_URL`, backend `.env.example` documents CORS origin + macOS port-5000 caveat, last "mock" comment scrubbed (`grep -rn -i mock src` = empty). Proof suite 19/19 PASS against live backend: catalog list/detail (public) → signup → add-to-cart (subtotal = price) → checkout (order pending, cart cleared) → order history → profile update → address create → wishlist add/verify → bike + wheel registration → owner login/dashboard → owner price edit reflected on storefront (restored after test) → owner order status pending→confirmed. Frontend build ✓ (339 modules), backend tests ✓ 6/6.
 
 ## I10
 

@@ -1,27 +1,51 @@
-import React, { useEffect, useState } from "react";
+// I07: address create/edit form. Reads `initial` (null = create), saves via
+// the parent's onSave(payload) which POSTs or PATCHes /account/addresses.
+// Layout kept from the original drawer; field names now match the backend.
+import React, { useState } from "react";
 
-const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
-  const [userAddresslList, setUserAddresslList] = useState([]);
-  const handleSubmit = (event) =>{
+const FIELD_CLS =
+  "input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2";
+
+const Address_Detail_Form = ({ initial, onSave, onClose }) => {
+  const [type, setType] = useState(initial?.type ?? "shipping");
+  const [fullName, setFullName] = useState(initial?.fullName ?? "");
+  const [line1, setLine1] = useState(initial?.line1 ?? "");
+  const [line2, setLine2] = useState(initial?.line2 ?? "");
+  const [city, setCity] = useState(initial?.city ?? "");
+  const [state, setState] = useState(initial?.state ?? "");
+  const [postalCode, setPostalCode] = useState(initial?.postalCode ?? "");
+  const [country, setCountry] = useState(initial?.country ?? "USA");
+  const [phone, setPhone] = useState(initial?.phone ?? "");
+  const [isDefault, setIsDefault] = useState(initial?.isDefault ?? false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const canSave = fullName.trim() !== "" && line1.trim() !== "" && city.trim() !== "";
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const fd = new FormData(event.target);
-
-    const data = Object.fromEntries(fd.entries());
-
-    const checkBoxData = fd.getAll("Address");
-    data.Address = checkBoxData;
-    console.log(data)
-    setUserAddresslList([
-      ...userAddresslList,
-      JSON.parse(JSON.stringify(data)),
-    ]);
-    event.target.reset();
+    if (!canSave || submitting) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      await onSave({
+        type,
+        fullName: fullName.trim(),
+        line1: line1.trim(),
+        line2: line2.trim(),
+        city: city.trim(),
+        state: state.trim(),
+        postalCode: postalCode.trim(),
+        country: country.trim(),
+        phone: phone.trim(),
+        isDefault,
+      });
+    } catch (err) {
+      setError(err?.message ?? "Could not save address.");
+    } finally {
+      setSubmitting(false);
+    }
   };
-  // if new form entry then updating the userAddresslList in the address component 
-  useEffect(() => {
-    handleUserAddress(userAddresslList);
-  }, [userAddresslList]);
-
 
   return (
     <div className="w-full fixed z-1010 opacity-100">
@@ -31,7 +55,7 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
             <div className="bg-gray-300 flex justify-center items-center w-12 h-12 rounded relative">
               <div>
                 <div
-                  onClick={handleClose}
+                  onClick={onClose}
                   className="flex justify-center items-center text-3xl"
                 >
                   <ion-icon name="close-outline"></ion-icon>
@@ -43,7 +67,9 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
 
         <div className="pt-8 h-full overflow-y-scroll scroll-smooth flex flex-col">
           <div className="mb-20 mr-8">
-            <h3 className="text-3xl font-bold pb-10">Add Address</h3>
+            <h3 className="text-3xl font-bold pb-10">
+              {initial ? "Edit Address" : "Add Address"}
+            </h3>
 
             <form
               onSubmit={handleSubmit}
@@ -53,30 +79,22 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
                 <div className="flex w-full justify-start items-center gap-2 mb-2 ">
                   <input
                     type="checkbox"
-                    name="address"
-                    id="Shipping"
-                    value="Shipping"
+                    checked={type === "shipping"}
+                    onChange={() => setType("shipping")}
                     className="rounded-full border-[2px] w-5 h-5 accent-neutral-800"
                   />
-                  <label
-                    htmlFor="Shipping"
-                    className="text-neutral-900 text-[18px]"
-                  >
+                  <label className="text-neutral-900 text-[18px]">
                     Shipping address
                   </label>
                 </div>
                 <div className="flex w-full justify-start items-center gap-2 mb-2 ">
                   <input
                     type="checkbox"
-                    name="address"
-                    id="Billing"
-                    value="Billing"
+                    checked={type === "billing"}
+                    onChange={() => setType("billing")}
                     className="rounded-full border-[2px] w-5 h-5 accent-neutral-800"
                   />
-                  <label
-                    htmlFor="Billing"
-                    className="text-neutral-900 text-[18px]"
-                  >
+                  <label className="text-neutral-900 text-[18px]">
                     Billing address
                   </label>
                 </div>
@@ -85,16 +103,14 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
                 <div className="relative">
                   <input
                     type="text"
-                    id="country"
-                    name="country"
+                    name="fullName"
                     required
-                    className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className={FIELD_CLS}
                   />
-                  <span
-                    htmlFor="myInput"
-                    className="floating-lable absolute left-3 top-3 text-gray-500"
-                  >
-                    Country
+                  <span className="floating-lable absolute left-3 top-3 text-gray-500">
+                    Full Name
                   </span>
                 </div>
               </div>
@@ -102,66 +118,13 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
                 <div className="relative">
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    name="line1"
                     required
-                    className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                    value={line1}
+                    onChange={(e) => setLine1(e.target.value)}
+                    className={FIELD_CLS}
                   />
-                  <span
-                    htmlFor="myInput"
-                    className="floating-lable absolute left-3 top-3 text-gray-500"
-                  >
-                    Name
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="lastname"
-                    name="lastname"
-                    required
-                    className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
-                  />
-                  <span
-                    htmlFor="myInput"
-                    className="floating-lable absolute left-3 top-3 text-gray-500"
-                  >
-                    Last Name
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="phonenumber"
-                    name=" phonenumber"
-                    required
-                    className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
-                  />
-                  <span
-                    htmlFor="myInput"
-                    className="floating-lable absolute left-3 top-3 text-gray-500"
-                  >
-                    Phone number
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="street"
-                    name="street"
-                    required
-                    className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
-                  />
-                  <span
-                    htmlFor="myInput"
-                    className="floating-lable absolute left-3 top-3 text-gray-500"
-                  >
+                  <span className="floating-lable absolute left-3 top-3 text-gray-500">
                     Street and address
                   </span>
                 </div>
@@ -170,84 +133,102 @@ const Address_Detail_Form = ({ handleClose, handleUserAddress }) => {
               <div className="relative">
                 <input
                   type="text"
-                  id="appartmentNumber"
-                  name="appartmentNumber"
-                  required
-                  className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                  name="line2"
+                  value={line2}
+                  onChange={(e) => setLine2(e.target.value)}
+                  className={FIELD_CLS}
                 />
-                <span
-                  htmlFor="myInput"
-                  className="floating-lable absolute left-3 top-3 text-gray-500"
-                >
+                <span className="floating-lable absolute left-3 top-3 text-gray-500">
                   Appartment or Suite Number
                 </span>
               </div>
               <div className="relative">
                 <input
                   type="text"
-                  id="city"
                   name="city"
                   required
-                  className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className={FIELD_CLS}
                 />
-                <span
-                  htmlFor="myInput"
-                  className="floating-lable absolute left-3 top-3 text-gray-500"
-                >
+                <span className="floating-lable absolute left-3 top-3 text-gray-500">
                   City
                 </span>
               </div>
               <div className="relative">
                 <input
                   type="text"
-                  id="state"
                   name="state"
-                  required
-                  className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  className={FIELD_CLS}
                 />
-                <span
-                  htmlFor="myInput"
-                  className="floating-lable absolute left-3 top-3 text-gray-500"
-                >
+                <span className="floating-lable absolute left-3 top-3 text-gray-500">
                   State/Region
                 </span>
               </div>
               <div className="relative">
                 <input
                   type="text"
-                  id="postcode"
-                  name="postcode"
+                  name="postalCode"
                   required
-                  className="input-field h-[50px] w-full p-3 rounded-md border-slate-400 border-2"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                  className={FIELD_CLS}
                 />
-                <span
-                  htmlFor="myInput"
-                  className="floating-lable absolute left-3 top-3 text-gray-500"
-                >
-                  post code
+                <span className="floating-lable absolute left-3 top-3 text-gray-500">
+                  Post code
+                </span>
+              </div>
+              <div className="relative">
+                <input
+                  type="text"
+                  name="country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  className={FIELD_CLS}
+                />
+                <span className="floating-lable absolute left-3 top-3 text-gray-500">
+                  Country
+                </span>
+              </div>
+              <div className="relative">
+                <input
+                  type="tel"
+                  name="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={FIELD_CLS}
+                />
+                <span className="floating-lable absolute left-3 top-3 text-gray-500">
+                  Phone
                 </span>
               </div>
               <div className="flex justify-start ml-1 mr-8 gap-3 mb-4">
                 <input
                   type="checkbox"
-                  name="Address"
-                  value="default"
-                  id="Address"
+                  name="isDefault"
+                  checked={isDefault}
+                  onChange={(e) => setIsDefault(e.target.checked)}
                   className="w-6 h-5 border-slate-800 border-[3px] mt-2 accent-neutral-800"
                 />
                 <div className="text-xl text-gray-600 font-light">
                   Make this my default address
                 </div>
               </div>
+
+              {error && <p className="text-sm text-red-600">{error}</p>}
+
               <button
                 type="submit"
-                className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4"
+                disabled={!canSave || submitting}
+                className="w-full h-14 bg-neutral-300 text-neutral-600 font-semibold rounded-lg mb-4 enabled:bg-neutral-800 disabled:opacity-50"
               >
-                Save Address
+                {submitting ? "Saving…" : "Save Address"}
               </button>
 
               <div
-                onClick={handleClose}
+                onClick={onClose}
                 className=" text-center underline text-neutral-900 font-semibold mb-4 cursor-pointer"
               >
                 Cancel

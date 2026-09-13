@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
 import { apiFetch } from "../../../lib/api.js";
 import { formatPrice } from "../../../lib/format.js";
@@ -7,12 +7,14 @@ import { formatPrice } from "../../../lib/format.js";
 const Single_Product_page = () => {
   const navigate = useNavigate();
   const { productSlug } = useParams();
+  const location = useLocation();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
   const [toggleTechInfo, setToggleTechInfo] = useState(true);
   const [getSize, setSize] = useState("");
+  const [actionMessage, setActionMessage] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,9 +45,42 @@ const Single_Product_page = () => {
     setToggleTechInfo((prevState) => !prevState);
   };
 
-  const handleAddToCart = () => {
-    // I04 wires the real POST /cart/items; for now keep the redirect.
-    navigate("/cart");
+  const handleAddToCart = async () => {
+    // I04: real POST /cart/items — merges same size + snapshots price server-side.
+    if (!product || !getSize) return;
+    setActionMessage(null);
+    try {
+      await apiFetch("/cart/items", {
+        method: "POST",
+        body: { productId: product.id, quantity: 1, selectedSize: getSize },
+      });
+      navigate("/cart");
+    } catch (err) {
+      if (err.status === 401) {
+        navigate("/auth/login", { state: { from: location.pathname } });
+        return;
+      }
+      setActionMessage(err?.message ?? "Could not add to cart.");
+    }
+  };
+
+  const handleSaveForLater = async () => {
+    // I08: Save for Later == wishlist item (separate from cart lines).
+    if (!product) return;
+    setActionMessage(null);
+    try {
+      await apiFetch("/account/wishlist/items", {
+        method: "POST",
+        body: { productId: product.id },
+      });
+      setActionMessage("Saved for later.");
+    } catch (err) {
+      if (err.status === 401) {
+        navigate("/auth/login", { state: { from: location.pathname } });
+        return;
+      }
+      setActionMessage(err?.message ?? "Could not save for later.");
+    }
   };
 
   if (loading) {
@@ -159,6 +194,9 @@ const Single_Product_page = () => {
                     Add To Cart
                   </button>
                 </div>
+                {actionMessage && (
+                  <p className="text-sm text-red-600 mb-2">{actionMessage}</p>
+                )}
                 <div className="mb-2">
                   <button className="bg-white w-full h-14 text-neutral-800 font-medium border-[3px] rounded-md hover:broder-2 hover:border-neutral-900 border-neutral-500 ">
                     Find In-Store
@@ -198,7 +236,10 @@ const Single_Product_page = () => {
 
               <div className="mt-3">
                 <div className="flex justify-between">
-                  <button className="flex justify-start gap-1 pb-3">
+                  <button
+                    onClick={handleSaveForLater}
+                    className="flex justify-start gap-1 pb-3"
+                  >
                     <div className="text-2xl flex justify-center items-center ">
                       {" "}
                       <ion-icon name="heart-outline"></ion-icon>

@@ -1,14 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../lib/AuthContext.jsx";
+
 const Login = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showpass, setShowpass] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState(null);
   const handleShowpass = () => {
     setShowpass((prevState) => !prevState);
   };
   const isFormValid = email.trim() !== "" && password.trim() !== "";
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!isFormValid || submitting) return;
+    setSubmitting(true);
+    setFormError(null);
+    try {
+      await login(email, password);
+      navigate(location.state?.from ?? "/account", { replace: true });
+    } catch (err) {
+      const details = Array.isArray(err?.details) ? err.details : [];
+      setFormError(
+        details.length
+          ? details.map((d) => `${d.path}: ${d.message}`).join(" · ")
+          : err?.message ?? "Unable to sign in.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <div className="flex items-center justify-center flex-col mt-36">
@@ -18,7 +45,7 @@ const Login = () => {
               Sign in to your Account
             </p>
           </div>
-          <div className="flex flex-col gap-8 w-full">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full">
             <div className="relative">
               <input
                 type="email"
@@ -55,6 +82,10 @@ const Login = () => {
               </span>
             </div>
 
+            {formError && (
+              <p className="text-sm text-red-600">{formError}</p>
+            )}
+
             <div>
               <p className="underline">Forgot your password?</p>
             </div>
@@ -72,17 +103,18 @@ const Login = () => {
 
             <div>
               <button
-                disabled={!isFormValid}
+                type="submit"
+                disabled={!isFormValid || submitting}
                 className={`h-[50px] w-full font-semibold rounded-md ${
                   isFormValid
                     ? "bg-neutral-900 text-white hover:bg-neutral-700 cursor-pointer"
                     : "text-stone-600 bg-gray-400 cursor-not-allowed"
                 }`}
               >
-                Sign In
+                {submitting ? "Signing in…" : "Sign In"}
               </button>
             </div>
-          </div>
+          </form>
         </div>
         <div className="m-10">
           <p>
