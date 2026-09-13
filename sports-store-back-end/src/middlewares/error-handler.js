@@ -4,6 +4,14 @@ import { env } from "../config/env.js";
 // { success: false, error: { code, message, details? } }
 // eslint-disable-next-line no-unused-vars
 export function errorHandler(err, req, res, next) {
+  // Mongoose CastError (bad ObjectId in params/body) -> 400, not 500
+  if (err?.name === "CastError") {
+    return res.status(400).json({
+      success: false,
+      error: { code: "INVALID_ID", message: `Invalid id: ${err.value}` },
+    });
+  }
+
   const statusCode = err.statusCode ?? 500;
   const code = err.code ?? "INTERNAL_ERROR";
   const message = statusCode === 500 && env.isProd ? "Internal server error" : (err.message || "Internal server error");
