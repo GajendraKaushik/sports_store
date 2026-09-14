@@ -59,7 +59,7 @@ const BiKes = () => {
   </Drawer.Items>
 </Drawer>  
      <div className="mb-12">
-      <div className="lg:hidden block mt-16">
+      <div className="lg:hidden block">
         <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
           <div className="flex items-center justify-between">
             <div className="flex justify-start mt-3 gap-0 hover:text-red-600">
@@ -75,7 +75,7 @@ const BiKes = () => {
       </div>
 
      <div className="bg-white grid-col-[repeat(1,minmax(min-content, max-content))] ">
-      <div className="grid-cols-2 gap-5 hidden md:grid ml-11 mt-36">
+      <div className="grid-cols-2 gap-5 hidden md:grid ml-11">
         <div className="mx-2 mb-5">
            <div className="text-3xl font-bold">
             Registered Bike

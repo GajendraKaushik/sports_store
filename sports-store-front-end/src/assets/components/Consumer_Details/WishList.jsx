@@ -65,7 +65,7 @@ const WishList = () => {
   }
   return (
     <>
-      <div className="lg:hidden block mt-16">
+      <div className="lg:hidden block">
         <div className=" bg-stone-100 mt-3 h-44">
           <div className="flex items-center justify-between p-5">
           <div className="flex justify-start mt-3 gap-0 hover:text-red-600">
@@ -83,7 +83,7 @@ const WishList = () => {
           </div>
         </div>
       </div>
-      <div className="mt-16 m-8 md:m-20 ">
+      <div className="m-8 md:m-20 ">
         <div className="">
           <div className="text-3xl font-bold hidden md:block">
             Saved For Later

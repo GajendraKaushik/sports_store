@@ -228,7 +228,7 @@ const ProductCart = () => {
   };
 if (loading) {
     return (
-      <div className="bg-white mt-28 ml-8">
+      <div className="bg-white ml-8 pt-6">
         <p>Loading your cart…</p>
       </div>
     );
@@ -236,7 +236,7 @@ if (loading) {
 
   if (loadError) {
     return (
-      <div className="bg-white mt-28 ml-8">
+      <div className="bg-white ml-8 pt-6">
         <p>{loadError?.message ?? "Could not load cart."}</p>
       </div>
     );
@@ -244,7 +244,7 @@ if (loading) {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 mt-16 md:mx-24 mx-7 relative">
+      <div className="grid grid-cols-1 md:grid-cols-3 pt-6 md:mx-24 mx-7 relative">
         <div className="md:col-span-3">
           <h2 className="font-bold text-2xl text-black my-10">Cart</h2>
         </div>

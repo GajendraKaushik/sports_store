@@ -25,7 +25,7 @@ const PaymentMethods = () => {
           <Payment_Detail_Form handleClose={handleClose} />
         </Drawer.Items>
       </Drawer>
-      <div className="bg-white grid-col-[repeat(1,minmax(min-content, max-content))] mt-16">
+      <div className="bg-white grid-col-[repeat(1,minmax(min-content, max-content))]">
         <div className="lg:hidden block">
           <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
             <div className="flex items-center justify-between">
@@ -47,7 +47,7 @@ const PaymentMethods = () => {
           </div>
         </div>
 
-        <div className="hidden lg:block ml-11 mt-24">
+        <div className="hidden lg:block ml-11">
           <div className="pt-4 px-6 pb-px bg-white mt-3 flex items-center justify-between">
             <div className="text-3xl text-center font-bold">
               Payment Methods

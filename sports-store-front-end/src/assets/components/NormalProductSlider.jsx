@@ -24,11 +24,16 @@ const NormalProductSlider = () => {
   }, []);
 
   return (
-    <CaroselContainer>
-      {products.map((product) => (
-        <NormalProductCard key={product.id} product={product} />
-      ))}
-    </CaroselContainer>
+    <section className="w-full bg-white">
+      <div className="px-12 pt-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-neutral-800 text-left">Rider Favorites</h2>
+      </div>
+      <CaroselContainer>
+        {products.map((product) => (
+          <NormalProductCard key={product.id} product={product} />
+        ))}
+      </CaroselContainer>
+    </section>
   );
 };
 

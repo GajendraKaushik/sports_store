@@ -7,7 +7,7 @@ const ProductListCard = ({ItemName, ItemImg, to}) => {
   return (
     <Link
       to={to}
-      className="my-20 mx-5 w-full h-64 block"
+      className=" mx-5 w-full h-80 block"
     >
       <div className="relative overflow-hidden rounded-lg group w-full h-full">
         <img

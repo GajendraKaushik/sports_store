@@ -43,7 +43,8 @@ const Product_List_Page = () => {
 
   return (
     <>
-      <div className="mt-32 ml-8 lg:mx-20 bg-white ">
+      <div className="w-full bg-white">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-8">
         <div className="flex flex-col gap-3 relative">
           <h1 className="text-2xl font-bold ">{categoryLabel}</h1>
           <section>
@@ -78,19 +79,19 @@ const Product_List_Page = () => {
           </section>
         </div>
 
-        {loading && <p className="m-4">Loading products…</p>}
+        {loading && <p className="mt-10">Loading products…</p>}
 
         {!loading && error && (
-          <p className="m-4 text-red-600">
+          <p className="mt-10 text-red-600">
             Could not load products: {error.message}
           </p>
         )}
 
         {!loading && !error && products.length === 0 && (
-          <p className="m-4">No products found.</p>
+          <p className="mt-10">No products found.</p>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 m-4 mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
           {products.map((item) => (
             <Product_Card
               key={item.id}
@@ -102,6 +103,7 @@ const Product_List_Page = () => {
               productSlug={item.slug}
             />
           ))}
+        </div>
         </div>
       </div>
     </>

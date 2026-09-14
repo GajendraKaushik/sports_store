@@ -20,7 +20,7 @@ const MyaccountRootLayout = () => {
   return (
 <>
 <div className="flex">
-        <div className="mt-[73px] w-96 py-6 px-16 flex-col bg-stone-50 gap-5 text-center hidden lg:flex">
+        <div className="w-96 py-6 px-16 flex-col bg-stone-50 gap-5 text-center hidden lg:flex">
           <div className="">
             <div className="mr-3 my-2">My Account</div>
             <div className="text-3xl font-bold mr-3 my-3">User Name</div>
@@ -46,7 +46,7 @@ const MyaccountRootLayout = () => {
       </div>
 
       {/* <div className="bg-stone-100 lg:hidden block">
-        <div className="w-full mt-28 bg-stone-100">
+        <div className="w-full bg-stone-100">
           <div className=" flex items-center justify-between m-4">
             <p>My Account</p>
             <a href="">Sign Out</a>

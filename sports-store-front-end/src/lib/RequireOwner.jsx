@@ -10,7 +10,7 @@ export default function RequireOwner({ children }) {
 
   if (loading) {
     return (
-      <div className="bg-white mt-28 ml-8">
+      <div className="bg-white ml-8 pt-6">
         <p>Checking your session…</p>
       </div>
     );

@@ -49,7 +49,7 @@ const Profile = () => {
         <UserDetailForm onClose={handleClose} onSaved={handleSaved} userInfo={userInfo} />
         </Drawer.Items>
       </Drawer>
-      <div className="lg:hidden block mt-16">
+      <div className="lg:hidden block">
           <div className="pt-4 px-6 pb-px bg-stone-100 mt-3">
             <div className="flex items-center justify-between">
             <div className="flex justify-start mt-3 gap-0 hover:text-red-600 cursor-pointer">
@@ -70,7 +70,7 @@ const Profile = () => {
 
       <div className={`bg-white ml-9 grid-col-1 p-12`}>
 
-        <div className=" mt-28 h-20 text-3xl font-bold">Profile</div>
+        <div className="h-20 text-3xl font-bold">Profile</div>
         {loadError && <p className="text-red-600">{loadError}</p>}
         <div className="grid md:grid-cols-2 gap-10 grid-cols-1">
           <div className="bg-white rounded-lg shadow-lg min-w-64 shadow-black">

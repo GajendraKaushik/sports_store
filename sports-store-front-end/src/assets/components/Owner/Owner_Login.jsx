@@ -35,7 +35,7 @@ const Owner_Login = () => {
   };
 
   return (
-    <div className="mt-28 mb-20 mx-auto max-w-md px-6">
+    <div className="mt-0 mb-20 pt-6 mx-auto max-w-md px-6">
       <h1 className="text-3xl font-bold">Owner Login</h1>
       <p className="mt-2 text-sm text-neutral-600">
         Sign in with your store owner account.

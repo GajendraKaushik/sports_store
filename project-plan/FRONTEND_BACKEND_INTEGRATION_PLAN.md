@@ -596,3 +596,36 @@ This sequencing gives us:
 - read-only catalog before mutating cart/account flows
 - owner UI after user auth works
 - one final proof pass with zero mocks
+
+## Post-plan: Homepage → product navigation (Sep 13, 2026)
+
+> Status: DONE — Carousel 1 category tiles now navigate to `/products?category=<slug>`
+> (backend `listProducts` already filters by category slug). Seed expanded from 3 to
+> 11 categories (electric-bikes, road-bikes, mountain-bikes, active-bikes, kids-bikes,
+> tires, apparel, accessories added) and 9 → 19 products (2 per new category) so every
+> tile opens a populated list. Carousel 2 now fetches `GET /products` (hardcoded mock
+> list removed) and each card links to `/products/:slug` via `NormalProductCard`
+> (local tile images mapped by slug, `primaryImage` fallback). `/products` heading
+> follows the active category, fetches `?limit=24`, refetches on category change.
+> Whole tile/card is the click target; "Shop" is a styled span (no button-in-link).
+> Track width `grid-auto-columns: 360px` (320px card + mx-5 margins). Verified:
+> 8/8 tile categories return items, 19-product catalog, detail target 200, unknown
+> category → 200 + empty list (renders "No products found"), build ✓ 339 modules,
+> backend tests ✓ 6/6.
+
+## Post-plan: product images — dummy now, real later (Sep 13, 2026)
+
+> Status: DONE — the API serves `public/images` statically at `/images`, so every
+> product has a working picture without external hosting. `npm run seed` now:
+> (1) uses a real file if one named `<slug>.jpg/.jpeg/.png/.webp/.avif/.gif` exists
+> in `public/images/`, (2) otherwise generates a category-themed SVG dummy
+> (gradient + emoji + product title, never overwrites an existing file), and
+> (3) stores the absolute URL (`PUBLIC_BASE_URL`, default `http://localhost:5001`,
+> documented in `.env.example`). Workflow for the owner: download images, save as
+> `<product-slug>.jpg` in `sports-store-back-end/public/images/`, re-run
+> `npm run seed` — homepage slider, product list, detail page, and owner panel all
+> update together (`primaryImage = images[0]`). `NormalProductSlider` no longer
+> overrides images locally. Verified: `/images/<slug>.svg` → 200 `image/svg+xml`,
+> products carry the new URLs, 8/8 tiles still populated, build ✓ 334 modules
+> (BikeImg imports removed), tests ✓ 6/6. See `public/images/README.md`.
+

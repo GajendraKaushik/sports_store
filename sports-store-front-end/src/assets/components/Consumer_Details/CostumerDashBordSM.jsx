@@ -17,7 +17,7 @@ import SaveForLatter from "../../images/bookmark.png";
 const CostumerDashBordSM = () => {
   return (
     <div className="bg-stone-100 relative">
-      <div className="w-full mt-28 bg-stone-100">
+      <div className="w-full bg-stone-100">
         <div className=" flex items-center justify-between m-4">
           <p>My Account</p>
           <NavLink to="/auth/login">Sign Out</NavLink>

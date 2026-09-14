@@ -21,7 +21,7 @@ const Owner_Layout = () => {
   };
 
   return (
-    <div className="mt-16 mb-20 mx-4 md:mx-10 flex flex-col md:flex-row gap-8">
+    <div className="mb-20 pt-6 mx-4 md:mx-10 flex flex-col md:flex-row gap-8">
       <aside className="md:w-56 shrink-0">
         <div className="bg-white shadow-3xl rounded-md p-5">
           <h2 className="text-lg font-bold">Owner Panel</h2>

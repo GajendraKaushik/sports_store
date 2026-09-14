@@ -66,7 +66,7 @@ const ProductsList = () => {
     </div>
 </div>
        <div className="LandinImageContainer hidden md:block">
-        <div className="relative w-full h-[810px] top-16">
+        <div className="relative w-full h-[860px]">
           <img src={Homeimg} alt="HomeImg" className=" absolute w-full h-full" />
           <div className="absolute flex flex-col text-left ml-20 mt-56 w-1/4 h-1/3 bg-black bg-opacity-20">
                <div className="text-white uppercase font-semibold  mt-5">

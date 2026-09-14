@@ -62,15 +62,19 @@ const ImageSlider = (props) => {
   ];
 
 return(
-    <CaroselContainer> 
-      {productItems.map((item) => {
-              return (
-                // image card itmes
-                <ProductListCard  key={item.name} ItemName={item.name} ItemImg ={item.img} to={item.to}/>
-              );
-            })}
-    </CaroselContainer>
-      
+    <section className="w-full bg-white">
+      <div className="px-12 pt-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-neutral-800 text-left">New Arrivals</h2>
+      </div>
+      <CaroselContainer> 
+        {productItems.map((item) => {
+                return (
+                  // image card itmes
+                  <ProductListCard  key={item.name} ItemName={item.name} ItemImg ={item.img} to={item.to}/>
+                );
+              })}
+      </CaroselContainer>
+    </section>
   );
 };
 

@@ -30,7 +30,7 @@ const NavBar = () => {
 
     return (
       <>
-        <div className="shadow-md w-full top-0 left-0 absolute">
+        <div className="shadow-md w-full top-0 left-0 sticky z-50 bg-white">
           <div className="md:flex items-center justify-between bg-white py-4 md:px-10 px-7 z-auto">
             <div className="font-bold text-2xl cursor-pointer flex items-center font-[Popins] italic uppercase">
               <span></span>

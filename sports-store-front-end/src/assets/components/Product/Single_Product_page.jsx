@@ -91,8 +91,8 @@ const Single_Product_page = () => {
 
   if (loading) {
     return (
-      <div className="bg-white mt-28">
-        <p className="ml-8 mt-6">Loading product…</p>
+      <div className="bg-white">
+        <p className="ml-8 pt-6">Loading product…</p>
         <button className="ml-8 mt-4 underline" onClick={() => navigate(-1)}>
           Go back
         </button>
@@ -103,8 +103,8 @@ const Single_Product_page = () => {
   if (loadError || !product) {
     const notFound = loadError?.code === "NOT_FOUND";
     return (
-      <div className="bg-white mt-28">
-        <p className="ml-8 mt-6">
+      <div className="bg-white">
+        <p className="ml-8 pt-6">
           {notFound
             ? "Product not found."
             : `Could not load product: ${loadError?.message ?? "Unknown error"}`}
@@ -126,7 +126,7 @@ const Single_Product_page = () => {
 
   return (
     <>
-      <div className="bg-white mt-28">
+      <div className="bg-white">
         <div className="top-button">
           <div className="flex">
             <button className="flex justify-between items-center w-full h-16 px-4">
