@@ -1,20 +1,28 @@
 import React from 'react'
+import { Link } from "react-router-dom";
+import { formatPrice } from "../../lib/format.js";
 
-
-const NormalProductCard = ({ProductImg, ProductName, OfferPrice, OriginalPrice}) => {
+// Whole card opens the product detail page (/products/:productSlug), same
+// pattern as Product_Card on the products list page.
+const NormalProductCard = ({product, ProductImg}) => {
   return (
-    <div  className=' w-[325px] h-[425px] bg-white'>
-        <div className='px-3 py-8  bg-white'>
-            <img src={ProductImg} alt="img1" className='w-full h-3/4 rounded-md'/>
+    <Link
+      to={`/products/${product.slug}`}
+      className=' w-full h-[425px] bg-white block'
+    >
+        <div className='px-3 py-8  bg-white w-full h-full'>
+            <img src={ProductImg ?? product.primaryImage} alt={product.title} className='w-full h-3/4 rounded-md object-cover'/>
             <div className='flex justify-between w-full'>
-              <div className='text-gray-600'>{ProductName}</div>
+              <div className='text-gray-600'>{product.title}</div>
               <div >
-                <p className='text-gray-950'>${OfferPrice}</p>
-                <p className='text-gray-500 line-through'>${OriginalPrice}</p>
+                <p className='text-gray-950'>{formatPrice(product.price, product.currency)}</p>
+                {product.compareAtPrice ? (
+                  <p className='text-gray-500 line-through'>{formatPrice(product.compareAtPrice, product.currency)}</p>
+                ) : null}
               </div>
             </div>
         </div>
-    </div>
+    </Link>
   )
 }
 

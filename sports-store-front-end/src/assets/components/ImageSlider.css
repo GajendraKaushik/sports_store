@@ -5,7 +5,9 @@
     overflow-x: auto;
     scrollbar-width: none;
     grid-auto-flow: column;
-    grid-auto-columns: 320px;
+    /* 360 = 320px visible card + the card's mx-5 (40px) so each track ends
+       exactly at the last card (no dead space at the right edge). */
+    grid-auto-columns: 360px;
 
 }
 .slider-wrapper .card-list::-webkit-scrollbar{

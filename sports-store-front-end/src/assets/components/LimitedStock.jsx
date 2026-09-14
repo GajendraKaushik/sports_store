@@ -13,14 +13,14 @@ const LimitedStock = () => {
     <>
     <div className='w-full bg-white'>
         <div className='grid p-12 grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-x-6 gap-y-11 md:gap-y-0'>
-         <LimitedProductCard ProductImg={BikeTempo}  ProductSpec={"Evolution of the Fastest"} ProductName={"The All-New Epic 8"}/>
-         <LimitedProductCard ProductImg={tire}  ProductSpec={"Keep Rolling"} ProductName={"All-New Hemisphere Tire"}/>
+         <LimitedProductCard ProductImg={BikeTempo}  ProductSpec={"Evolution of the Fastest"} ProductName={"The All-New Epic 8"} to="/products/s-works-stumpjumper-evo"/>
+         <LimitedProductCard ProductImg={tire}  ProductSpec={"Keep Rolling"} ProductName={"All-New Hemisphere Tire"} to="/products/fast-trak-control-tire"/>
         </div>
     </div>
     <div className='w-full bg-white'>
         <div className='grid p-12 grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-x-6 gap-y-11 md:gap-y-0'>
-         <LimitedProductCard ProductImg={FindStore}  ProductSpec={"Evolution of the Fastest"} ProductName={"The All-New Epic 8"}/>
-         <LimitedProductCard ProductImg={DownloadApp}  ProductSpec={"Keep Rolling"} ProductName={"All-New Hemisphere Tire"}/>
+         <LimitedProductCard ProductImg={FindStore}  ProductSpec={"Evolution of the Fastest"} ProductName={"The All-New Epic 8"} to="/products/s-works-stumpjumper-evo"/>
+         <LimitedProductCard ProductImg={DownloadApp}  ProductSpec={"Keep Rolling"} ProductName={"All-New Hemisphere Tire"} to="/products/ground-control-grid-tire"/>
         </div>
     </div>
     </>

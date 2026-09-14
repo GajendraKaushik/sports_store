@@ -16,38 +16,48 @@ import tire from "../images/Tire.webp";
 
 
 const ImageSlider = (props) => {
+  // `to` navigates to the products list pre-filtered by that tile's category
+  // (carousel 1 tiles are categories, not single products).
   let productItems = [
     {
       name: "Electric Bike",
       img: offridingImg,
+      to: "/products?category=electric-bikes",
     },
     {
       name: "Road Bikes",
       img: Tileimg,
+      to: "/products?category=road-bikes",
     },
     {
       name: "Mountain Bike",
       img: forestImg,
+      to: "/products?category=mountain-bikes",
     },
     {
       name: "Active Bike",
       img: singleridingImg,
+      to: "/products?category=active-bikes",
     },
     {
       name: "Kids Bike",
       img: kids,
+      to: "/products?category=kids-bikes",
     },
     {
       name: "Tire",
       img: tire,
+      to: "/products?category=tires",
     },
     {
       name: "Apparel",
       img: apparel,
+      to: "/products?category=apparel",
     },
     {
       name: "Accessaries",
       img: Accessa,
+      to: "/products?category=accessories",
     },
   ];
 
@@ -56,7 +66,7 @@ return(
       {productItems.map((item) => {
               return (
                 // image card itmes
-                <ProductListCard  key={item.name} ItemName={item.name} ItemImg ={item.img}/>
+                <ProductListCard  key={item.name} ItemName={item.name} ItemImg ={item.img} to={item.to}/>
               );
             })}
     </CaroselContainer>

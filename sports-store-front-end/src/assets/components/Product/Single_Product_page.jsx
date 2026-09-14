@@ -15,6 +15,12 @@ const Single_Product_page = () => {
   const [toggleTechInfo, setToggleTechInfo] = useState(true);
   const [getSize, setSize] = useState("");
   const [actionMessage, setActionMessage] = useState(null);
+  // Gallery: which image is shown in the main frame.
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [productSlug]);
 
   useEffect(() => {
     let cancelled = false;
@@ -110,6 +116,14 @@ const Single_Product_page = () => {
     );
   }
 
+  // All views for the gallery; falls back to a single primaryImage.
+  const productImages =
+    product.images?.length > 0
+      ? product.images
+      : product.primaryImage
+        ? [product.primaryImage]
+        : [];
+
   return (
     <>
       <div className="bg-white mt-28">
@@ -127,8 +141,29 @@ const Single_Product_page = () => {
           <div className="grid grid-cols-3 ">
             <div className="w-full col-span-2">
            <div className="ml-14 ">
-              <img src={product.primaryImage ?? product.images?.[0]} alt={product.title} className="w-full h-[750px] rounded-md "/>
-              {/* Additional product images can be rendered here from product.images[] */}
+              <img
+                src={productImages[activeImageIndex]}
+                alt={`${product.title} — image ${activeImageIndex + 1}`}
+                className="w-full h-[750px] object-cover rounded-md"
+              />
+              {productImages.length > 1 && (
+                <div className="flex justify-center gap-4 mt-6">
+                  {productImages.map((image, index) => (
+                    <button
+                      key={image}
+                      onClick={() => setActiveImageIndex(index)}
+                      aria-label={`Show image ${index + 1} of ${product.title}`}
+                      className={`w-28 h-24 rounded-md overflow-hidden border-2 transition-colors ${
+                        index === activeImageIndex
+                          ? "border-neutral-900"
+                          : "border-transparent hover:border-neutral-400"
+                      }`}
+                    >
+                      <img src={image} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
            </div>
         
             </div>

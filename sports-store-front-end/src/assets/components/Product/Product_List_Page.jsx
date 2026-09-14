@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Product_Card from "./Product_Card";
 import { apiFetch } from "../../../lib/api.js";
 
 const Product_List_Page = () => {
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category") ?? "";
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
 
-    apiFetch("/products")
+    // I02: category tiles on the homepage land here via ?category=<slug>.
+    // limit=24 is the API max; the catalog is small enough to page once.
+    const query = category ? `?category=${encodeURIComponent(category)}&limit=24` : "?limit=24";
+    apiFetch(`/products${query}`)
       .then((data) => {
         if (!cancelled) setProducts(data?.items ?? []);
       })
@@ -24,13 +31,21 @@ const Product_List_Page = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [category]);
+
+  // Heading follows the active tile filter ("Electric Bikes", "Tires", …).
+  const categoryLabel = category
+    ? category
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    : "All Products";
 
   return (
     <>
       <div className="mt-32 ml-8 lg:mx-20 bg-white ">
         <div className="flex flex-col gap-3 relative">
-          <h1 className="text-2xl font-bold ">Bikes</h1>
+          <h1 className="text-2xl font-bold ">{categoryLabel}</h1>
           <section>
             <p>
               Perfection. It's hard to define, yet easy to recognize. We
