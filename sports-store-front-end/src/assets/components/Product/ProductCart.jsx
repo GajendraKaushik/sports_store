@@ -211,20 +211,10 @@ const ProductCart = () => {
       });
     });
 
-  const handleCheckout = async () => {
-    setBusy(true);
-    try {
-      const data = await apiFetch("/orders", {
-        method: "POST",
-        body: { fulfillmentMethod: "pickup" },
-      });
-      const order = data?.order ?? data;
-      navigate(`/account/orders/${order.id}`);
-    } catch (err) {
-      alert(err?.message ?? "Could not place order");
-    } finally {
-      setBusy(false);
-    }
+  // Dummy checkout: payment is not enabled yet, so route to the
+  // placeholder page instead of placing an order.
+  const handleCheckout = () => {
+    navigate("/checkout");
   };
 if (loading) {
     return (

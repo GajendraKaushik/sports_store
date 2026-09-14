@@ -30,6 +30,7 @@ import Product_List_Page from "./assets/components/Product/Product_List_Page";
 
 import Single_Product_page from "./assets/components/Product/Single_Product_page";
 import ProductCart from "./assets/components/Product/ProductCart";
+import CheckoutPlaceholder from "./assets/components/Product/CheckoutPlaceholder";
 import SignUp from "./assets/components/Login/SignUp";
 
 // U10 -> I01: auth guard now reads the real session (AuthContext). Logged-out
@@ -56,6 +57,7 @@ function App() {
           element: <Single_Product_page />
         },
         { path: "/cart", element: <RequireAuth><ProductCart /></RequireAuth> },
+        { path: "/checkout", element: <RequireAuth><CheckoutPlaceholder /></RequireAuth> },
         
         // U02 + U16 + I01: Normalized + responsive account routes, now
         // behind the real session guard. ResponsiveRootLayout picks the
