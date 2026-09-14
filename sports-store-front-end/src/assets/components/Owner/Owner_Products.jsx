@@ -2,7 +2,12 @@
 // Price/status edits here are what the storefront (GET /products) shows.
 // No delete, no image upload — out of scope per plan.
 import React, { useCallback, useEffect, useState } from "react";
-import { apiFetch } from "../../../lib/api.js";
+import {
+  getOwnerProducts,
+  createOwnerProduct,
+  updateOwnerProduct,
+  getCategories,
+} from "../../../api/ownerApi.js";
 import { formatPrice } from "../../../lib/format.js";
 
 const STATUSES = ["draft", "active", "archived"];
@@ -72,7 +77,7 @@ const Owner_Products = () => {
   const [formError, setFormError] = useState(null);
 
   const load = useCallback(() => {
-    apiFetch("/owner/products")
+    getOwnerProducts()
       .then((data) => setProducts(data?.products ?? []))
       .catch((err) => setError(err?.message ?? "Could not load products"))
       .finally(() => setLoading(false));
@@ -80,7 +85,7 @@ const Owner_Products = () => {
 
   useEffect(() => {
     load();
-    apiFetch("/categories")
+    getCategories()
       .then((data) => setCategories(data?.categories ?? data?.items ?? []))
       .catch(() => setCategories([]));
   }, [load]);
@@ -115,19 +120,13 @@ const Owner_Products = () => {
     try {
       const payload = payloadFromForm(form);
       if (editingId) {
-        const data = await apiFetch(`/owner/products/${editingId}`, {
-          method: "PATCH",
-          body: payload,
-        });
+        const data = await updateOwnerProduct(editingId, payload);
         const updated = data?.product ?? data;
         setProducts((prev) =>
           prev.map((p) => (p.id === editingId ? updated : p)),
         );
       } else {
-        const data = await apiFetch("/owner/products", {
-          method: "POST",
-          body: payload,
-        });
+        const data = await createOwnerProduct(payload);
         const created = data?.product ?? data;
         setProducts((prev) => [created, ...prev]);
       }

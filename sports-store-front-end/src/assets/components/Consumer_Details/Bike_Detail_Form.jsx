@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { apiFetch } from "../../../lib/api.js";
+import { createBike } from "../../../api/accountApi.js";
 
 // I08: bike registration posts to POST /account/bikes
 const Bike_Detail_Form = ({ handleClose, onCreated }) => {
@@ -12,14 +12,11 @@ const Bike_Detail_Form = ({ handleClose, onCreated }) => {
     setSubmitting(true);
     setError(null);
     try {
-      await apiFetch("/account/bikes", {
-        method: "POST",
-        body: {
-          serialNumber: data.serialNumber,
-          bikeName: data.bikeName,
-          purchaseLocation: data.purchaseLocation ?? "",
-          ...(data.purchaseDate ? { purchaseDate: data.purchaseDate } : {}),
-        },
+      await createBike({
+        serialNumber: data.serialNumber,
+        bikeName: data.bikeName,
+        purchaseLocation: data.purchaseLocation ?? "",
+        ...(data.purchaseDate ? { purchaseDate: data.purchaseDate } : {}),
       });
       event.target.reset();
       onCreated?.();

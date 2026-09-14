@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CaroselContainer from "./CaroselContainer";
 import NormalProductCard from "./NormalProductCard";
-import { apiFetch } from "../../lib/api.js";
+import { useHomeProducts } from "../../hooks/useProducts.js";
 
-// Products come live from GET /products; each card shows the product's own
-// primaryImage (category-themed dummy SVGs until real photos are dropped into
-// the backend's public/images folder and the seed is re-run).
+// Products come live from GET /products (via useHomeProducts); each card
+// shows the product's own primaryImage (category-themed dummy SVGs until
+// real photos are dropped into the backend's public/images folder and the
+// seed is re-run).
 const NormalProductSlider = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    let cancelled = false;
-    apiFetch("/products")
-      .then((data) => {
-        if (!cancelled) setProducts(data?.items ?? []);
-      })
-      .catch(() => {
-        // Slider stays empty on failure; the /products page surfaces errors.
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { products } = useHomeProducts();
 
   return (
     <section className="w-full bg-white">

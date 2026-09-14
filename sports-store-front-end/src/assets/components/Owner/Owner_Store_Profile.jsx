@@ -1,7 +1,7 @@
 // I09: store profile editor. Reads GET /owner/store, saves PATCH /owner/store
 // (name, slug, description, contactEmail, contactPhone, address).
 import React, { useEffect, useState } from "react";
-import { apiFetch } from "../../../lib/api.js";
+import { getOwnerStore, updateOwnerStore } from "../../../api/ownerApi.js";
 
 const Owner_Store_Profile = () => {
   const [store, setStore] = useState(null);
@@ -13,7 +13,7 @@ const Owner_Store_Profile = () => {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    apiFetch("/owner/store")
+    getOwnerStore()
       .then((data) => {
         const s = data?.store ?? data;
         setStore(s);
@@ -39,17 +39,14 @@ const Owner_Store_Profile = () => {
     setSaveError(null);
     setSaved(false);
     try {
-      const data = await apiFetch("/owner/store", {
-        method: "PATCH",
-        body: {
+      const data = await updateOwnerStore({
           name: form.name.trim(),
           slug: form.slug.trim(),
           description: form.description,
           contactEmail: form.contactEmail.trim(),
           contactPhone: form.contactPhone.trim(),
           address: form.address,
-        },
-      });
+        });
       const s = data?.store ?? data;
       setStore(s);
       setForm({

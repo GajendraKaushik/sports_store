@@ -4,7 +4,12 @@ import {Drawer } from "flowbite-react";
 import Address_Detail_Form from "./Address_Detail_Form";
 import Address_detail_Card from "./Address_detail_Card";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import {
+  getAddresses,
+  createAddress,
+  updateAddress,
+  deleteAddress,
+} from "../../../api/accountApi.js";
 import { useAuth } from "../../../lib/AuthContext.jsx";
 
 // I07: address book reads/writes /account/addresses* (list/create/update/
@@ -20,7 +25,7 @@ const Address = () => {
   const [loadError, setLoadError] = useState(null);
 
   const load = useCallback(() => {
-    apiFetch("/account/addresses")
+    getAddresses()
       .then((data) => setAddresses(data?.addresses ?? []))
       .catch((err) =>
         setLoadError(err?.message ?? "Could not load addresses"),
@@ -47,12 +52,9 @@ const Address = () => {
 
   const handleUpsert = async (payload) => {
     if (editing?.id) {
-      await apiFetch(`/account/addresses/${editing.id}`, {
-        method: "PATCH",
-        body: payload,
-      });
+      await updateAddress(editing.id, payload);
     } else {
-      await apiFetch("/account/addresses", { method: "POST", body: payload });
+      await createAddress(payload);
     }
     handleClose();
     await load();
@@ -60,14 +62,13 @@ const Address = () => {
 
   const handleDelete = async (addressId) => {
     if (!window.confirm("Remove this address?")) return;
-    await apiFetch(`/account/addresses/${addressId}`, { method: "DELETE" });
+    await deleteAddress(addressId);
     await load();
   };
 
   const handleSetDefault = async (addressId) => {
-    await apiFetch(`/account/addresses/${addressId}`, {
-      method: "PATCH",
-      body: { isDefault: true },
+    await updateAddress(addressId, {
+      isDefault: true,
     });
     await load();
   };

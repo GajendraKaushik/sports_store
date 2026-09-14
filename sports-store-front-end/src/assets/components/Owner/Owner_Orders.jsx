@@ -1,7 +1,7 @@
 // I09: owner orders. Reads GET /owner/orders, changes status via
 // PATCH /owner/orders/:orderId/status (frozen status enum).
 import React, { useCallback, useEffect, useState } from "react";
-import { apiFetch } from "../../../lib/api.js";
+import { getOwnerOrders, updateOrderStatus } from "../../../api/ownerApi.js";
 import { formatPrice } from "../../../lib/format.js";
 
 const STATUSES = [
@@ -19,7 +19,7 @@ const Owner_Orders = () => {
   const [rowBusy, setRowBusy] = useState(null);
 
   const load = useCallback(() => {
-    apiFetch("/owner/orders")
+    getOwnerOrders()
       .then((data) => setOrders(data?.orders ?? []))
       .catch((err) => setError(err?.message ?? "Could not load orders"))
       .finally(() => setLoading(false));
@@ -32,10 +32,7 @@ const Owner_Orders = () => {
   const handleStatusChange = async (orderId, status) => {
     setRowBusy(orderId);
     try {
-      const data = await apiFetch(`/owner/orders/${orderId}/status`, {
-        method: "PATCH",
-        body: { status },
-      });
+      const data = await updateOrderStatus(orderId, { status });
       const updated = data?.order ?? data;
       setOrders((prev) =>
         prev.map((order) => (order.id === orderId ? updated : order)),

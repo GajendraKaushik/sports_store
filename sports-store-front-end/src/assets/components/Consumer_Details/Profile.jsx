@@ -3,7 +3,7 @@ import UserDetailForm from "./UserDetailForm";
 
 import {Drawer} from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import { getProfile } from "../../../api/accountApi.js";
 import { useAuth } from "../../../lib/AuthContext.jsx";
 
 // I07: profile reads/writes the backend (GET/PATCH /account/profile).
@@ -17,7 +17,7 @@ const Profile = () => {
   const [loadError, setLoadError] = useState(null);
 
   const loadProfile = () =>
-    apiFetch("/account/profile")
+    getProfile()
       .then((data) => setUserInfo(data?.profile ?? data))
       .catch((err) => setLoadError(err?.message ?? "Could not load profile"));
 

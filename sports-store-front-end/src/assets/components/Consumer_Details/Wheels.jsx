@@ -4,7 +4,7 @@ import Wheel_Detail_Form from "./Wheel_Detail_Form";
 import Wheel_info_Cards from "./Wheel_info_Cards.jsx";
 import plus from "../../images/Icons/plus.png";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import { getWheels } from "../../../api/accountApi.js";
 import { useAuth } from "../../../lib/AuthContext.jsx";
 
 // I08: wheels page reads GET /account/wheels; form creates via POST /account/wheels
@@ -19,7 +19,7 @@ const Wheels = () => {
   const handleClose = () => setIsOpen(false);
 
   const load = useCallback(() => {
-    apiFetch("/account/wheels")
+    getWheels()
       .then((data) => setWheels(data?.wheels ?? []))
       .catch((err) => setLoadError(err?.message ?? "Could not load wheels"))
       .finally(() => setLoading(false));

@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Saved_Product_Card from "./Saved_Product_Card";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import {
+  getAccountWishlist,
+  removeWishlistItem,
+  addToCart,
+} from "../../../api/accountApi.js";
 import { useAuth } from "../../../lib/AuthContext.jsx";
 
 // I08: wishlist page reads /account/wishlist and supports move-to-cart
@@ -14,7 +18,7 @@ const WishList = () => {
   const [loadError, setLoadError] = useState(null);
 
   const load = useCallback(() => {
-    apiFetch("/account/wishlist")
+    getAccountWishlist()
       .then((data) => setItems(data?.items ?? []))
       .catch((err) =>
         setLoadError(err?.message ?? "Could not load wishlist"),
@@ -30,9 +34,7 @@ const WishList = () => {
 
   const handleRemove = async (productId) => {
     try {
-      await apiFetch(`/account/wishlist/items/${productId}`, {
-        method: "DELETE",
-      });
+      await removeWishlistItem(productId);
       setItems((prev) =>
         prev.filter((i) => itemProductId(i) !== productId),
       );
@@ -45,10 +47,7 @@ const WishList = () => {
     const product = item.product ?? {};
     const productId = itemProductId(item);
     try {
-      await apiFetch("/cart/items", {
-        method: "POST",
-        body: { productId, quantity: 1, selectedSize: "" },
-      });
+      await addToCart({ productId, quantity: 1, selectedSize: "" });
       await handleRemove(productId);
     } catch (err) {
       alert(err?.message ?? "Could not add to cart");

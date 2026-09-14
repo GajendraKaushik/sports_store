@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import { getOrders } from "../../../api/accountApi.js";
 import { useAuth } from "../../../lib/AuthContext.jsx";
 import { formatPrice } from "../../../lib/format.js";
 
@@ -13,7 +13,7 @@ const Oders = () => {
   const [loadError, setLoadError] = useState(null);
 
   const load = useCallback(() => {
-    apiFetch("/account/orders")
+    getOrders()
       .then((data) => setOrders(data?.orders ?? []))
       .catch((err) => setLoadError(err?.message ?? "Could not load orders"))
       .finally(() => setLoading(false));

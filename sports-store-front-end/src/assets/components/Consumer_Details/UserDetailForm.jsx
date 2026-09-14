@@ -2,7 +2,7 @@
 // fields the backend accepts (firstName/lastName/phone); email/role are
 // never editable client-side. Keeps the original drawer styling.
 import React, { useState } from "react";
-import { apiFetch } from "../../../lib/api.js";
+import { updateProfile } from "../../../api/accountApi.js";
 
 const UserDetailForm = ({ onClose, onSaved, userInfo }) => {
   const [firstName, setFirstName] = useState(userInfo?.firstName ?? "");
@@ -19,13 +19,10 @@ const UserDetailForm = ({ onClose, onSaved, userInfo }) => {
     setSubmitting(true);
     setError(null);
     try {
-      const data = await apiFetch("/account/profile", {
-        method: "PATCH",
-        body: {
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
-          phone: phone.trim(),
-        },
+      const data = await updateProfile({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        phone: phone.trim(),
       });
       onSaved(data?.profile ?? data);
     } catch (err) {

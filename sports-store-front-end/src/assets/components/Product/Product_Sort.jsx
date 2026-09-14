@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { SORT_OPTIONS } from "../../../services/productService.js";
 
-export const SORT_OPTIONS = [
-  { value: "featured", label: "Featured" },
-  { value: "newest", label: "New" },
-  { value: "price-asc", label: "Price (Low to High)" },
-  { value: "price-desc", label: "Price (High to Low)" },
-];
+export { SORT_OPTIONS };
 
 // Reusable sort dropdown (single-select radios).
 // Owns its open/close state; parent owns the value.

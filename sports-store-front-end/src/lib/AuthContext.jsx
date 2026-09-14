@@ -9,7 +9,8 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { apiFetch, getToken, setToken } from "./api.js";
+import { getToken, setToken } from "./api.js";
+import { getCurrentUser, loginUser, signupUser } from "../api/authApi.js";
 
 const AuthContext = createContext(null);
 
@@ -23,7 +24,7 @@ export function AuthProvider({ children }) {
       setLoading(false);
       return;
     }
-    apiFetch("/auth/me")
+    getCurrentUser()
       .then((data) => {
         if (!cancelled) setUser(data?.user ?? data);
       })
@@ -43,20 +44,14 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = useCallback(async (email, password) => {
-    const data = await apiFetch("/auth/login", {
-      method: "POST",
-      body: { email, password },
-    });
+    const data = await loginUser({ email, password });
     setToken(data.token);
     setUser(data.user);
     return data.user;
   }, []);
 
   const signup = useCallback(async (payload) => {
-    const data = await apiFetch("/auth/signup", {
-      method: "POST",
-      body: payload,
-    });
+    const data = await signupUser(payload);
     setToken(data.token);
     setUser(data.user);
     return data.user;

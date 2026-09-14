@@ -1,12 +1,12 @@
-// I05: cart page reads/writes the real backend against
-// GET /cart, PATCH/DELETE /cart/items/:productId, /account/wishlist and
-// POST /orders. All data comes from the API - server subtotal wins.
-import React, { useCallback, useEffect, useState } from "react";
+// UI / Presentation layer — cart page.
+//
+// Responsibility: render cart + "Save for Later" rows and forward user
+// actions to useCart (application layer) which talks to cartApi /
+// wishlistApi. Price formatting stays in lib/format.js.
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import useCart from "../../../hooks/useCart.js";
 import { formatPrice } from "../../../lib/format.js";
-
-const PICKUP_FEE = 50;
 
 const CartItemCard = ({ item, onUpdateQty, onRemove, onSaveForLater, busy }) => {
   const qtyMinus = () => onUpdateQty(Math.max(1, item.quantity - 1));
@@ -133,90 +133,30 @@ const SavedItemCard = ({ item, onAddToCart, onRemove, busy }) => {
 };
 const ProductCart = () => {
   const navigate = useNavigate();
-  const [cart, setCart] = useState(null);
-  const [wishlist, setWishlist] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState(null);
-  const [busy, setBusy] = useState(false);
-
-  const load = useCallback(async () => {
-    try {
-      const [cartData, wishlistData] = await Promise.all([
-        apiFetch("/cart"),
-        apiFetch("/account/wishlist"),
-      ]);
-      setCart(cartData?.cart ?? cartData);
-      setWishlist(wishlistData?.items ?? wishlistData ?? []);
-    } catch (err) {
-      setLoadError(err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    load();
-  }, [load]);
-
-  const runAction = async (action) => {
-    setBusy(true);
-    try {
-      await action();
-      await load();
-    } catch (err) {
-      alert(err?.message ?? "Something went wrong");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const items = cart?.items ?? [];
-  const subtotal = cart?.subtotal ?? 0;
-  const estimatedTotal = subtotal + PICKUP_FEE;
-
-  const handleUpdateQty = (productId, quantity) =>
-    runAction(() =>
-      apiFetch(`/cart/items/${productId}`, {
-        method: "PATCH",
-        body: { quantity },
-      }),
-    );
-
-  const handleRemove = (productId) =>
-    runAction(() => apiFetch(`/cart/items/${productId}`, { method: "DELETE" }));
-
-  const handleSaveForLater = (item) =>
-    runAction(async () => {
-      await apiFetch("/account/wishlist/items", {
-        method: "POST",
-        body: { productId: item.productId },
-      });
-      await apiFetch(`/cart/items/${item.productId}`, { method: "DELETE" });
-    });
-
-  const handleWishlistRemove = (productId) =>
-    runAction(() =>
-      apiFetch(`/account/wishlist/items/${productId}`, { method: "DELETE" }),
-    );
-
-  const handleWishlistAddToCart = (item) =>
-    runAction(async () => {
-      const product = item.product ?? {};
-      await apiFetch("/cart/items", {
-        method: "POST",
-        body: { productId: product.id, quantity: 1, selectedSize: "" },
-      });
-      await apiFetch(`/account/wishlist/items/${product.id}`, {
-        method: "DELETE",
-      });
-    });
+  const {
+    cart,
+    wishlist,
+    items,
+    loading,
+    loadError,
+    busy,
+    subtotal,
+    estimatedTotal,
+    pickupFee,
+    updateQuantity,
+    removeItem,
+    saveForLater,
+    removeSaved,
+    moveSavedToCart,
+  } = useCart();
 
   // Dummy checkout: payment is not enabled yet, so route to the
   // placeholder page instead of placing an order.
   const handleCheckout = () => {
     navigate("/checkout");
   };
-if (loading) {
+
+  if (loading) {
     return (
       <div className="bg-white ml-8 pt-6">
         <p>Loading your cart…</p>
@@ -247,9 +187,9 @@ if (loading) {
                     <CartItemCard
                       item={item}
                       busy={busy}
-                      onUpdateQty={(q) => handleUpdateQty(item.productId, q)}
-                      onRemove={() => handleRemove(item.productId)}
-                      onSaveForLater={() => handleSaveForLater(item)}
+                      onUpdateQty={(q) => updateQuantity(item.productId, q)}
+                      onRemove={() => removeItem(item.productId)}
+                      onSaveForLater={() => saveForLater(item)}
                     />
                   </div>
                   <hr className="h-[1.5px] bg-gray-600 my-3" />
@@ -278,9 +218,9 @@ if (loading) {
                   <SavedItemCard
                     item={item}
                     busy={busy}
-                    onAddToCart={() => handleWishlistAddToCart(item)}
+                    onAddToCart={() => moveSavedToCart(item)}
                     onRemove={() =>
-                      handleWishlistRemove(item.product?.id ?? item.productId)
+                      removeSaved(item.product?.id ?? item.productId)
                     }
                   />
                 </div>
@@ -309,7 +249,7 @@ if (loading) {
             <div className="flex items-center justify-between mb-3">
               <p>Pick up in-Store</p>
               <div className="font-semibold text-neutral-600">
-                {formatPrice(PICKUP_FEE)}
+                {formatPrice(pickupFee)}
               </div>
             </div>
             <hr className="h-[1.75px] my-1" />

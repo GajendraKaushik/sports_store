@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
-import { apiFetch } from "../../../lib/api.js";
+import useProductDetail from "../../../hooks/useProductDetail.js";
 import { formatPrice } from "../../../lib/format.js";
 
 const Single_Product_page = () => {
@@ -9,9 +9,8 @@ const Single_Product_page = () => {
   const { productSlug } = useParams();
   const location = useLocation();
 
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState(null);
+  const { product, loading, loadError, addToCart, saveForLater } =
+    useProductDetail(productSlug);
   const [toggleTechInfo, setToggleTechInfo] = useState(true);
   const [getSize, setSize] = useState("");
   const [actionMessage, setActionMessage] = useState(null);
@@ -20,27 +19,6 @@ const Single_Product_page = () => {
 
   useEffect(() => {
     setActiveImageIndex(0);
-  }, [productSlug]);
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setLoadError(null);
-
-    apiFetch(`/products/${productSlug}`)
-      .then((data) => {
-        if (!cancelled) setProduct(data?.product ?? data);
-      })
-      .catch((err) => {
-        if (!cancelled) setLoadError(err);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
   }, [productSlug]);
 
   const handleChangeSize = (Size) => {
@@ -56,10 +34,8 @@ const Single_Product_page = () => {
     if (!product || !getSize) return;
     setActionMessage(null);
     try {
-      await apiFetch("/cart/items", {
-        method: "POST",
-        body: { productId: product.id, quantity: 1, selectedSize: getSize },
-      });
+      const result = await addToCart({ quantity: 1, selectedSize: getSize });
+      if (!result?.ok) return; // size gating is handled by resolveSizeSelection
       navigate("/cart");
     } catch (err) {
       if (err.status === 401) {
@@ -75,10 +51,7 @@ const Single_Product_page = () => {
     if (!product) return;
     setActionMessage(null);
     try {
-      await apiFetch("/account/wishlist/items", {
-        method: "POST",
-        body: { productId: product.id },
-      });
+      await saveForLater();
       setActionMessage("Saved for later.");
     } catch (err) {
       if (err.status === 401) {

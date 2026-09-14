@@ -1,7 +1,7 @@
 // I09: owner dashboard. Reads GET /owner/dashboard counts only.
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import { getOwnerDashboard } from "../../../api/ownerApi.js";
 
 const Owner_Dashboard = () => {
   const [dashboard, setDashboard] = useState(null);
@@ -9,7 +9,7 @@ const Owner_Dashboard = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    apiFetch("/owner/dashboard")
+    getOwnerDashboard()
       .then((data) => setDashboard(data?.dashboard ?? data))
       .catch((err) => setError(err?.message ?? "Could not load dashboard"))
       .finally(() => setLoading(false));

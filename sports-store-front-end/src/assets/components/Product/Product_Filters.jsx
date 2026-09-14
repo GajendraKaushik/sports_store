@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { apiFetch } from "../../../lib/api.js";
-
-export const EMPTY_FILTERS = {
-  categories: [],
-  groups: [],
-  sizes: [],
-  families: [],
-  collections: [],
-  priceRanges: [],
-};
+import {
+  EMPTY_FILTERS,
+  buildFilterSections,
+  countActiveFilters,
+  toggleFilterValue,
+} from "../../../services/productService.js";
 
 const FilterSection = ({ section, isOpen, expanded, onToggle, onToggleMore, checkboxList, pillList }) => {
   const visibleOptions =
@@ -44,15 +40,19 @@ const FilterSection = ({ section, isOpen, expanded, onToggle, onToggleMore, chec
     </div>
   );
 };
-const Product_Filters = ({ category = "", value = EMPTY_FILTERS, onChange }) => {
+// UI / Presentation layer — filter panel.
+//
+// Responsibility: render checkboxes/pills from facet data and report the
+// user's selections upward. No API calls, no query building — facets come
+// in as props (produced by useProductFacets) and selection is delegated to
+// productService.toggleFilterValue / countActiveFilters.
+const Product_Filters = ({ facets = null, value = EMPTY_FILTERS, onChange }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const filterRef = useRef(null);
-  const [facets, setFacets] = useState(null);
   const [openSections, setOpenSections] = useState({ Category: true });
   const [showMore, setShowMore] = useState({});
   const selected = value ?? EMPTY_FILTERS;
-  const activeCount = Object.values(selected).reduce(
-    (t, arr) => t + (Array.isArray(arr) ? arr.length : 0), 0);
+  const activeCount = countActiveFilters(selected);
 
   useEffect(() => {
     if (!filterOpen) return;
@@ -68,27 +68,11 @@ const Product_Filters = ({ category = "", value = EMPTY_FILTERS, onChange }) => 
     };
   }, [filterOpen]);
 
-  useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      try {
-        const q = category ? `?category=${encodeURIComponent(category)}` : "";
-        const data = await apiFetch(`/products/facets${q}`);
-        if (!cancelled && data?.facets) setFacets(data.facets);
-      } catch { if (!cancelled) setFacets(null); }
-    };
-    load();
-    return () => { cancelled = true; };
-  }, [category]);
-
   const toggleSection = (title) =>
     setOpenSections((p) => ({ ...p, [title]: !p[title] }));
 
-  const toggleValue = (key, v) => {
-    const cur = selected[key] ?? [];
-    const next = cur.includes(v) ? cur.filter((i) => i !== v) : [...cur, v];
-    onChange?.({ ...selected, [key]: next });
-  };
+  const toggleValue = (key, v) =>
+    onChange?.(toggleFilterValue(selected, key, v));
 
   const checkboxList = (section, visibleOptions) => (
     <div className="flex flex-col gap-4">
@@ -119,28 +103,15 @@ const Product_Filters = ({ category = "", value = EMPTY_FILTERS, onChange }) => 
     </div>
   );
 
-  const sections = [
-    { key: "categories", title: "Category",
-      options: facets?.categories ?? [] },
-    { key: "groups", title: "Group",
-      options: facets?.groups ?? [] },
-    { key: "sizes", title: "Size", variant: "pills", visibleLimit: 6,
-      options: facets?.sizes ?? [] },
-    { key: "priceRanges", title: "Price", visibleLimit: 5,
-      options: (facets?.priceRanges ?? []).map((bucket) => ({ value: bucket.key, label: bucket.label, count: bucket.count })) },
-    { key: "families", title: "Product Family", visibleLimit: 5,
-      options: facets?.families ?? [] },
-    { key: "collections", title: "Collection",
-      options: facets?.collections ?? [] },
-  ];
+  const sections = buildFilterSections(facets);
 
   return (
     <div ref={filterRef} className="relative md:w-48 w-full">
       <button type="button" onClick={() => setFilterOpen((o) => !o)}
         aria-haspopup="dialog" aria-expanded={filterOpen}
         className="w-full h-12 bg-neutral-800 hover:bg-neutral-500 text-white font-semibold rounded-md">
-        <span className="flex justify-between items-center mx-4">
-          <span>Filter &amp; sort{activeCount > 0 ? ` (${activeCount})` : ""}</span>
+                <span className="flex justify-between items-center mx-4">
+          <span>Filters{activeCount > 0 ? ` (${activeCount})` : ""}</span>
           <span className="text-xl text-white font-bold leading-none">
             <ion-icon name="options-outline"></ion-icon>
           </span>

@@ -4,7 +4,7 @@ import plus from "../../images/Icons/plus.png";
 import { Drawer } from "flowbite-react";
 import Bike_Detail_Form from "./Bike_Detail_Form";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../lib/api.js";
+import { getBikes } from "../../../api/accountApi.js";
 import { useAuth } from "../../../lib/AuthContext.jsx";
 
 // I08: bikes page reads GET /account/bikes; form creates via POST /account/bikes
@@ -20,7 +20,7 @@ const BiKes = () => {
   const handleClose = () => setIsOpen(false);
 
  const load = useCallback(() => {
-  apiFetch("/account/bikes")
+  getBikes()
     .then((data) => setBikes(data?.bikes ?? []))
     .catch((err) => setLoadError(err?.message ?? "Could not load bikes"))
     .finally(() => setLoading(false));
