@@ -34,6 +34,8 @@ const MOCK_PRODUCTS = [
     price: 6499.99,
     compareAtPrice: 11500.0,
     category: "mountain-bikes",
+    isFeatured: true,
+    featuredOrder: 1,
   },
   {
     slug: "s-works-stumpjumper-evo",
@@ -41,6 +43,8 @@ const MOCK_PRODUCTS = [
     price: 5499.99,
     compareAtPrice: 10500.0,
     category: "mountain-bikes",
+    isFeatured: true,
+    featuredOrder: 2,
   },
   {
     slug: "turbo-vado-4-0",
@@ -48,6 +52,8 @@ const MOCK_PRODUCTS = [
     price: 2749.99,
     compareAtPrice: 4000.0,
     category: "electric-bikes",
+    isFeatured: true,
+    featuredOrder: 3,
   },
   {
     slug: "turbo-como-sl-4-0",
@@ -55,6 +61,8 @@ const MOCK_PRODUCTS = [
     price: 1799.99,
     compareAtPrice: 3250.0,
     category: "electric-bikes",
+    isFeatured: true,
+    featuredOrder: 4,
   },
   {
     slug: "turbo-vado-4-0-step-through",
@@ -340,6 +348,8 @@ async function upsertProducts(store, categoriesBySlug) {
           compareAtPrice: item.compareAtPrice,
           currency: "USD",
           stockQuantity: 25,
+          isFeatured: item.isFeatured ?? false,
+          featuredOrder: item.featuredOrder ?? 0,
           sizes: SIZES,
           images: PRODUCT_IMAGE_VIEWS.map((_view, viewIndex) =>
             resolveProductImage(item, viewIndex),

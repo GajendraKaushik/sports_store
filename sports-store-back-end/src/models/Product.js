@@ -28,6 +28,8 @@ const productSchema = new mongoose.Schema(
     compareAtPrice: { type: Number, min: 0 },
     currency: { type: String, uppercase: true, trim: true, default: "USD" },
     stockQuantity: { type: Number, default: 0, min: 0 },
+    isFeatured: { type: Boolean, default: false, index: true },
+    featuredOrder: { type: Number, default: 0, min: 0 },
     sizes: { type: [String], default: [] },
     images: { type: [String], default: [] },
     specifications: { type: mongoose.Schema.Types.Mixed, default: {} },

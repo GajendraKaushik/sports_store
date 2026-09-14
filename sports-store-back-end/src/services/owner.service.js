@@ -30,6 +30,8 @@ function toOwnerProductPayload(product) {
     compareAtPrice: raw.compareAtPrice ?? null,
     currency: raw.currency,
     stockQuantity: raw.stockQuantity,
+    isFeatured: raw.isFeatured ?? false,
+    featuredOrder: raw.featuredOrder ?? 0,
     sizes: raw.sizes ?? [],
     images: raw.images ?? [],
     specifications: raw.specifications ?? {},

@@ -14,6 +14,8 @@ function toProductPayload(product) {
     compareAtPrice: raw.compareAtPrice ?? null,
     currency: raw.currency,
     stockQuantity: raw.stockQuantity,
+    isFeatured: raw.isFeatured ?? false,
+    featuredOrder: raw.featuredOrder ?? 0,
     sizes: raw.sizes ?? [],
     images: raw.images ?? [],
     primaryImage: raw.images?.[0] ?? null,
@@ -52,19 +54,18 @@ export async function listProducts({ category, search, page, limit, sort }) {
   }
 
   const sortMap = {
+    featured: { isFeatured: -1, featuredOrder: 1, createdAt: -1 },
     newest: { createdAt: -1 },
     "price-asc": { price: 1 },
     "price-desc": { price: -1 },
   };
 
   const skip = (page - 1) * limit;
+  const query = Product.find(filter).populate("categoryId", "name slug");
+  if (sortMap[sort]) query.sort(sortMap[sort]);
   const [total, docs] = await Promise.all([
     Product.countDocuments(filter),
-    Product.find(filter)
-      .populate("categoryId", "name slug")
-      .sort(sortMap[sort] ?? sortMap.newest)
-      .skip(skip)
-      .limit(limit),
+    query.skip(skip).limit(limit),
   ]);
 
   return {

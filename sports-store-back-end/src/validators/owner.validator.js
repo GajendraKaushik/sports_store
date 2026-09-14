@@ -31,6 +31,8 @@ const productPayload = z.object({
   compareAtPrice: z.coerce.number().min(0).optional(),
   currency: z.string().trim().optional().default("USD"),
   stockQuantity: z.coerce.number().int().min(0).optional().default(0),
+  isFeatured: z.coerce.boolean().optional(),
+  featuredOrder: z.coerce.number().int().min(0).optional(),
   sizes: z.array(z.string().trim().min(1)).optional().default([]),
   images: z.array(z.string().trim().url("Image must be a URL")).optional().default([]),
   specifications: z.record(z.any()).optional().default({}),

@@ -6,9 +6,8 @@ export const productQuerySchema = z.object({
   page: z.coerce.number().int().min(1).optional().default(1),
   limit: z.coerce.number().int().min(1).max(24).optional().default(12),
   sort: z
-    .enum(["newest", "price-asc", "price-desc"])
-    .optional()
-    .default("newest"),
+    .enum(["featured", "newest", "price-asc", "price-desc"])
+    .optional(),
 });
 
 export const productSlugSchema = z.object({
