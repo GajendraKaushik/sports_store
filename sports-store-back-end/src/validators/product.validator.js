@@ -8,6 +8,12 @@ export const productQuerySchema = z.object({
   sort: z
     .enum(["featured", "newest", "price-asc", "price-desc"])
     .optional(),
+  categories: z.string().trim().min(1).optional(),
+  groups: z.string().trim().min(1).optional(),
+  sizes: z.string().trim().min(1).optional(),
+  families: z.string().trim().min(1).optional(),
+  collections: z.string().trim().min(1).optional(),
+  priceRanges: z.string().trim().min(1).optional(),
 });
 
 export const productSlugSchema = z.object({

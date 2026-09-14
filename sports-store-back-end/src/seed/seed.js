@@ -15,6 +15,7 @@ const MONGODB_URI =
   process.env.MONGODB_URI ?? "mongodb://127.0.0.1:27017/sports_store";
 
 const SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
+const FRAME_SIZES = ["44", "49", "52", "54", "56", "58"];
 
 // Product images live in public/images and are served by the API at /images.
 // The seed prefers a real file the owner dropped in (<slug>.jpg/.png/.webp/…)
@@ -31,6 +32,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "stumpjumper-comp-alloy",
     title: "Stumpjumper Comp Alloy",
+    group: "Bikes",
+    productFamily: "Stumpjumper",
     price: 6499.99,
     compareAtPrice: 11500.0,
     category: "mountain-bikes",
@@ -40,6 +43,9 @@ const MOCK_PRODUCTS = [
   {
     slug: "s-works-stumpjumper-evo",
     title: "S-Works Stumpjumper EVO",
+    group: "Bikes",
+    productFamily: "Stumpjumper",
+    collection: "Team",
     price: 5499.99,
     compareAtPrice: 10500.0,
     category: "mountain-bikes",
@@ -49,6 +55,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "turbo-vado-4-0",
     title: "Turbo Vado 4.0",
+    group: "E-Bikes",
+    productFamily: "Turbo Vado",
     price: 2749.99,
     compareAtPrice: 4000.0,
     category: "electric-bikes",
@@ -58,6 +66,9 @@ const MOCK_PRODUCTS = [
   {
     slug: "turbo-como-sl-4-0",
     title: "Turbo Como SL 4.0",
+    group: "E-Bikes",
+    productFamily: "Turbo Como",
+    collection: "Limited",
     price: 1799.99,
     compareAtPrice: 3250.0,
     category: "electric-bikes",
@@ -67,6 +78,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "turbo-vado-4-0-step-through",
     title: "Turbo Vado 4.0 Step-Through",
+    group: "E-Bikes",
+    productFamily: "Turbo Vado",
     price: 2749.99,
     compareAtPrice: 4000.0,
     category: "electric-bikes",
@@ -74,6 +87,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "diverge-comp-e5",
     title: "Diverge Comp E5",
+    group: "Bikes",
+    productFamily: "Diverge",
     price: 1999.99,
     compareAtPrice: 2500.0,
     category: "road-bikes",
@@ -84,6 +99,8 @@ const MOCK_PRODUCTS = [
     price: 5499.99,
     compareAtPrice: 8000.0,
     category: "road-bikes",
+    group: "Bikes",
+    productFamily: "Roubaix",
   },
   {
     slug: "roubaix-expert-2",
@@ -91,6 +108,8 @@ const MOCK_PRODUCTS = [
     price: 5499.99,
     compareAtPrice: 8000.0,
     category: "wheels",
+    group: "Bikes",
+    productFamily: "Roubaix",
   },
   {
     slug: "roubaix-expert-3",
@@ -98,11 +117,15 @@ const MOCK_PRODUCTS = [
     price: 5499.99,
     compareAtPrice: 8000.0,
     category: "components",
+    group: "Framesets",
+    productFamily: "Roubaix",
   },
   // Added so every homepage tile opens a populated list.
   {
     slug: "sirrus-4-0",
     title: "Sirrus 4.0",
+    group: "Bikes",
+    productFamily: "Sirrus",
     price: 1149.99,
     compareAtPrice: 1350.0,
     category: "active-bikes",
@@ -110,6 +133,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "sirrus-x-3-0",
     title: "Sirrus X 3.0",
+    group: "Bikes",
+    productFamily: "Sirrus",
     price: 899.99,
     compareAtPrice: 1100.0,
     category: "active-bikes",
@@ -117,6 +142,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "riprock-20",
     title: "Riprock 20",
+    group: "Bikes",
+    productFamily: "Riprock",
     price: 449.99,
     compareAtPrice: 525.0,
     category: "kids-bikes",
@@ -124,6 +151,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "riprock-24",
     title: "Riprock 24",
+    group: "Bikes",
+    productFamily: "Riprock",
     price: 499.99,
     compareAtPrice: 575.0,
     category: "kids-bikes",
@@ -131,6 +160,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "ground-control-grid-tire",
     title: "Ground Control GRID Tire",
+    group: "Bikes",
+    productFamily: "Ground Control",
     price: 54.99,
     compareAtPrice: 65.0,
     category: "tires",
@@ -138,6 +169,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "fast-trak-control-tire",
     title: "Fast Trak Control Tire",
+    group: "Bikes",
+    productFamily: "Fast Trak",
     price: 59.99,
     compareAtPrice: 70.0,
     category: "tires",
@@ -145,6 +178,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "rbx-comp-jersey",
     title: "RBX Comp Jersey",
+    group: "Bikes",
+    productFamily: "RBX",
     price: 79.99,
     compareAtPrice: 95.0,
     category: "apparel",
@@ -152,6 +187,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "trail-liner-shorts",
     title: "Trail Liner Shorts",
+    group: "Bikes",
+    productFamily: "Trail",
     price: 99.99,
     compareAtPrice: 120.0,
     category: "apparel",
@@ -159,6 +196,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "stix-switch-headlight",
     title: "Stix Switch Headlight",
+    group: "Bikes",
+    productFamily: "Stix",
     price: 44.99,
     compareAtPrice: 55.0,
     category: "accessories",
@@ -166,6 +205,8 @@ const MOCK_PRODUCTS = [
   {
     slug: "ambient-qi2-mount",
     title: "Ambient Qi2 Mount",
+    group: "Bikes",
+    productFamily: "Ambient",
     price: 39.99,
     compareAtPrice: 49.0,
     category: "accessories",
@@ -350,7 +391,13 @@ async function upsertProducts(store, categoriesBySlug) {
           stockQuantity: 25,
           isFeatured: item.isFeatured ?? false,
           featuredOrder: item.featuredOrder ?? 0,
-          sizes: SIZES,
+          group: item.group ?? "",
+          productFamily: item.productFamily ?? "",
+          collection: item.collection ?? "",
+          sizes:
+            item.category === "road-bikes"
+              ? [...SIZES, ...FRAME_SIZES]
+              : SIZES,
           images: PRODUCT_IMAGE_VIEWS.map((_view, viewIndex) =>
             resolveProductImage(item, viewIndex),
           ),

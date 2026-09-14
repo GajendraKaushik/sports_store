@@ -15,4 +15,9 @@ export async function listCategories(req, res) {
   res.status(200).json({ success: true, data: { categories } });
 }
 
-export default { listProducts, getProductBySlug, listCategories };
+export async function getFacets(req, res) {
+  const facets = await productService.getFacets(req.query);
+  res.status(200).json({ success: true, data: { facets } });
+}
+
+export default { listProducts, getProductBySlug, listCategories, getFacets };

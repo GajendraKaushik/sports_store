@@ -15,6 +15,8 @@ router.get(
   asyncHandler(productController.listProducts),
 );
 
+router.get("/facets", asyncHandler(productController.getFacets));
+
 router.get(
   "/:slug",
   validate(productSlugSchema, "params"),
