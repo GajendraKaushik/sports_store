@@ -2,7 +2,7 @@
 
 A bike-shop e-commerce app — customer storefront + owner panel, built end-to-end.
 
-**Live demo →** [Frontend](https://your-vercel-url) · [API](https://your-render-url)
+**Live demo →** [Frontend](sports-store-woad.vercel.app) · [API](https://sports-store-api.onrender.com)
 
 > Browse products, manage a cart, place orders. Owner can manage products, update order status, and edit the store — all against the same API with different permissions.
 
