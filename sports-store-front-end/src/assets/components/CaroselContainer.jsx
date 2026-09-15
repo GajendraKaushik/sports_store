@@ -38,7 +38,7 @@ const CaroselContainer = (props) => {
     };
   return (
       <div className="w-full">
-        <div className="slider-wrapper p-12 w-full rounded-sm">
+        <div className="slider-wrapper p-12 bg-white w-full rounded-sm">
           <div className="card-list" ref={cardListRef} onScroll={handelScroll}>
             {props.children}
           </div>

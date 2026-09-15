@@ -15,7 +15,13 @@ export function createApp() {
   const app = express();
 
   app.use(express.json());
-  app.use(cors({ origin: env.corsOrigin }));
+  // CORS_ORIGIN supports a comma-separated list so local dev, production,
+  // and Vercel preview URLs can all be allowed from one env value.
+  const allowedOrigins = env.corsOrigin
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  app.use(cors({ origin: allowedOrigins }));
   app.use(requestLogger({ skip: ["/api/v1/health", "/images"] }));
 
   // Product images (seed dummies + owner-dropped files) are served from
